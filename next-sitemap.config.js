@@ -1,7 +1,10 @@
+/** @type {import('next-sitemap').IConfig} */
 module.exports = {
-    siteUrl: 'https://macexo.com', // Replace with your domain
-    generateRobotsTxt: true, // Automatically create a robots.txt
-    changefreq: 'daily', // Optional: Frequency of content updates
-    priority: 0.7, // Optional: Default priority for pages
-  };
-  
+  siteUrl: 'https://macexo.com',
+  generateRobotsTxt: true,
+  changefreq: 'weekly',
+  priority: 0.7,
+  // The three /recruiting/<subteam> routes now redirect to /design/<subteam>;
+  // keep redirect sources out of the sitemap.
+  exclude: ['/recruiting/electrical', '/recruiting/mechanical', '/recruiting/software'],
+};

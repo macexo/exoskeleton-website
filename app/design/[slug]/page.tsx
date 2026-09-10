@@ -1,136 +1,164 @@
-import React from "react";
-import { useParams } from "next/navigation";
+import type { Metadata } from "next";
 import Link from "next/link";
-import { FaBolt, FaCogs, FaCode, FaShieldAlt } from "react-icons/fa";
+import { notFound } from "next/navigation";
+import { Section } from "@/components/ui/Section";
+import Reveal from "@/components/ui/Reveal";
+import Button, { ArrowRight } from "@/components/ui/Button";
+import { SUBTEAMS, getSubteam } from "@/data/subteams";
+import {
+  APPLICATIONS_OPEN,
+  APPLICATION_FORM_LINK,
+} from "@/app/recruiting/constants";
 
-const TEAM_DETAILS: Record<
-  string,
-  {
-    name: string;
-    icon: React.ReactNode;
-    description: string;
-    details: React.ReactNode;
-  }
-> = {
-  electrical: {
-    name: "Electrical",
-    icon: <FaBolt size={40} className="text-yellow-400" />,
-    description:
-      "The electrical team powers and brings the exoskeleton to life, from distributing energy safely to sensing motion and driving motors. See below for details on our two sub-teams: Power Architecture and Electrical Actuation & Sensing.",
-    details: (
-      <>
-        <strong>Electrical Actuation & Sensing Team</strong>
-        <br />
-        The electrical actuation and sensing team designs and integrates the
-        sensors and motors that enable responsive, real-time interaction with
-        the user's movement. From precise IMU data to reliable motor control
-        signals, we build the systems that sense, react, and move.
-        <br />
-        As a general member, you'll work on designing circuits, selecting
-        components, managing clean wiring, and helping program embedded systems.
-        You'll also collaborate closely with software and mechanical teams to
-        make sure everything fits together, and works safely.
-        <br />
-        If you're excited by embedded systems, signal pathways, or the challenge
-        of making hardware smarter and more responsive, apply now!
-        <br />
-        <br />
-        <strong>Power Architecture Team</strong>
-        <br />
-        The Power Architecture team ensures the exoskeleton runs safely and
-        efficiently. From regulating voltages to distributing power to all
-        onboard systems, we handle the electrical backbone of the suit.
-        <br />
-        As a general member, you'll help design power distribution circuits, lay
-        out PCBs, and get hands-on with wiring, soldering, and testing. We work
-        on safety-critical systems, so attention to detail and clean
-        implementation matter.
-        <br />
-        If you're passionate about electronics, enjoy building and testing
-        circuits, and want to work on systems to power the suit, apply now!
-      </>
-    ),
-  },
-  mechanical: {
-    name: "Mechanical",
-    icon: <FaCogs size={40} className="text-gray-400" />,
-    description:
-      "The Mechanical team is responsible for the design and fabrication of the exoskeleton which will support the pilot's entire range of motion from below their hip. See below for details on our two Mechanical Sub-teams: Waist and Linkages.",
-    details: (
-      <>
-        <strong>Waist Team</strong>
-        <br />
-        The Waist team is responsible for the central structural component of the
-        exoskeleton. Members work on the design and fabrication of the waist
-        assembly, ensuring it safely and comfortably interfaces with the pilot
-        while supporting the attached leg linkages.
-        <br />
-        As a general member you will work on ergonomics, material selection,
-        and structural design to ensure the exoskeleton's core is both
-        robust and wearable.
-        <br />
-        <br />
-        <strong>Linkages Team</strong>
-        <br />
-        The Linkages team is responsible for the mechanical structures that connect
-        the joints and transmit forces throughout the exoskeleton's legs. Members
-        design components that mimic human biomechanics while withstanding the 
-        dynamic loads of motion.
-        <br />
-        As a general member you will work on limb and joint design,
-        kinematics, and material selection to develop the rigid capability
-        of the exoskeleton's legs.
-      </>
-    ),
-  },
-  software: {
-    name: "Software",
-    icon: <FaCode size={40} className="text-mutedBlue" />,
-    description:
-      "Develops the code that controls the exoskeleton, from embedded systems to applied ML applications.",
-    details:
-      "The Software team develops embedded firmware, control algorithms, and user interfaces. Their work enables precise movement, safety interlocks, and data collection for performance analysis.",
-  },
-  safety: {
-    name: "Safety Integration",
-    icon: <FaShieldAlt size={40} className="text-emerald-400" />,
-    description:
-      "Safety is at the core of our design process, integrated by all subteams to ensure rigorous standards.",
-    details:
-      "Safety is not a standalone subteam, but a principle that guides every aspect of our design. From electrical protections and mechanical fail-safes to robust software controls, safety is integrated at every stage. Our team collaborates to meet and exceed safety standards, ensuring the exoskeleton is reliable and secure for all users.",
-  },
-};
+/**
+ * Subteam detail.
+ *
+ * Previously this file inlined ~430 words of copy that were duplicated
+ * character-for-character from the three /recruiting/<subteam> pages, and it
+ * imported `useParams` from next/navigation into a server component without
+ * ever using it. Content now comes from data/subteams.ts, so it exists once.
+ */
 
-export default async function DesignDetailPage(props: {
+/** Statically generate all four pages rather than rendering each on demand. */
+export function generateStaticParams() {
+  return SUBTEAMS.map((team) => ({ slug: team.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const team = getSubteam(slug);
+  if (!team) return { title: "Not found" };
+  return { title: `${team.name} Subteam`, description: team.body };
+}
+
+export default async function SubteamPage({
+  params,
+}: {
   params: Promise<{ slug: string }>;
 }) {
-  const { slug } = await props.params;
-  const team = TEAM_DETAILS[slug];
+  const { slug } = await params;
+  const team = getSubteam(slug);
+  if (!team) notFound();
 
-  if (!team) {
-    return (
-      <main className="min-h-screen flex flex-col items-center justify-center bg-charcoal text-softWhite p-8">
-        <h1 className="text-3xl font-bold mb-4">Team Not Found</h1>
-        <Link href="/design" className="text-ashGold underline">
-          Back to Design
-        </Link>
-      </main>
-    );
-  }
+  const others = SUBTEAMS.filter((t) => t.slug !== team.slug);
 
   return (
-    <main className="min-h-screen flex flex-col items-center bg-charcoal text-softWhite py-16 px-4">
-      <div className="bg-black bg-opacity-70 rounded-xl shadow-lg border-l-4 border-ashGold p-8 max-w-2xl w-full text-center flex flex-col items-center">
-        {team.icon}
-        <h1 className="text-4xl font-bold mt-2 mb-2 text-ashGold">
-          {team.name} Design
-        </h1>
-        <p className="text-lg mb-4">{team.description}</p>
-        <p className="text-md mb-6">{team.details}</p>
-        <Link href="/design" className="text-ashGold underline font-semibold">
-          ← Back to Design
-        </Link>
-      </div>
-    </main>
+    <>
+      <header className="relative isolate overflow-hidden bg-jet pt-36 pb-16">
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[radial-gradient(70%_60%_at_15%_0%,rgba(189,169,104,0.10),transparent_70%)]"
+        />
+        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+          <Link
+            href="/design"
+            className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-softWhite/50 transition-colors hover:text-ashGold"
+          >
+            <span aria-hidden>←</span> Design
+          </Link>
+          <div className="mt-6 flex flex-col sm:flex-row items-start gap-5">
+            <span
+              className={`grid shrink-0 place-items-center w-14 h-14 rounded-2xl ${team.bg} ${team.text}`}
+              aria-hidden
+            >
+              <team.icon size={24} />
+            </span>
+            <div>
+              <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-softWhite">
+                {team.name}
+              </h1>
+              <p className="mt-3 max-w-2xl text-lg text-softWhite/70 leading-relaxed text-pretty">
+                {team.body}
+              </p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <Section tone="charcoal">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-14">
+          <Reveal>
+            <h2 className="font-mono text-xs font-medium uppercase tracking-[0.12em] text-ashGold">
+              What you&rsquo;d work on
+            </h2>
+            <ul className="mt-6 space-y-3">
+              {team.work.map((item) => (
+                <li
+                  key={item}
+                  className="flex gap-3 rounded-xl border border-hairline/10 bg-hairline/[0.035] p-4 text-softWhite/80"
+                >
+                  <span
+                    className={`mt-2 h-1.5 w-1.5 shrink-0 rounded-full ${team.text} bg-current`}
+                    aria-hidden
+                  />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+
+          <Reveal delay={120}>
+            <div className="rounded-2xl border border-ashGold/25 bg-[radial-gradient(120%_120%_at_0%_0%,rgba(189,169,104,0.12),transparent_60%)] p-7">
+              <h2 className="text-2xl font-bold text-softWhite">
+                {team.recruiting
+                  ? `Join ${team.name}`
+                  : `${team.name} is by invitation`}
+              </h2>
+              <p className="mt-2 text-softWhite/65 leading-relaxed">
+                {team.recruiting
+                  ? "No prior experience required — the leads teach the tools. One application covers every subteam."
+                  : "This subteam is staffed from members already on the team. Join another subteam first and put your hand up."}
+              </p>
+              <div className="mt-6 flex flex-wrap gap-3">
+                {APPLICATIONS_OPEN && team.recruiting ? (
+                  <Button
+                    href={APPLICATION_FORM_LINK}
+                    external
+                    trailing={<ArrowRight />}
+                  >
+                    Apply now
+                  </Button>
+                ) : (
+                  <Button href="/recruiting" trailing={<ArrowRight />}>
+                    See all subteams
+                  </Button>
+                )}
+                <Button href="/design" variant="secondary">
+                  Back to the suit
+                </Button>
+              </div>
+            </div>
+
+            <div className="mt-8">
+              <h2 className="font-mono text-xs font-medium uppercase tracking-[0.12em] text-softWhite/50">
+                Other subteams
+              </h2>
+              <ul className="mt-4 grid sm:grid-cols-2 gap-3">
+                {others.map((other) => (
+                  <li key={other.slug}>
+                    <Link
+                      href={`/design/${other.slug}`}
+                      className="group flex items-center gap-3 tile p-4"
+                    >
+                      <span className={`shrink-0 ${other.text}`} aria-hidden>
+                        <other.icon size={17} />
+                      </span>
+                      <span className="font-medium text-softWhite group-hover:text-ashGold transition-colors">
+                        {other.name}
+                      </span>
+                      <ArrowRight className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Reveal>
+        </div>
+      </Section>
+    </>
   );
 }

@@ -1,212 +1,201 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
-import { FaBolt, FaCogs, FaCode, FaShieldAlt } from "react-icons/fa";
+import PageHero from "@/components/ui/PageHero";
+import { Section, SectionHeader } from "@/components/ui/Section";
+import Reveal from "@/components/ui/Reveal";
+import Button, { ArrowRight } from "@/components/ui/Button";
+import { SUBTEAMS } from "@/data/subteams";
+import { SUIT_SPECS, SUIT_SYSTEMS, BUILD_CYCLE } from "@/data/suit";
+import SuitExplorer from "@/components/SuitExplorer";
 
-const DESIGN_TEAMS = [
-  {
-    name: "Electrical",
-    slug: "electrical",
-    icon: FaBolt,
-    color: "yellow-400",
-    borderColor: "border-yellow-400",
-    iconBg: "bg-yellow-400/10",
-    description:
-      "Responsible for the circuits, sensors, and power systems that enable the exoskeleton's core functionality.",
-    special: false,
-  },
-  {
-    name: "Mechanical",
-    slug: "mechanical",
-    icon: FaCogs,
-    color: "gray-400",
-    borderColor: "border-gray-400",
-    iconBg: "bg-gray-400/10",
-    description:
-      "Designs the structure, joints, and moving parts for strength, comfort, and performance.",
-    special: false,
-  },
-  {
-    name: "Software",
-    slug: "software",
-    icon: FaCode,
-    color: "mutedBlue",
-    borderColor: "border-mutedBlue",
-    iconBg: "bg-mutedBlue/10",
-    description:
-      "Develops the code that controls the exoskeleton, from embedded systems to applied ML applications.",
-    special: false,
-  },
-];
-
-const SAFETY_TEAM = {
-  name: "Safety Integration",
-  slug: "safety",
-  icon: FaShieldAlt,
-  color: "emerald-400",
-  borderColor: "border-emerald-400",
-  iconBg: "bg-emerald-400/10",
+export const metadata: Metadata = {
+  title: "Design",
   description:
-    "Safety is at the core of our design process, integrated by all subteams to ensure rigorous standards.",
+    "How McMaster Exoskeleton designs and builds a powered lower-limb exoskeleton: the subsystems on the suit, what each subteam owns, and how a season runs from blank CAD to competition.",
 };
 
-function DesignPage() {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
-
+/**
+ * The design page.
+ *
+ * The previous version was a stub: three one-sentence cards, an off-palette
+ * green "Safety Integration" box, a 33-word philosophy paragraph and no images
+ * at all — on the page a sponsor and a prospective engineer are both most
+ * likely to open.
+ */
+export default function DesignPage() {
   return (
-    <main className="min-h-screen bg-charcoal text-softWhite">
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
-        {/* Background decorative elements */}
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-ashGold/50 to-transparent" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-ashGold/10 via-transparent to-transparent pointer-events-none" />
+    <>
+      <PageHero
+        eyebrow="Engineering"
+        title="How the suit"
+        accent="comes together."
+        image="/team/obstacle_course.jpg"
+        imageAlt="A pilot in the McMaster Exoskeleton suit being supported by team members during an obstacle course run."
+        focal="30% 52%"
+      >
+        Four subteams, one machine. Every part is specified, machined and wired
+        by students, then put on a person and tested until it holds.
+      </PageHero>
 
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          {/* Badge */}
-          <div
-            className={`mb-6 transition-all duration-1000 ${
-              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
-          >
-            <span className="inline-block px-4 py-1.5 text-xs font-medium tracking-widest uppercase bg-ashGold/20 text-ashGold border border-ashGold/30 rounded-full">
-              Engineering
-            </span>
-          </div>
+      {/* The artifact, annotated. */}
+      <Section tone="charcoal">
+        <SectionHeader
+          align="left"
+          eyebrow="The suit"
+          title="Every part of this"
+          accent="was made by a student."
+        >
+          The suit carries load through a rigid aluminium structure and adds
+          torque at the hip and knee, so a pilot can climb stairs and clear
+          obstacles wearing it. Pick a callout to see what each subsystem does
+          and which subteam builds it.
+        </SectionHeader>
 
-          <h1
-            className={`text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 transition-all duration-1000 delay-200 ${
-              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
-          >
-            Our Design <span className="text-gradient-gold">Approach</span>
-          </h1>
-
-          <p
-            className={`text-lg sm:text-xl text-softWhite/70 max-w-2xl mx-auto leading-relaxed transition-all duration-1000 delay-400 ${
-              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
-          >
-            Explore how each subteam contributes to the exoskeleton's design.
-            Click a team to learn more about their design philosophy and
-            technical approach.
-          </p>
+        <div className="mt-12">
+          <SuitExplorer />
         </div>
-      </section>
 
-      {/* Teams Grid */}
-      <section className="relative py-20 bg-jet overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-ashGold/30 to-transparent" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-ashGold/5 via-transparent to-transparent pointer-events-none" />
-
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Technical Teams */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            {DESIGN_TEAMS.map((team, index) => (
-              <Link
-                key={team.slug}
-                href={`/design/${team.slug}`}
-                className={`group relative p-8 rounded-2xl bg-charcoal/50 border border-white/5 hover:${team.borderColor} transition-all duration-500 hover:bg-charcoal overflow-hidden ${
-                  isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                }`}
-                style={{ transitionDelay: `${600 + index * 100}ms` }}
-              >
-                {/* Hover glow effect */}
-                <div className={`absolute inset-0 ${team.iconBg} opacity-0 group-hover:opacity-30 transition-opacity duration-500 blur-2xl`} />
-
-                <div className="relative flex flex-col items-center text-center">
-                  {/* Icon */}
-                  <div className={`p-4 rounded-xl ${team.iconBg} mb-6 transition-all duration-300 group-hover:scale-110`}>
-                    <team.icon size={36} className={`text-${team.color}`} />
-                  </div>
-
-                  {/* Content */}
-                  <h3 className={`text-2xl font-bold mb-3 text-softWhite group-hover:text-${team.color} transition-colors duration-300`}>
-                    {team.name}
-                  </h3>
-                  <p className="text-softWhite/60 leading-relaxed mb-4">
-                    {team.description}
-                  </p>
-
-                  {/* CTA */}
-                  <span className={`text-sm font-semibold text-${team.color} opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center gap-1`}>
-                    View Details
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </span>
-                </div>
-
-                {/* Bottom border accent */}
-                <div className={`absolute bottom-0 left-0 right-0 h-1 ${team.iconBg} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-              </Link>
-            ))}
-          </div>
-
-          {/* Safety Integration - Featured */}
-          <Link
-            href={`/design/${SAFETY_TEAM.slug}`}
-            className={`group relative block p-8 md:p-10 rounded-2xl bg-charcoal/50 border-2 border-emerald-400/30 hover:border-emerald-400 transition-all duration-500 hover:bg-charcoal overflow-hidden ${
-              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
-            style={{ transitionDelay: "900ms" }}
-          >
-            {/* Hover glow effect */}
-            <div className="absolute inset-0 bg-emerald-400/5 opacity-0 group-hover:opacity-30 transition-opacity duration-500 blur-2xl" />
-
-            <div className="relative flex flex-col md:flex-row items-center gap-6 md:gap-10">
-              {/* Icon */}
-              <div className="flex-shrink-0 p-6 rounded-2xl bg-emerald-400/10 transition-all duration-300 group-hover:scale-110">
-                <FaShieldAlt size={48} className="text-emerald-400" />
+        <Reveal delay={150} className="mt-10">
+          <dl className="grid grid-cols-2 lg:grid-cols-3 grid-hairlines">
+            {SUIT_SPECS.map((spec) => (
+              <div key={spec.label} className="bg-charcoal p-5">
+                <dt className="font-mono text-[11px] uppercase tracking-[0.12em] text-softWhite/45">
+                  {spec.label}
+                </dt>
+                <dd className="mt-1.5 font-medium text-softWhite">
+                  {spec.value}
+                  {spec.note && (
+                    <span className="block text-sm font-normal text-softWhite/50">
+                      {spec.note}
+                    </span>
+                  )}
+                </dd>
               </div>
+            ))}
+          </dl>
+        </Reveal>
+      </Section>
 
-              {/* Content */}
-              <div className="flex-grow text-center md:text-left">
-                <h3 className="text-3xl font-bold mb-3 text-emerald-400">
-                  {SAFETY_TEAM.name}
+      {/* Grouped capability panel — what is actually on the machine. */}
+      <Section tone="jet" divider>
+        <SectionHeader
+          eyebrow="Subsystems"
+          title="What's on"
+          accent="the machine"
+        >
+          Every one of these is specified, sourced and integrated by a student
+          subteam. Nothing here arrives as a kit.
+        </SectionHeader>
+
+        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {SUIT_SYSTEMS.map((system, i) => (
+            <Reveal key={system.group} delay={i * 80}>
+              <div className="h-full card p-5">
+                <h3 className="font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-ashGold">
+                  {system.group}
                 </h3>
-                <p className="text-lg text-softWhite/70 leading-relaxed max-w-2xl">
-                  {SAFETY_TEAM.description}
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {system.items.map((item) => (
+                    <li
+                      key={item}
+                      className="rounded-lg border border-hairline/10 bg-hairline/[0.045] px-2.5 py-1.5 text-[13px] text-softWhite/80"
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
+
+      {/* Subteams — real depth, linked to their own pages. */}
+      <Section tone="charcoal" id="subteams">
+        <SectionHeader
+          eyebrow="Subteams"
+          title="Who owns"
+          accent="what"
+        >
+          Four groups, each responsible for a slice of the machine end to end.
+        </SectionHeader>
+
+        <div className="mt-12 grid md:grid-cols-2 gap-4">
+          {SUBTEAMS.map((team, i) => (
+            <Reveal key={team.slug} delay={i * 80}>
+              <Link
+                href={`/design/${team.slug}`}
+                className="group flex h-full flex-col card p-6 card-interactive"
+              >
+                <span
+                  className={`grid place-items-center w-11 h-11 rounded-xl ${team.bg} ${team.text}`}
+                  aria-hidden
+                >
+                  <team.icon size={19} />
+                </span>
+                <h3 className="mt-4 flex items-center gap-2 text-xl font-semibold text-softWhite group-hover:text-ashGold transition-colors">
+                  {team.name}
+                  <ArrowRight className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                </h3>
+                <p className="mt-2 text-softWhite/65 leading-relaxed text-pretty">
+                  {team.body}
+                </p>
+                <ul className="mt-5 space-y-2 border-t border-hairline/10 pt-5">
+                  {team.work.slice(0, 3).map((item) => (
+                    <li
+                      key={item}
+                      className="flex gap-2.5 text-sm text-softWhite/70"
+                    >
+                      <span className={`mt-[7px] h-1 w-1 shrink-0 rounded-full ${team.text} bg-current`} />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </Link>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
+
+      {/* How a season runs. */}
+      <Section tone="jet" divider>
+        <SectionHeader
+          align="left"
+          eyebrow="Process"
+          title="One season,"
+          accent="blank CAD to competition."
+        >
+          The team rebuilds from scratch every year. Here is what that actually
+          looks like.
+        </SectionHeader>
+
+        <ol className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 grid-hairlines">
+          {BUILD_CYCLE.map((phase, i) => (
+            <Reveal as="li" key={phase.phase} delay={i * 90} className="bg-jet">
+              <div className="h-full p-6">
+                <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-ashGold">
+                  {String(i + 1).padStart(2, "0")} · {phase.window}
+                </span>
+                <h3 className="mt-3 text-lg font-semibold text-softWhite">
+                  {phase.phase}
+                </h3>
+                <p className="mt-2 text-sm text-softWhite/60 leading-relaxed">
+                  {phase.detail}
                 </p>
               </div>
+            </Reveal>
+          ))}
+        </ol>
 
-              {/* Arrow */}
-              <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-2">
-                <svg className="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </div>
-            </div>
-
-            {/* Corner accent */}
-            <div className="absolute top-0 left-0 w-20 h-20 border-l-4 border-t-4 border-emerald-400/30 rounded-tl-2xl" />
-            <div className="absolute bottom-0 right-0 w-20 h-20 border-r-4 border-b-4 border-emerald-400/30 rounded-br-2xl" />
-          </Link>
-        </div>
-
-        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-ashGold/30 to-transparent" />
-      </section>
-
-      {/* Philosophy Section */}
-      <section className="relative py-20 bg-charcoal overflow-hidden">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-            Our Philosophy
-          </h2>
-          <div className="mx-auto w-24 h-1 bg-gradient-to-r from-transparent via-ashGold to-transparent mb-8" />
-          <p className="text-lg text-softWhite/70 leading-relaxed max-w-3xl mx-auto">
-            We believe in iterative design, rigorous testing, and cross-functional
-            collaboration. Every component of our exoskeleton is designed with the
-            user in mind, balancing performance, comfort, and safety.
-          </p>
-        </div>
-      </section>
-    </main>
+        <Reveal delay={200} className="mt-10 flex flex-wrap gap-3">
+          <Button href="/recruiting" trailing={<ArrowRight />}>
+            Work on this with us
+          </Button>
+          <Button href="/ace2026" variant="secondary">
+            See it at competition
+          </Button>
+        </Reveal>
+      </Section>
+    </>
   );
 }
-
-export default DesignPage;

@@ -1,14 +1,12 @@
+import type { Metadata } from "next";
 import Sponsors from "@/components/Sponsors";
-import React from "react";
 
-function SponsorPage() {
-  return (
-    // <div className="w-full h-full">
-    //   <Sponsors />
-    // </div>
+export const metadata: Metadata = {
+  title: "Sponsors",
+  description:
+    "Sponsorship tiers and benefits for McMaster Exoskeleton. Gold sponsors have their logo on the exoskeleton itself. Bronze from under $1,000, Silver $1,000–2,000, Gold $2,000+.",
+};
 
-    <Sponsors />
-  );
+export default function SponsorsPage() {
+  return <Sponsors />;
 }
-
-export default SponsorPage;

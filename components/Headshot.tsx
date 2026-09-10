@@ -1,103 +1,66 @@
-"use client";
-
 import React from "react";
+import Image from "next/image";
 import { FaLinkedin } from "react-icons/fa";
+import { roleAccent, type Person } from "@/data/people";
 
-export interface HeadshotProps {
-  name: string;
-  title: string;
-  linkedin_url: string;
-  image_url: string;
-}
-
-const Headshot: React.FC<HeadshotProps> = ({
-  name,
-  title,
-  linkedin_url,
-  image_url,
-}) => {
-  const getBorderColor = (title: string) => {
-    const lowerTitle = title.toLowerCase();
-    if (lowerTitle.includes("principal")) return "border-ashGold";
-    if (lowerTitle.includes("software")) return "border-mutedBlue";
-    if (lowerTitle.includes("electrical")) return "border-yellow-400";
-    if (lowerTitle.includes("mechanical")) return "border-red-900";
-    if (lowerTitle.includes("safety")) return "border-dustyRose";
-    return "border-ashGold/50";
-  };
-
-  const getGlowColor = (title: string) => {
-    const lowerTitle = title.toLowerCase();
-    if (lowerTitle.includes("principal"))
-      return "group-hover:shadow-[0_0_30px_rgba(189,169,104,0.3)]";
-    if (lowerTitle.includes("software"))
-      return "group-hover:shadow-[0_0_30px_rgba(93,173,226,0.3)]";
-    if (lowerTitle.includes("electrical"))
-      return "group-hover:shadow-[0_0_30px_rgba(250,204,21,0.3)]";
-    if (lowerTitle.includes("mechanical"))
-      return "group-hover:shadow-[0_0_30px_rgba(156,163,175,0.3)]";
-    if (lowerTitle.includes("safety"))
-      return "group-hover:shadow-[0_0_30px_rgba(185,124,143,0.3)]";
-    return "group-hover:shadow-[0_0_30px_rgba(189,169,104,0.2)]";
-  };
+/**
+ * Server component — this was previously a client component despite having no
+ * state, no effects and no handlers.
+ *
+ * Headshot images are served at 320px for a 160px circle (2x for retina). They
+ * were previously raw <img> tags pointing at files up to 2.2 MB rendered into
+ * an 80px circle.
+ */
+export default function Headshot({
+  person,
+  size = "md",
+}: {
+  person: Person;
+  size?: "sm" | "md";
+}) {
+  const dim = size === "sm" ? "w-24 h-24" : "w-32 h-32 sm:w-36 sm:h-36";
+  const px = size === "sm" ? 192 : 288;
 
   return (
-    <div className="group relative flex flex-col items-center p-6 rounded-2xl bg-black/20 border border-white/5 hover:border-ashGold/20 transition-all duration-500 hover:bg-black/30 hover:-translate-y-1 overflow-hidden">
-      {/* Background gradient on hover */}
-      <div className="absolute inset-0 bg-gradient-to-b from-ashGold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-      {/* Image container */}
-      <div className="relative mb-4">
-        {/* Decorative ring */}
-        <div
-          className={`absolute inset-0 rounded-full ${getBorderColor(
-            title
-          )} opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm scale-110`}
-        />
-
-        <div
-          className={`relative w-40 h-40 rounded-full overflow-hidden border-4 ${getBorderColor(
-            title
-          )} transition-all duration-500 ${getGlowColor(title)} bg-white`}
-        >
-          <img
-            src={image_url}
-            alt={`${name}'s headshot`}
-            className="w-full h-full object-cover object-[center_10%] transition-transform duration-500 group-hover:scale-110"
-          />
-        </div>
-
-        {/* Subtle ring animation on hover */}
-        <div
-          className={`absolute -inset-2 rounded-full border-2 ${getBorderColor(
-            title
-          )} opacity-0 group-hover:opacity-30 transition-all duration-700 group-hover:scale-110`}
+    <div className="group flex flex-col items-center card p-5 text-center card-interactive">
+      {/*
+        White, not the card colour. Eight of the ten roster photos are cutouts
+        with a white background baked in and two are genuinely transparent, so a
+        dark circle rendered those two dark and the rest white. White matches
+        the majority and makes all ten read as one set.
+      */}
+      <div
+        className={`relative ${dim} shrink-0 overflow-hidden rounded-full border-2 ${roleAccent(
+          person.title
+        )} bg-white`}
+      >
+        <Image
+          src={person.image_url}
+          alt=""
+          width={px}
+          height={px}
+          sizes="144px"
+          className="h-full w-full object-cover object-[center_15%] transition-transform duration-500 group-hover:scale-105"
         />
       </div>
 
-      {/* Text content */}
-      <div className="relative text-center space-y-1">
-        <h3 className="text-lg sm:text-xl font-bold text-softWhite group-hover:text-ashGold transition-colors duration-300">
-          {name}
-        </h3>
-        <p className="text-xs sm:text-sm text-softWhite/60">{title}</p>
-      </div>
+      <h3 className="mt-4 font-semibold text-softWhite">{person.name}</h3>
+      <p className="mt-0.5 font-mono text-[11px] uppercase tracking-[0.12em] text-softWhite/55">
+        {person.title}
+      </p>
+      {person.tenure && (
+        <p className="mt-1 text-xs text-softWhite/40">{person.tenure}</p>
+      )}
 
-      {/* LinkedIn link */}
       <a
-        href={linkedin_url}
+        href={person.linkedin_url}
         target="_blank"
         rel="noopener noreferrer"
-        className="relative mt-4 p-2.5 rounded-lg bg-charcoal border border-white/10 hover:border-ashGold/30 hover:bg-ashGold/10 transition-all duration-300 group/link hover:scale-110"
-        aria-label={`${name}'s LinkedIn profile`}
+        className="mt-4 rounded-lg border border-hairline/10 bg-hairline/[0.045] p-2.5 text-softWhite/60 transition-colors hover:border-ashGold/40 hover:text-ashGold"
+        aria-label={`${person.name} on LinkedIn`}
       >
-        <FaLinkedin
-          size={18}
-          className="text-softWhite/60 group-hover/link:text-ashGold transition-colors duration-300"
-        />
+        <FaLinkedin size={17} />
       </a>
     </div>
   );
-};
-
-export default Headshot;
+}

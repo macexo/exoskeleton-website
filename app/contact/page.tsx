@@ -1,181 +1,171 @@
-"use client";
+import type { Metadata } from "next";
+import { FaEnvelope, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
+import PageHero from "@/components/ui/PageHero";
+import { Section, SectionHeader } from "@/components/ui/Section";
+import Reveal from "@/components/ui/Reveal";
+import Button, { ArrowRight } from "@/components/ui/Button";
+import { SITE, SOCIALS, SPONSORSHIP_PACKAGE } from "@/data/site";
 
-import React, { useEffect, useState } from "react";
-import { FaEnvelope, FaInstagram, FaLinkedin, FaMapMarkerAlt } from "react-icons/fa";
+export const metadata: Metadata = {
+  title: "Contact",
+  description:
+    "Get in touch with McMaster Exoskeleton about sponsorship, joining the team, media or collaboration.",
+};
 
-const contactMethods = [
+/**
+ * Contact.
+ *
+ * Routed by intent rather than by channel. The old page was three identical
+ * cards labelled Email / Instagram / LinkedIn, which told a sponsor and a
+ * prospective member exactly the same thing.
+ */
+const ROUTES = [
   {
-    icon: FaEnvelope,
-    title: "Email",
-    value: "exo@mcmaster.ca",
-    href: "mailto:exo@mcmaster.ca",
-    description: "For general inquiries and sponsorship",
+    label: "Sponsorship",
+    body: "Funding, parts, machining time or software licences — and what your company gets back.",
+    action: "Email us about sponsoring",
+    href: `mailto:${SITE.email}?subject=Sponsorship%20enquiry`,
+    secondary: { label: "Sponsorship tiers", href: "/sponsors" },
   },
   {
-    icon: FaInstagram,
-    title: "Instagram",
-    value: "@mcmasterexo",
-    href: "https://www.instagram.com/mcmasterexo/",
-    description: "Follow our journey and updates",
+    label: "Joining the team",
+    body: "McMaster students from any year or program. No prior experience required.",
+    action: "See open subteams",
+    href: "/recruiting",
+    secondary: { label: "What we build", href: "/design" },
   },
   {
-    icon: FaLinkedin,
-    title: "LinkedIn",
-    value: "McMaster Exoskeleton",
-    href: "https://www.linkedin.com/company/mcmasterexo/",
-    description: "Connect with us professionally",
+    label: "Media & collaboration",
+    body: "Press, other student teams, research groups, or anyone who wants to talk exoskeletons.",
+    action: `Email ${SITE.email}`,
+    href: `mailto:${SITE.email}`,
+    secondary: null,
   },
 ];
 
-function ContactPage() {
-  const [isLoaded, setIsLoaded] = useState(false);
+const CHANNELS = [
+  { icon: FaEnvelope, label: SITE.email, href: `mailto:${SITE.email}`, name: "Email" },
+  { icon: FaInstagram, label: "@mcmasterexo", href: SOCIALS.instagram, name: "Instagram" },
+  { icon: FaLinkedin, label: "McMaster Exoskeleton", href: SOCIALS.linkedin, name: "LinkedIn" },
+  { icon: FaYoutube, label: "@McMasterExo", href: SOCIALS.youtube, name: "YouTube" },
+];
 
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
-
+export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-charcoal text-softWhite">
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
-        {/* Background decorative elements */}
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-ashGold/50 to-transparent" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-ashGold/10 via-transparent to-transparent pointer-events-none" />
+    <>
+      <PageHero
+        eyebrow="Get in touch"
+        title="Talk to"
+        accent="the team."
+        size="sm"
+      >
+        We read everything that comes to {SITE.email}. Tell us which of these
+        you are and we will get back to you.
+      </PageHero>
 
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          {/* Badge */}
-          <div
-            className={`mb-6 transition-all duration-1000 ${
-              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
-          >
-            <span className="inline-block px-4 py-1.5 text-xs font-medium tracking-widest uppercase bg-ashGold/20 text-ashGold border border-ashGold/30 rounded-full">
-              Get in Touch
-            </span>
-          </div>
-
-          <h1
-            className={`text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 transition-all duration-1000 delay-200 ${
-              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
-          >
-            Contact <span className="text-gradient-gold">Us</span>
-          </h1>
-
-          <p
-            className={`text-lg sm:text-xl text-softWhite/70 max-w-2xl mx-auto leading-relaxed transition-all duration-1000 delay-400 ${
-              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
-          >
-            Have questions about our team, sponsorship opportunities, or want to
-            collaborate? We'd love to hear from you.
-          </p>
-        </div>
-      </section>
-
-      {/* Contact Methods */}
-      <section className="relative py-20 bg-jet overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-ashGold/30 to-transparent" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-ashGold/5 via-transparent to-transparent pointer-events-none" />
-
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {contactMethods.map((method, index) => (
-              <a
-                key={method.title}
-                href={method.href}
-                target={method.href.startsWith("mailto") ? undefined : "_blank"}
-                rel={method.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                className={`group p-8 rounded-2xl bg-charcoal/50 border border-white/5 hover:border-ashGold/30 transition-all duration-500 hover:bg-charcoal text-center ${
-                  isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                }`}
-                style={{ transitionDelay: `${600 + index * 100}ms` }}
-              >
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-ashGold/10 mb-6 transition-all duration-300 group-hover:scale-110 group-hover:bg-ashGold/20">
-                  <method.icon
-                    size={28}
-                    className="text-ashGold"
-                  />
+      <Section tone="charcoal" size="sm">
+        <div className="grid md:grid-cols-3 gap-4">
+          {ROUTES.map((route, i) => (
+            <Reveal key={route.label} delay={i * 80}>
+              <div className="flex h-full flex-col card p-6">
+                <h2 className="font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-ashGold">
+                  {route.label}
+                </h2>
+                <p className="mt-3 flex-1 text-softWhite/70 leading-relaxed">
+                  {route.body}
+                </p>
+                <div className="mt-6 flex flex-wrap gap-2.5">
+                  <Button
+                    href={route.href}
+                    external={route.href.startsWith("mailto:")}
+                    size="sm"
+                    trailing={<ArrowRight />}
+                  >
+                    {route.action}
+                  </Button>
+                  {route.secondary && (
+                    <Button
+                      href={route.secondary.href}
+                      variant="secondary"
+                      size="sm"
+                    >
+                      {route.secondary.label}
+                    </Button>
+                  )}
                 </div>
-                <h3 className="text-xl font-bold text-softWhite mb-2 group-hover:text-ashGold transition-colors duration-300">
-                  {method.title}
-                </h3>
-                <p className="text-ashGold font-medium mb-2">{method.value}</p>
-                <p className="text-sm text-softWhite/50">{method.description}</p>
-              </a>
-            ))}
-          </div>
+              </div>
+            </Reveal>
+          ))}
         </div>
+      </Section>
 
-        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-ashGold/30 to-transparent" />
-      </section>
-
-      {/* Location Section */}
-      <section className="relative py-20 bg-charcoal overflow-hidden">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Our Location</h2>
-            <div className="mx-auto w-24 h-1 bg-gradient-to-r from-transparent via-ashGold to-transparent" />
-          </div>
-
-          <div
-            className={`p-8 rounded-2xl bg-jet/50 border border-white/5 text-center transition-all duration-1000 delay-900 ${
-              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
-          >
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-ashGold/10 mb-6">
-              <FaMapMarkerAlt size={28} className="text-ashGold" />
-            </div>
-            <h3 className="text-2xl font-bold text-softWhite mb-2">
-              McMaster University
-            </h3>
-            <p className="text-lg text-softWhite/70 mb-1">
-              Faculty of Engineering
-            </p>
-            <p className="text-softWhite/50">
-              1280 Main Street West, Hamilton, ON L8S 4L8
-            </p>
+      <Section tone="jet" divider>
+        <div className="grid lg:grid-cols-2 gap-12">
+          <div>
+            <SectionHeader align="left" eyebrow="Channels" title="Find us" />
+            <ul className="mt-8 space-y-2">
+              {CHANNELS.map((channel, i) => (
+                <Reveal as="li" key={channel.name} delay={i * 60}>
+                  <a
+                    href={channel.href}
+                    target={channel.href.startsWith("http") ? "_blank" : undefined}
+                    rel={channel.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    className="group flex items-center gap-4 tile p-4"
+                  >
+                    <channel.icon className="text-ashGold shrink-0" size={18} />
+                    <span className="min-w-0">
+                      <span className="block font-mono text-[10px] uppercase tracking-[0.12em] text-softWhite/45">
+                        {channel.name}
+                      </span>
+                      <span className="block text-softWhite group-hover:text-ashGold transition-colors break-all">
+                        {channel.label}
+                      </span>
+                    </span>
+                    <ArrowRight className="ml-auto shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </a>
+                </Reveal>
+              ))}
+            </ul>
           </div>
 
-          <p className="text-center mt-8 text-softWhite/50">
-            We're a student team based at McMaster University's Engineering campus.
-          </p>
+          <div>
+            <SectionHeader align="left" eyebrow="Where" title="Find the lab" />
+            <Reveal delay={100} className="mt-8">
+              <div className="card p-6">
+                <p className="text-lg font-semibold text-softWhite">
+                  McMaster University
+                </p>
+                <p className="mt-1 text-softWhite/65">Faculty of Engineering</p>
+                <address className="mt-3 not-italic text-softWhite/55">
+                  1280 Main Street West
+                  <br />
+                  Hamilton, ON L8S 4L8
+                  <br />
+                  Canada
+                </address>
+                <div className="mt-6 flex flex-wrap gap-2.5">
+                  <Button
+                    href="https://www.google.com/maps/search/?api=1&query=McMaster+University+Faculty+of+Engineering+Hamilton+ON"
+                    external
+                    variant="secondary"
+                    size="sm"
+                  >
+                    Open in Maps
+                  </Button>
+                  <Button
+                    href={SPONSORSHIP_PACKAGE}
+                    external
+                    variant="secondary"
+                    size="sm"
+                  >
+                    Sponsorship package (PDF)
+                  </Button>
+                </div>
+              </div>
+            </Reveal>
+          </div>
         </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="relative py-16 bg-jet">
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-ashGold/30 to-transparent" />
-
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-lg text-softWhite/60 mb-6">
-            Interested in sponsoring or partnering with us?
-          </p>
-          <a
-            href="/2526 McMaster Exoskeleton Sponsorship Proposal.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-ashGold text-charcoal font-bold rounded-lg hover:bg-goldLight transition-all duration-300 shadow-lg hover:shadow-glow"
-          >
-            View Sponsorship Package
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-              />
-            </svg>
-          </a>
-        </div>
-      </section>
-    </div>
+      </Section>
+    </>
   );
 }
-
-export default ContactPage;

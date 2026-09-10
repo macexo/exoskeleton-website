@@ -2,606 +2,214 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Design tokens.
+ *
+ * The palette is intentionally small: a near-black ground, two elevated
+ * surfaces, one warm accent and a neutral text ramp. The previous config also
+ * carried mutedBlue / slateCyan / dustyRose / steelRed accents that were used
+ * only to tint headshot rings — inconsistently, and differently for current vs.
+ * archived members, so the same person's ring changed colour on graduation.
+ */
 :root {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --gold: #BDA968;
+  /* Ground. Warmed very slightly off pure neutral — every well-made dark site
+     tints its ground rather than using flat grey (Railway purple, Supabase
+     green, Warp olive). Ours leans warm to sit under the gold. */
+  /*
+   * Raw channel triplets as well as hex. Tailwind can only apply an opacity
+   * modifier (bg-jet/90) to a custom property when the colour is declared as
+   * `rgb(var(--x) / <alpha-value>)`; given a bare `var(--jet)` it silently
+   * emits no rule at all, so every bg-jet/NN on the site resolved to
+   * transparent. The hex forms stay for direct var() use in plain CSS below.
+   */
+  --jet-rgb: 10 10 9;
+  --charcoal-rgb: 20 19 18;
+  --jet: rgb(var(--jet-rgb));
+  --charcoal: rgb(var(--charcoal-rgb));
+  --gold: #bda968;
   --gold-light: #d4c48a;
   --gold-dark: #9a8954;
+
+  --background: var(--jet);
+  --foreground: #ededed;
+
+  /* Hairlines derive from a warm off-white, not #ffffff. This is the cheapest
+     way to stop a dark theme reading cold, and it costs nothing. */
+  --hair: 251 248 241;
+
+  /* Borders as shadows rather than `border`. The third ring is the page colour,
+     so a card reads as cut out of the ground instead of drawn on top of it. */
+  --ring-hair: 0 0 0 1px rgb(var(--hair) / 0.09);
+  --ring-ground: 0 0 0 1px var(--jet);
+  --shadow-card: var(--ring-hair), 0 10px 30px -14px rgb(0 0 0 / 0.75), var(--ring-ground);
+
+  /* One knob retimes every transition on the site — including the reduced-motion
+     override below, which means no selector enumeration. */
+  --motion-speed: 1;
+  --dur-fast: calc(0.12s * var(--motion-speed));
+  --dur: calc(0.22s * var(--motion-speed));
+  --dur-slow: calc(0.45s * var(--motion-speed));
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Offset in-page anchor targets so the fixed header does not cover them. */
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    color: var(--foreground);
+    background: var(--background);
+    overflow-x: hidden;
+    /* Exo 2 is applied via the font variable in layout.tsx. The old rule set
+       `font-family: Arial` here, which silently overrode the loaded webfont on
+       every element that did not opt back in. */
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Headings use Rajdhani, the condensed display face. Body stays neutral. */
+  h1, h2, h3 {
+    font-family: var(--font-display), var(--font-sans), system-ui, sans-serif;
+    letter-spacing: -0.015em;
+  }
+
+  ::selection {
+    background: var(--gold);
+    color: var(--jet);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  overflow-x: hidden;
+@layer components {
+  /*
+   * The one card.
+   *
+   * The old site had ten variants of this object, cycling through bg-black/20,
+   * bg-black/30, bg-charcoal/30, bg-charcoal/50, bg-jet/50 and
+   * bg-black bg-opacity-60, across rounded-lg/xl/2xl and four padding scales.
+   * The old globals.css also declared a `.card` that was used exactly zero
+   * times — so this one is defined here AND applied at every call site.
+   *
+   * The border is a shadow, not a `border`, so the outermost ring can be the
+   * page colour: the card reads as cut out of the ground rather than floating
+   * on it.
+   */
+  .card {
+    @apply relative overflow-hidden rounded-2xl bg-hairline/[0.035] shadow-card;
+  }
+
+  /*
+   * A grid whose 1px gaps show the hairline through, used for spec and result
+   * tables. Children set their own opaque background (bg-charcoal / bg-jet),
+   * which is what makes the gaps read as rules.
+   */
+  .grid-hairlines {
+    @apply gap-px overflow-hidden rounded-2xl bg-hairline/[0.08] shadow-card;
+  }
+
+  /* Smaller sibling of .card, for list rows and link tiles. */
+  .tile {
+    @apply relative overflow-hidden rounded-xl bg-hairline/[0.035] shadow-card
+           transition-all duration-[var(--dur)] ease-[var(--ease-out)]
+           hover:bg-hairline/[0.06] hover:shadow-card-hover;
+  }
+
+  .card-interactive {
+    @apply transition-all duration-[var(--dur)] ease-[var(--ease-out)]
+           hover:-translate-y-1 hover:bg-hairline/[0.06] hover:shadow-card-hover;
+  }
 }
 
-html, body {
-  height: 100%;
+@layer utilities {
+  /* Prevents ragged single-word last lines in headlines. */
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
 }
 
-/* Selection styling */
-::selection {
-  background: var(--gold);
-  color: #0D0D0D;
+/* Scrollbar — Firefox first, then WebKit. */
+* {
+  scrollbar-color: var(--gold-dark) var(--jet);
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
 }
-
 ::-webkit-scrollbar-track {
-  background: #0D0D0D;
+  background: var(--jet);
 }
-
 ::-webkit-scrollbar-thumb {
-  background: var(--gold);
+  background: var(--gold-dark);
   border-radius: 5px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--gold-light);
-}
-
-/* Premium animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-60px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(60px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(189, 169, 104, 0.3);
-  }
-  50% {
-    box-shadow: 0 0 40px rgba(189, 169, 104, 0.6);
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-@keyframes gradient-shift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-@keyframes draw-line {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
-
-@keyframes rotate-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Utility animation classes */
-.animate-fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.8s ease-out forwards;
-}
-
-.animate-fade-in-down {
-  animation: fadeInDown 0.8s ease-out forwards;
-}
-
-.animate-slide-in-left {
-  animation: slideInLeft 0.8s ease-out forwards;
-}
-
-.animate-slide-in-right {
-  animation: slideInRight 0.8s ease-out forwards;
-}
-
-.animate-scale-in {
-  animation: scaleIn 0.6s ease-out forwards;
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-.animate-shimmer {
-  background: linear-gradient(90deg, transparent, rgba(189, 169, 104, 0.3), transparent);
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite;
-}
-
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient-shift 3s ease infinite;
-}
-
-/* Delay utilities - Golden ratio inspired for natural feel */
-.delay-100 { animation-delay: 100ms; }
-.delay-150 { animation-delay: 150ms; }
-.delay-200 { animation-delay: 200ms; }
-.delay-300 { animation-delay: 300ms; }
-.delay-400 { animation-delay: 400ms; }
-.delay-500 { animation-delay: 500ms; }
-.delay-600 { animation-delay: 600ms; }
-.delay-700 { animation-delay: 700ms; }
-.delay-800 { animation-delay: 800ms; }
-
-/* Premium easing functions */
-.ease-premium {
-  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.ease-bounce-subtle {
-  transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-/* Unified Card System */
-.card {
-  position: relative;
-  border-radius: 1rem;
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  overflow: hidden;
-}
-
-.card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  background: linear-gradient(
-    135deg,
-    rgba(189, 169, 104, 0.1) 0%,
-    transparent 50%,
-    transparent 100%
-  );
-  pointer-events: none;
-}
-
-.card:hover {
-  border-color: rgba(189, 169, 104, 0.3);
-  background: rgba(0, 0, 0, 0.3);
-  transform: translateY(-4px);
-  box-shadow:
-    0 20px 40px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(189, 169, 104, 0.1);
-}
-
-.card:hover::before {
-  opacity: 1;
-}
-
-/* Scan lines effect for tech aesthetic */
-.scan-lines {
-  position: relative;
-}
-
-.scan-lines::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.03;
-  background-image: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(189, 169, 104, 0.1) 2px,
-    rgba(189, 169, 104, 0.1) 4px
-  );
-}
-
-/* Section divider */
-.section-divider-fancy {
-  position: relative;
-  height: 6rem;
-  margin: -3rem 0;
-  z-index: 10;
-}
-
-.section-divider-fancy::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, transparent, rgba(189, 169, 104, 0.05), transparent);
-}
-
-.section-divider-fancy::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 8rem;
-  height: 1px;
-  background: linear-gradient(to right, transparent, rgba(189, 169, 104, 0.4), transparent);
-}
-
-/* Glassmorphism effects */
-.glass {
-  background: rgba(28, 28, 30, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(189, 169, 104, 0.1);
-}
-
-.glass-dark {
-  background: rgba(13, 13, 13, 0.8);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.glass-gold {
-  background: rgba(189, 169, 104, 0.1);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(189, 169, 104, 0.2);
-}
-
-/* Text gradients */
-.text-gradient-gold {
-  background: linear-gradient(135deg, #BDA968, #d4c48a, #BDA968);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.text-gradient-white {
-  background: linear-gradient(135deg, #ffffff, #d4d4d4, #ffffff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Premium underline effect */
-.underline-gradient {
-  position: relative;
-}
-
-.underline-gradient::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  border-radius: 2px;
-}
-
-/* Card hover effects */
-.card-hover {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card-hover:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(189, 169, 104, 0.1);
-}
-
-/* Display font for headings - uses Tailwind's font-display class */
-.font-display {
-  font-family: 'Rajdhani', sans-serif;
-  letter-spacing: -0.01em;
-}
-
-/* Button styles - Unified System */
-.btn-primary {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
   background: var(--gold);
-  color: #1C1C1E;
-  font-weight: 700;
-  border-radius: 0.5rem;
-  overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 20px rgba(189, 169, 104, 0.2);
 }
 
-.btn-primary::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+/*
+ * Gold text gradient. Kept as a class because the -webkit-background-clip
+ * combination is awkward to express in utilities and it is used in headlines
+ * across several pages.
+ */
+.text-gradient-gold {
+  background: linear-gradient(100deg, var(--gold-light), var(--gold) 55%, var(--gold-dark));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
-.btn-primary:hover::before {
-  left: 100%;
+/* Fine gold rule used to close out a section. */
+.hairline {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(189, 169, 104, 0.35), transparent);
 }
 
-.btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(189, 169, 104, 0.4);
-  background: var(--gold-light);
-}
-
-.btn-primary:active {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(189, 169, 104, 0.3);
-}
-
-/* Secondary button - outlined */
-.btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  border: 2px solid rgba(189, 169, 104, 0.5);
-  color: var(--gold);
-  font-weight: 600;
-  border-radius: 0.5rem;
-  background: transparent;
-  backdrop-filter: blur(8px);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.btn-secondary:hover {
-  border-color: var(--gold);
-  background: rgba(189, 169, 104, 0.1);
-  transform: translateY(-2px);
-}
-
-/* Ghost button - minimal */
-.btn-ghost {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  color: rgba(245, 245, 245, 0.7);
-  font-weight: 500;
-  border-radius: 0.5rem;
-  background: transparent;
-  transition: all 0.3s ease;
-}
-
-.btn-ghost:hover {
-  color: var(--gold);
-  background: rgba(255, 255, 255, 0.05);
-}
-
-/* Button sizes */
-.btn-lg {
-  padding: 1rem 2rem;
-  font-size: 1.125rem;
-}
-
-.btn-sm {
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-}
-
-/* Image reveal effect */
-.image-reveal {
-  position: relative;
-  overflow: hidden;
-}
-
-.image-reveal::before {
-  content: '';
+/*
+ * Film grain. Kills the banding that large radial gradients produce on dark
+ * grounds, and adds a little warmth. `stitchTiles="stitch"` is what makes the
+ * tile seamless — without it the 180px repeat shows visible seams.
+ */
+.grain::after {
+  content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(189, 169, 104, 0.1), transparent);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  z-index: 1;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.13;
+  mix-blend-mode: soft-light;
+  background-size: 180px 180px;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-.image-reveal:hover::before {
-  opacity: 1;
-}
-
-/* Section divider */
-.section-divider {
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  opacity: 0.3;
-}
-
-/* Glow effects */
-.glow-gold {
-  box-shadow: 0 0 20px rgba(189, 169, 104, 0.3);
-}
-
-.glow-gold-intense {
-  box-shadow: 0 0 30px rgba(189, 169, 104, 0.5), 0 0 60px rgba(189, 169, 104, 0.2);
-}
-
-/* Border gradient */
-.border-gradient {
-  position: relative;
-  background: linear-gradient(#1C1C1E, #1C1C1E) padding-box,
-              linear-gradient(135deg, var(--gold), transparent) border-box;
-  border: 2px solid transparent;
-}
-
-/* Focus states */
-a:focus-visible,
-button:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 2px;
-}
-
-/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
+  :root {
+    /* Retimes everything built on --dur* in one line. */
+    --motion-speed: 0.01;
+  }
+
+  /* Belt and braces for anything not using the tokens. Reveal.tsx separately
+     checks the media query and jumps straight to its shown state, so reduced
+     motion never leaves content stuck at opacity 0. */
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
-
-  html {
-    scroll-behavior: auto;
-  }
-}
-
-/* Hero parallax background */
-.parallax-bg {
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-@supports (-webkit-touch-callout: none) {
-  .parallax-bg {
-    background-attachment: scroll;
-  }
-}
-
-/* Premium section styling */
-.section-premium {
-  position: relative;
-}
-
-.section-premium::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(189, 169, 104, 0.3), transparent);
-}
-
-/* Noise texture overlay */
-.noise-overlay {
-  position: relative;
-}
-
-.noise-overlay::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  opacity: 0.03;
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* Smooth image loading */
-img {
-  transition: opacity 0.3s ease;
-}
-
-img[loading] {
-  opacity: 0;
-}
-
-img:not([loading]) {
-  opacity: 1;
 }
