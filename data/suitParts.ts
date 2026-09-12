@@ -30,7 +30,7 @@ export const SUIT_PARTS: SuitPart[] = [
     y: 20,
     owner: "Electrical",
     detail:
-      "Back-mounted enclosure carrying the battery, power distribution and controller boards. It also carries our sponsors' logos to every event we run.",
+      "The waist-mounted enclosure carries the onboard computing and electronics. Mechanical packaging gives power, sensing and software a place on the suit.",
   },
   {
     id: "e-stop",
@@ -39,7 +39,7 @@ export const SUIT_PARTS: SuitPart[] = [
     y: 37,
     owner: "Health & Safety",
     detail:
-      "A hardware cutoff within the pilot's reach. Pressing it removes power from the actuators immediately — ACE will not clear a suit for the course without one.",
+      "A physical emergency stop gives the pilot a way to interrupt powered operation. It forms part of the suit’s mechanical, electrical and software safety considerations.",
   },
   {
     id: "hip",
@@ -48,7 +48,7 @@ export const SUIT_PARTS: SuitPart[] = [
     y: 46,
     owner: "Mechanical",
     detail:
-      "Powered hip joint. It adds torque through the swing and stance phases of the pilot's gait and carries load into the frame rather than the pilot's body.",
+      "The hip assembly connects powered actuation to the upper leg. Its geometry has to accommodate the wearer’s movement while maintaining joint alignment.",
   },
   {
     id: "harness",
@@ -57,7 +57,7 @@ export const SUIT_PARTS: SuitPart[] = [
     y: 44,
     owner: "Electrical",
     detail:
-      "Power and signal routing between the control pack, the actuators and the sensors — built to survive being walked, climbed and fallen in.",
+      "Power and signal wiring connect the electronics, sensors and actuators. Routing has to account for moving joints and the person wearing the suit.",
   },
   {
     id: "knee",
@@ -66,7 +66,7 @@ export const SUIT_PARTS: SuitPart[] = [
     y: 61,
     owner: "Mechanical",
     detail:
-      "Powered knee joint. This is the actuator doing the most work on the stair climb, where it drives the pilot's full body weight upward each step.",
+      "A powered knee joint connects the moving structure to a strapped shin interface. Linkage geometry and attachment both matter when transferring assistance to the leg.",
   },
   {
     id: "foot",
@@ -75,7 +75,7 @@ export const SUIT_PARTS: SuitPart[] = [
     y: 87,
     owner: "Mechanical",
     detail:
-      "Where the whole structure meets the ground. The boot plate transfers load out of the frame and has to stay rigid without limiting the pilot's ankle.",
+      "The leg structure connects to the wearer’s boot through an ankle interface. This connection supports a path for the suit’s weight toward the ground while accommodating ankle movement.",
   },
 ];
 
