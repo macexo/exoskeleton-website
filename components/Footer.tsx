@@ -19,9 +19,9 @@ export default function Footer() {
   return (
     <footer className="relative bg-jet text-softWhite border-t border-hairline/10">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
           {/* Brand */}
-          <div className="col-span-2">
+          <div className="sm:col-span-2">
             <Link href="/" className="inline-block mb-5">
               <Image
                 src="/exo_logo_gold_black.png"

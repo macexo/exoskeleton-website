@@ -22,7 +22,7 @@ export default function About() {
         title="A powered lower-limb exoskeleton,"
         accent="built from nothing each year."
       >
-        Every season the team starts from a blank CAD file and ends with a suit a
+        Students integrate mechanical design, electronics and software into a suit a
         pilot can walk, climb stairs and run an obstacle course in. Four subteams
         own it end to end — no kits, no off-the-shelf chassis.
       </SectionHeader>

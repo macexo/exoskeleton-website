@@ -18,7 +18,7 @@ export default function CallToAction() {
               Build it with us
             </h2>
             <p className="mt-3 text-softWhite/65 leading-relaxed">
-              No experience required — we teach. If you want to machine parts,
+              Explore the role requirements. If you want to design parts,
               lay out boards or write control code, there is a place for you.
             </p>
             <div className="mt-6">
