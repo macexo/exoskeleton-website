@@ -3,6 +3,7 @@
 // Current member responsibilities are maintained separately in teamRoles.ts.
 
 export type EngineeringOverview = {
+  kind: "areas" | "flow";
   title: string;
   introduction: string;
   stages: readonly {
@@ -15,8 +16,9 @@ export type EngineeringOverview = {
 };
 
 export const SOFTWARE_ARCHITECTURE = {
-  title: "Sense. Understand. Assist.",
-  introduction: "The software connects measurements from the wearer to commands for the powered joints. Each stage brings a different engineering challenge.",
+  kind: "flow",
+  title: "Sense. Predict. Control. Assist.",
+  introduction: "Software follows a real information path: it reads movement, estimates intent, calculates commands and carries those commands to the powered joints.",
   stages: [
     {
       name: "Sense movement",
@@ -54,8 +56,9 @@ export const DISCIPLINE_ENGINEERING = {
     sectionTitle: "Where the person meets the machine.",
     sectionIntroduction: "The waist and leg structure connect the pilot to the powered joints. Their physical interfaces also make room for electronics, sensors and wiring.",
     overview: {
-      title: "Fit. Move. Carry.",
-      introduction: "From the waist to the ground, each interface shapes how the suit sits on a person, moves with them and carries its loads.",
+      kind: "areas",
+      title: "Four interfaces. One moving structure.",
+      introduction: "These are connected design areas rather than sequential steps. CAD, material selection, fabrication, assembly and testing support the waist and every leg interface.",
       stages: [
         {
           name: "Fit the pilot",
@@ -92,8 +95,9 @@ export const DISCIPLINE_ENGINEERING = {
     sectionTitle: "Power and signals, brought together.",
     sectionIntroduction: "Electrical work connects the power supply, motion sensors and motor electronics. Those systems need physical space in the suit and interfaces that software can work with.",
     overview: {
-      title: "Supply. Sense. Actuate.",
-      introduction: "Power distribution, measurement and motor electronics support different parts of the same wearable system. Their connections matter as much as the individual circuits.",
+      kind: "areas",
+      title: "Four systems. Designed together.",
+      introduction: "These systems are developed in parallel rather than as a linear pipeline. Circuit design, component selection, PCB layout, assembly and testing support each area and the connections between them.",
       stages: [
         {
           name: "Distribute power",

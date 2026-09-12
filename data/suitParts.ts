@@ -1,87 +1,72 @@
-/**
- * Annotated hotspots over `public/ace_2025/full_suit_image.png`.
- *
- * Coordinates are percentages of that image's natural 1800x2400 (3:4) frame, so
- * the diagram MUST render the photo un-cropped in a 3:4 box for the markers to
- * land correctly. Positions were read off a coordinate grid overlaid on the
- * actual photograph.
- *
- * `owner` ties each part back to the subteam that builds it, which is the point
- * of the diagram: it shows a recruit where their discipline physically lives on
- * the machine, and shows a sponsor that the team knows its own hardware.
- */
+// Public system functions only; detailed responsibilities live on discipline pages.
+// Coordinates refer to the uncropped 2:3 hardware photograph.
+export type PhotoAnnotation = {
+  x: number;
+  y: number;
+  side: "left" | "right";
+  labelY: number;
+};
 
 export type SuitPart = {
   id: string;
   name: string;
-  /** % from left of the image. */
-  x: number;
-  /** % from top of the image. */
-  y: number;
-  owner: "Mechanical" | "Electrical" | "Software" | "Health & Safety";
+  hint: string;
   detail: string;
+  learnMore: { href: string; label: string };
+  photoAnnotation?: PhotoAnnotation;
 };
 
 export const SUIT_PARTS: SuitPart[] = [
   {
-    id: "control-pack",
-    name: "Control pack",
-    x: 68,
-    y: 20,
-    owner: "Electrical",
-    detail:
-      "The waist-mounted enclosure carries the onboard computing and electronics. Mechanical packaging gives power, sensing and software a place on the suit.",
+    id: "power",
+    name: "Power & computing",
+    hint: "Onboard electronics",
+    detail: "Power distribution and computing hardware sit at the waist. Their connections supply the suit’s electronics and carry signals between sensing, software and the powered joints.",
+    learnMore: { href: "/design/electrical", label: "Explore electrical design" },
+    photoAnnotation: { x: 42, y: 24, side: "left", labelY: 20 },
   },
   {
-    id: "e-stop",
-    name: "Emergency stop",
-    x: 32,
-    y: 37,
-    owner: "Health & Safety",
-    detail:
-      "A physical emergency stop gives the pilot a way to interrupt powered operation. It forms part of the suit’s mechanical, electrical and software safety considerations.",
+    id: "waist",
+    name: "Waist & fit",
+    hint: "The connection to the pilot",
+    detail: "The waist connects the suit to its wearer and supports the onboard electronics. Attachment, comfort and packaging have to work together around a moving body.",
+    learnMore: { href: "/design/mechanical#waist", label: "Explore the waist module" },
+    photoAnnotation: { x: 65, y: 25, side: "right", labelY: 33 },
   },
   {
-    id: "hip",
-    name: "Hip actuator",
-    x: 36,
-    y: 46,
-    owner: "Mechanical",
-    detail:
-      "The hip assembly connects powered actuation to the upper leg. Its geometry has to accommodate the wearer’s movement while maintaining joint alignment.",
+    id: "actuation",
+    name: "Powered joints",
+    hint: "Hip & knee assistance",
+    detail: "Motors at the hip and knee turn electrical power and control commands into assistive torque. Their mounts and joint geometry connect that assistance to the pilot’s legs.",
+    learnMore: { href: "/design/electrical#actuation-sensing", label: "Explore actuation & sensing" },
+    photoAnnotation: { x: 41, y: 66, side: "left", labelY: 61 },
   },
   {
-    id: "harness",
-    name: "Wiring harness",
-    x: 55,
-    y: 44,
-    owner: "Electrical",
-    detail:
-      "Power and signal wiring connect the electronics, sensors and actuators. Routing has to account for moving joints and the person wearing the suit.",
+    id: "linkages",
+    name: "Leg structure",
+    hint: "Structure that follows movement",
+    detail: "Linkages, joints and mounting hardware connect the powered assemblies to the pilot. Alignment and range of motion guide how the structure follows the leg and transfers assistive torque.",
+    learnMore: { href: "/design/mechanical#linkages", label: "Explore the linkages" },
+    photoAnnotation: { x: 40, y: 75, side: "right", labelY: 80 },
   },
   {
-    id: "knee",
-    name: "Knee actuator",
-    x: 66,
-    y: 61,
-    owner: "Mechanical",
-    detail:
-      "A powered knee joint connects the moving structure to a strapped shin interface. Linkage geometry and attachment both matter when transferring assistance to the leg.",
+    id: "sensing",
+    name: "Motion sensing",
+    hint: "Movement into data",
+    detail: "Body-mounted sensors measure how the pilot moves. Electrical connections carry those measurements to the software that reads and interprets them.",
+    learnMore: { href: "/design/electrical#actuation-sensing", label: "Explore actuation & sensing" },
   },
   {
-    id: "foot",
-    name: "Foot interface",
-    x: 56,
-    y: 87,
-    owner: "Mechanical",
-    detail:
-      "The leg structure connects to the wearer’s boot through an ankle interface. This connection supports a path for the suit’s weight toward the ground while accommodating ankle movement.",
+    id: "software",
+    name: "Software & controls",
+    hint: "Data into motor commands",
+    detail: "Firmware reads the sensors, predictive models estimate movement, and control software calculates commands for the powered joints. These stages connect the pilot’s motion to assistance.",
+    learnMore: { href: "/design/software", label: "Explore software design" },
   },
 ];
 
-export const OWNER_STYLES: Record<SuitPart["owner"], string> = {
-  Mechanical: "text-ashGold",
-  Electrical: "text-yellow-400",
-  Software: "text-mutedBlue",
-  "Health & Safety": "text-dustyRose",
-};
+export const SUIT_RESPONSE = [
+  { id: "sensing", name: "Sensing", hint: "Measure movement" },
+  { id: "software", name: "Software", hint: "Interpret & command" },
+  { id: "actuation", name: "Assistance", hint: "Drive the joints" },
+] as const;

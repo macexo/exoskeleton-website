@@ -50,7 +50,7 @@
 .page-bottom-link > .home-container { display: flex; justify-content: space-between; align-items: center; gap: 28px; }
 .page-bottom-link > .home-container > span { font-size: 16px; color: var(--page-text); }
 
-/* Engineering directory and the photographed suit. */
+/* Engineering directory. */
 .subteam-directory { border-top: 1px solid var(--page-line); }
 .subteam-row { display: grid; grid-template-columns: 50px 1fr 1.25fr 46px; gap: 28px; align-items: center; padding-block: 30px; border-bottom: 1px solid var(--page-line); transition: padding .2s; }
 .subteam-row:hover { padding-inline: 8px; }
@@ -61,21 +61,6 @@
 .directory-status { display: block; font-size: 12px; margin-top: 12px; color: #797257; }
 .directory-arrow { display: grid; place-items: center; height: 44px; width: 44px; border: 1px solid var(--page-line); border-radius: 50%; transition: background .2s; }
 .subteam-row:hover .directory-arrow { background: #d4b66e; color: #1b1e15; border-color: #d4b66e; }
-.suit-explorer { display: grid; grid-template-columns: .85fr 1.15fr; gap: 58px; align-items: start; }
-.suit-diagram { position: relative; aspect-ratio: 3/4; overflow: hidden; }
-.suit-diagram-image { position: absolute; inset: 0; }
-.suit-diagram-image > img { filter: saturate(.7) brightness(.83); }
-.suit-hotspot { position: absolute; transform: translate(-50%, -50%); width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid #ffffffb3; border-radius: 50%; background: #10110ede; font: 12px/1 var(--font-mono), monospace; color: #f0eddf; transition: background .2s, box-shadow .2s; }
-.suit-hotspot[aria-pressed="true"] { background: #d4b66e; border-color: #d4b66e; color: #17190f; box-shadow: 0 0 0 6px #d4b66e40; }
-.suit-parts > .eyebrow { padding-bottom: 20px; }
-.suit-part { border-top: 1px solid var(--page-line); padding-bottom: 19px; }
-.suit-part > button { width: 100%; display: flex; align-items: center; text-align: left; gap: 17px; min-height: 54px; padding-block: 16px 10px; }
-.suit-part > button > span:first-child { font: 12px var(--font-mono), monospace; color: #918c74; }
-.suit-part .part-name { font-size: 18px; font-weight: 550; }
-.suit-part .part-owner { margin-left: auto; font: 12px/1.4 var(--font-mono), monospace; color: #aaa797; text-align: right; }
-.suit-part > p { font-size: 14px; line-height: 1.65; color: #b0b0a5; padding-left: 34px; }
-.suit-part.is-active { border-top-color: #d4b66e; }
-.suit-part.is-active .part-name, .suit-part.is-active > button > span:first-child { color: #d4b66e; }
 .spec-table { display: grid; grid-template-columns: repeat(3,1fr); margin-top: 48px; border-top: 1px solid var(--page-line); border-left: 1px solid var(--page-line); }
 .spec-table > div { padding: 23px; border-right: 1px solid var(--page-line); border-bottom: 1px solid var(--page-line); }
 .spec-table dt { color: #a8a797; font: 12px/1.5 var(--font-mono), monospace; text-transform: uppercase; }
@@ -290,8 +275,6 @@
   .page-index > .home-container { display: block; padding-top: 15px; }
   .page-index > .home-container > div { justify-content: space-between; gap: 10px 24px; }
   .page-section-intro { grid-template-columns: .85fr 2fr; gap: 30px; }
-  .suit-explorer { gap: 32px; grid-template-columns: .9fr 1.1fr; }
-  .suit-part .part-owner { display: none; }
   .subteam-row { grid-template-columns: 30px 1fr 1.2fr 44px; gap: 20px; }
   .directory-name h3 { font-size: 25px; }
   .work-layout, .apply-layout, .faq-layout, .partner-contact, .contact-details { gap: 40px; }
@@ -332,10 +315,6 @@
   .directory-description { grid-column: 2 / -1; }
   .directory-arrow { grid-column: 3; grid-row: 1; width: 36px; height: 36px; }
   .subteam-row:hover { padding-inline: 0; }
-  .suit-explorer { grid-template-columns: 1fr; gap: 30px; }
-  .suit-diagram { position: relative; top: auto; max-width: 420px; width: 100%; margin-inline: auto; }
-  .suit-part .part-owner { display: block; font-size: 11px; }
-  .suit-part > p { font-size: 15px; padding-left: 0; }
   .spec-table { grid-template-columns: 1fr 1fr; margin-top: 30px; }
   .spec-table > div { padding: 18px; }
   .spec-table dd { font-size: 15px; }
@@ -431,7 +410,6 @@
 }
 @media (max-width: 380px) {
   .roster-grid { grid-template-columns: 1fr; }
-  .suit-part .part-owner { display: none; }
   .spec-table, .season-timeline, .funding-grid { grid-template-columns: 1fr; }
   .person-profile h3 { font-size: 22px; }
   .alumni-grid .person-profile h3 { font-size: 18px; }

@@ -9,22 +9,23 @@ export default function DisciplineOverview({ name, overview }: {
 }) {
   const [selected, setSelected] = useState(0);
   const detailId = useId();
+  const isFlow = overview.kind === "flow";
 
   return (
     <div className="discipline-overview">
       <div className="architecture-toolbar">
-        <p className="eyebrow">{name} / System connections</p>
-        <span className="architecture-hint">Select an area to explore</span>
+        <p className="eyebrow">{name} / {isFlow ? "System flow" : "Design areas"}</p>
+        <span className="architecture-hint">Select {isFlow ? "a stage" : "an area"} to explore</span>
       </div>
       <div className="architecture-intro">
         <h3>{overview.title}</h3>
         <p>{overview.introduction}</p>
       </div>
-      <ul className="architecture-flow" aria-label={`${name} system overview`}>
+      <ul className={`architecture-flow ${isFlow ? "is-flow" : "is-areas"}`} aria-label={`${name} ${isFlow ? "system flow" : "design areas"}`}>
         {overview.stages.map((item, index) => (
           <li key={item.name}>
             <button type="button" aria-label={item.name} aria-pressed={selected === index} aria-controls={detailId} onClick={() => setSelected(index)}>
-              <span className="flow-step" aria-hidden="true">0{index + 1}<span>{selected === index ? "−" : "+"}</span></span>
+              <span className="flow-step" aria-hidden="true">{isFlow ? `0${index + 1}` : "Design area"}<span>{selected === index ? "−" : "+"}</span></span>
               <strong>{item.name}</strong><span className="flow-device">{item.device}</span><span className="flow-summary">{item.summary}</span>
             </button>
           </li>
@@ -33,7 +34,7 @@ export default function DisciplineOverview({ name, overview }: {
       <div id={detailId} className="architecture-detail" aria-live="polite" aria-atomic="true">
         {overview.stages.map((item, index) => (
           <div key={item.name} className={`architecture-detail-panel ${selected === index ? "is-active" : ""}`} aria-hidden={selected !== index}>
-            <div><span className="eyebrow">Inside the system / 0{index + 1}</span><h4>{item.name}</h4></div>
+            <div><span className="eyebrow">{isFlow ? `Inside the flow / 0${index + 1}` : "Inside the design area"}</span><h4>{item.name}</h4></div>
             <div><p>{item.detail}</p><span className="architecture-work">{item.work}</span></div>
           </div>
         ))}
