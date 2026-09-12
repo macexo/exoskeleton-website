@@ -66,29 +66,29 @@ export const ACE_RESULTS: AceYear[] = [
     gallery: [
       {
         src: "/ace_2026/DSCF0584.jpeg",
-        alt: "The full McMaster Exoskeleton team gathered outdoors on campus with two pilots in suits at the centre.",
+        alt: "Teams and pilots gathered outdoors at McMaster during ACE 2026.",
       },
       {
         src: "/ace_2026/IMG_4369.jpg",
-        alt: "Team members making final adjustments to the exoskeleton before a competition run.",
+        alt: "A McMaster pilot navigating a balance obstacle with teammates alongside at ACE 2026.",
       },
       {
         src: "/ace_2026/IMG_4128.JPG",
-        alt: "A pilot in the exoskeleton preparing at the start of a competition event.",
+        alt: "McMaster students checking the exoskeleton before an ACE 2026 event.",
         position: "object-[45%_50%]",
       },
       {
         src: "/ace_2026/sponsors.jpg",
-        alt: "The exoskeleton's control pack showing sponsor logos during competition.",
+        alt: "Sponsor logos displayed on the exoskeleton’s leg frame during competition.",
         position: "object-[50%_63%]",
       },
       {
         src: "/ace_2026/IMG_4563.jpg",
-        alt: "The team working on the suit between events at ACE 2026.",
+        alt: "Pilots from competing university teams standing together in their exoskeletons at ACE 2026.",
       },
       {
         src: "/ace_2026/IMG_4800.JPG",
-        alt: "A pilot walking in the exoskeleton during an ACE 2026 event.",
+        alt: "Team members kneeling beside the pilot to adjust the exoskeleton before a run.",
       },
     ],
   },
