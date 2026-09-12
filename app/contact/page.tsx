@@ -1,171 +1,22 @@
 import type { Metadata } from "next";
-import { FaEnvelope, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
-import PageHero from "@/components/ui/PageHero";
-import { Section, SectionHeader } from "@/components/ui/Section";
-import Reveal from "@/components/ui/Reveal";
-import Button, { ArrowRight } from "@/components/ui/Button";
+import Link from "next/link";
+import { PageSection, SectionIntro } from "@/components/ui/Interior";
+import { ArrowRight } from "@/components/ui/Button";
 import { SITE, SOCIALS, SPONSORSHIP_PACKAGE } from "@/data/site";
+import { FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description:
-    "Get in touch with McMaster Exoskeleton about sponsorship, joining the team, media or collaboration.",
-};
-
-/**
- * Contact.
- *
- * Routed by intent rather than by channel. The old page was three identical
- * cards labelled Email / Instagram / LinkedIn, which told a sponsor and a
- * prospective member exactly the same thing.
- */
-const ROUTES = [
-  {
-    label: "Sponsorship",
-    body: "Funding, parts, machining time or software licences — and what your company gets back.",
-    action: "Email us about sponsoring",
-    href: `mailto:${SITE.email}?subject=Sponsorship%20enquiry`,
-    secondary: { label: "Sponsorship tiers", href: "/sponsors" },
-  },
-  {
-    label: "Joining the team",
-    body: "McMaster students from any year or program. No prior experience required.",
-    action: "See open subteams",
-    href: "/recruiting",
-    secondary: { label: "What we build", href: "/design" },
-  },
-  {
-    label: "Media & collaboration",
-    body: "Press, other student teams, research groups, or anyone who wants to talk exoskeletons.",
-    action: `Email ${SITE.email}`,
-    href: `mailto:${SITE.email}`,
-    secondary: null,
-  },
-];
-
+export const metadata: Metadata = { title: "Contact", description: "Talk to McMaster Exoskeleton about joining, sponsorship, media or collaboration. Email exo@mcmaster.ca or follow the team." };
 const CHANNELS = [
-  { icon: FaEnvelope, label: SITE.email, href: `mailto:${SITE.email}`, name: "Email" },
-  { icon: FaInstagram, label: "@mcmasterexo", href: SOCIALS.instagram, name: "Instagram" },
-  { icon: FaLinkedin, label: "McMaster Exoskeleton", href: SOCIALS.linkedin, name: "LinkedIn" },
-  { icon: FaYoutube, label: "@McMasterExo", href: SOCIALS.youtube, name: "YouTube" },
+  { name: "Instagram", label: "@mcmasterexo", href: SOCIALS.instagram, icon: FaInstagram },
+  { name: "LinkedIn", label: "McMaster Exoskeleton", href: SOCIALS.linkedin, icon: FaLinkedin },
+  { name: "YouTube", label: "@McMasterExo", href: SOCIALS.youtube, icon: FaYoutube },
 ];
 
 export default function ContactPage() {
-  return (
-    <>
-      <PageHero
-        eyebrow="Get in touch"
-        title="Talk to"
-        accent="the team."
-        size="sm"
-      >
-        We read everything that comes to {SITE.email}. Tell us which of these
-        you are and we will get back to you.
-      </PageHero>
-
-      <Section tone="charcoal" size="sm">
-        <div className="grid md:grid-cols-3 gap-4">
-          {ROUTES.map((route, i) => (
-            <Reveal key={route.label} delay={i * 80}>
-              <div className="flex h-full flex-col card p-6">
-                <h2 className="font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-ashGold">
-                  {route.label}
-                </h2>
-                <p className="mt-3 flex-1 text-softWhite/70 leading-relaxed">
-                  {route.body}
-                </p>
-                <div className="mt-6 flex flex-wrap gap-2.5">
-                  <Button
-                    href={route.href}
-                    external={route.href.startsWith("mailto:")}
-                    size="sm"
-                    trailing={<ArrowRight />}
-                  >
-                    {route.action}
-                  </Button>
-                  {route.secondary && (
-                    <Button
-                      href={route.secondary.href}
-                      variant="secondary"
-                      size="sm"
-                    >
-                      {route.secondary.label}
-                    </Button>
-                  )}
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </Section>
-
-      <Section tone="jet" divider>
-        <div className="grid lg:grid-cols-2 gap-12">
-          <div>
-            <SectionHeader align="left" eyebrow="Channels" title="Find us" />
-            <ul className="mt-8 space-y-2">
-              {CHANNELS.map((channel, i) => (
-                <Reveal as="li" key={channel.name} delay={i * 60}>
-                  <a
-                    href={channel.href}
-                    target={channel.href.startsWith("http") ? "_blank" : undefined}
-                    rel={channel.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="group flex items-center gap-4 tile p-4"
-                  >
-                    <channel.icon className="text-ashGold shrink-0" size={18} />
-                    <span className="min-w-0">
-                      <span className="block font-mono text-[10px] uppercase tracking-[0.12em] text-softWhite/45">
-                        {channel.name}
-                      </span>
-                      <span className="block text-softWhite group-hover:text-ashGold transition-colors break-all">
-                        {channel.label}
-                      </span>
-                    </span>
-                    <ArrowRight className="ml-auto shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </a>
-                </Reveal>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <SectionHeader align="left" eyebrow="Where" title="Find the lab" />
-            <Reveal delay={100} className="mt-8">
-              <div className="card p-6">
-                <p className="text-lg font-semibold text-softWhite">
-                  McMaster University
-                </p>
-                <p className="mt-1 text-softWhite/65">Faculty of Engineering</p>
-                <address className="mt-3 not-italic text-softWhite/55">
-                  1280 Main Street West
-                  <br />
-                  Hamilton, ON L8S 4L8
-                  <br />
-                  Canada
-                </address>
-                <div className="mt-6 flex flex-wrap gap-2.5">
-                  <Button
-                    href="https://www.google.com/maps/search/?api=1&query=McMaster+University+Faculty+of+Engineering+Hamilton+ON"
-                    external
-                    variant="secondary"
-                    size="sm"
-                  >
-                    Open in Maps
-                  </Button>
-                  <Button
-                    href={SPONSORSHIP_PACKAGE}
-                    external
-                    variant="secondary"
-                    size="sm"
-                  >
-                    Sponsorship package (PDF)
-                  </Button>
-                </div>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </Section>
-    </>
-  );
+  return <div className="home-page inner-page">
+    <header className="contact-hero"><div className="home-container"><p className="eyebrow"><span className="eyebrow-rule" />Contact / McMaster Exo</p><h1>Good things start<br />with <span>a conversation.</span></h1><div className="contact-intro"><p>Interested in joining, backing the build or working together? We’d like to hear from you.</p><a href={`mailto:${SITE.email}`} className="contact-email">{SITE.email}<ArrowRight /></a></div></div></header>
+    <PageSection tone="light"><SectionIntro eyebrow="01 / What brings you here?" title="Let’s connect you with the team." /><div className="contact-intents"><article><span className="eyebrow">For future teammates</span><h3>I want to build<br />with you.</h3><p>Explore the subteams and application process. Students from every year and program are welcome.</p><Link href="/recruiting" className="home-text-link">Find your place <ArrowRight /></Link><a href={`mailto:${SITE.email}?subject=Question%20about%20joining`} className="contact-secondary">Ask a recruiting question ↗</a></article><article><span className="eyebrow">For potential partners</span><h3>I want to back<br />the build.</h3><p>Funding, parts, manufacturing support or software. Let’s talk about what we can build together.</p><a href={`mailto:${SITE.email}?subject=Sponsorship%20enquiry`} className="home-text-link">Start a partnership conversation <ArrowRight /></a><Link href="/sponsors" className="contact-secondary">Explore sponsorship levels ↗</Link></article><article><span className="eyebrow">For collaborators & media</span><h3>I have something<br />in mind.</h3><p>A story, a research question or another student team’s idea. Tell us what you’re thinking.</p><a href={`mailto:${SITE.email}?subject=Collaboration%20enquiry`} className="home-text-link">Email the team <ArrowRight /></a><Link href="/design" className="contact-secondary">Get to know the engineering ↗</Link></article></div></PageSection>
+    <PageSection><div className="contact-details"><div><p className="eyebrow">02 / Follow the work</p><h2 className="home-heading">Find us out there.</h2><ul className="contact-channels">{CHANNELS.map(channel=><li key={channel.name}><a href={channel.href} target="_blank" rel="noopener noreferrer"><channel.icon size={22} /><span><strong>{channel.name}</strong><span>{channel.label}</span></span><ArrowRight /></a></li>)}</ul></div><div className="campus-details"><p className="eyebrow">03 / Where we build</p><h2>Made at<br />McMaster.</h2><p>Faculty of Engineering</p><address>1280 Main Street West<br />Hamilton, ON L8S 4L8<br />Canada</address><p className="visit-note">Get in touch to arrange a visit or learn more about the team.</p><a href="https://www.google.com/maps/search/?api=1&query=McMaster+University+Faculty+of+Engineering+Hamilton+ON" target="_blank" rel="noopener noreferrer" className="home-text-link">Find the campus <ArrowRight /></a></div></div></PageSection>
+    <section className="page-bottom-link"><div className="home-container"><span>Want to share the team with someone?</span><a href={SPONSORSHIP_PACKAGE} target="_blank" rel="noopener noreferrer" className="home-text-link">Sponsorship package <span className="pdf-label">PDF ↗</span></a></div></section>
+  </div>;
 }
