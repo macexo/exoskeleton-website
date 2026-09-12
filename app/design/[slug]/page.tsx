@@ -1,164 +1,55 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Section } from "@/components/ui/Section";
-import Reveal from "@/components/ui/Reveal";
-import Button, { ArrowRight } from "@/components/ui/Button";
+import PageHero from "@/components/ui/PageHero";
+import { PageSection, SectionIntro, PageNav } from "@/components/ui/Interior";
+import { ArrowRight } from "@/components/ui/Button";
+import TeamRoles from "@/components/TeamRoles";
+import SoftwareArchitecture from "@/components/SoftwareArchitecture";
 import { SUBTEAMS, getSubteam } from "@/data/subteams";
-import {
-  APPLICATIONS_OPEN,
-  APPLICATION_FORM_LINK,
-} from "@/app/recruiting/constants";
+import { SUBTEAM_PRESENTATION } from "@/data/subteamPresentation";
+import { getTeamRoles } from "@/data/teamRoles";
+import { SITE } from "@/data/site";
+import { APPLICATIONS_OPEN, APPLICATION_FORM_LINK } from "@/app/recruiting/constants";
 
-/**
- * Subteam detail.
- *
- * Previously this file inlined ~430 words of copy that were duplicated
- * character-for-character from the three /recruiting/<subteam> pages, and it
- * imported `useParams` from next/navigation into a server component without
- * ever using it. Content now comes from data/subteams.ts, so it exists once.
- */
-
-/** Statically generate all four pages rather than rendering each on demand. */
-export function generateStaticParams() {
-  return SUBTEAMS.map((team) => ({ slug: team.slug }));
+export function generateStaticParams() { return SUBTEAMS.map(team => ({ slug: team.slug })); }
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const team = getSubteam((await params).slug);
+  return team ? { title: team.slug === "safety" ? "Health & Safety" : `${team.name} Team`, description: team.body } : { title: "Not found" };
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const team = getSubteam(slug);
-  if (!team) return { title: "Not found" };
-  return { title: `${team.name} Subteam`, description: team.body };
-}
-
-export default async function SubteamPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const team = getSubteam(slug);
+export default async function SubteamPage({ params }: { params: Promise<{ slug: string }> }) {
+  const team = getSubteam((await params).slug);
   if (!team) notFound();
-
-  const others = SUBTEAMS.filter((t) => t.slug !== team.slug);
-
+  const page = SUBTEAM_PRESENTATION[team.slug];
+  const roles = getTeamRoles(team.slug);
+  const others = SUBTEAMS.filter(other => other.slug !== team.slug && other.slug !== "safety");
+  const isSoftware = team.slug === "software";
   return (
-    <>
-      <header className="relative isolate overflow-hidden bg-jet pt-36 pb-16">
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-[radial-gradient(70%_60%_at_15%_0%,rgba(189,169,104,0.10),transparent_70%)]"
-        />
-        <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
-          <Link
-            href="/design"
-            className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-softWhite/50 transition-colors hover:text-ashGold"
-          >
-            <span aria-hidden>←</span> Design
-          </Link>
-          <div className="mt-6 flex flex-col sm:flex-row items-start gap-5">
-            <span
-              className={`grid shrink-0 place-items-center w-14 h-14 rounded-2xl ${team.bg} ${team.text}`}
-              aria-hidden
-            >
-              <team.icon size={24} />
-            </span>
-            <div>
-              <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-softWhite">
-                {team.name}
-              </h1>
-              <p className="mt-3 max-w-2xl text-lg text-softWhite/70 leading-relaxed text-pretty">
-                {team.body}
-              </p>
-            </div>
-          </div>
+    <div className="home-page inner-page">
+      <PageHero eyebrow={`${roles.length ? "2026–27 team" : "Engineering"} / ${team.name}`} title={page.title} accent={page.accent} image={page.image} imageAlt={page.imageAlt} imageCaption="From the workshop to the competition floor" actions={<><a href="#the-work" className="home-button">{roles.length ? "Explore the subteams" : "Explore the work"} <ArrowRight /></a><Link href="/design" className="home-text-link">← Back to the design</Link></>}>
+        {team.body}
+      </PageHero>
+      {roles.length > 0 && <PageNav items={[...roles.map(role => ({ href: `#${role.id}`, label: role.name })), { href: "#join", label: "How to join" }]} />}
+      <PageSection id="the-work" tone="light">
+        <SectionIntro eyebrow={roles.length ? "01 / Current member roles" : "01 / Protection across the system"} title={roles.length ? `Inside ${team.name.toLowerCase()}.` : "Safety spans every discipline."}>
+          {roles.length ? "Responsibilities and expectations from the team’s 2026/27 application. Choose the area that fits your interests and experience." : team.body}
+        </SectionIntro>
+        {roles.length ? <TeamRoles division={team.slug} /> : <ol className="work-list">{team.work.map((work, i) => <li key={work}><span>0{i + 1}</span><p>{work}</p></li>)}</ol>}
+      </PageSection>
+      <PageSection id="engineering" tone="surface">
+        <SectionIntro eyebrow="02 / Connecting the disciplines" title={isSoftware ? "From movement to assistance." : team.slug === "mechanical" ? "Where the person meets the machine." : team.slug === "electrical" ? "Power and signals, brought together." : "Protection across the whole suit."}>
+          {isSoftware ? "Sensing, prediction and control connect the wearer’s movement to the powered joints. This overview shows how software contributes to the suit." : team.slug === "electrical" ? "Electrical work connects the power system, motion sensors and motor electronics. It also means fitting those systems into a wearable structure and working with software to bring them to life." : team.slug === "mechanical" ? "The waist and leg structure must accommodate both the pilot and the electronics. Joint geometry, attachment, packaging and assembly bring mechanical work into close contact with every other discipline." : "Pilot safety involves the structure, electrical protections and software behaviour together. Physical travel limits, an emergency stop and command limits are all part of that work."}
+        </SectionIntro>
+        {isSoftware ? <SoftwareArchitecture /> : <Link href="/design#the-suit" className="home-text-link">Explore the suit <ArrowRight /></Link>}
+      </PageSection>
+      <PageSection id="join">
+        <div className="subteam-join">
+          <div><p className="eyebrow">03 / Take the next step</p><h2 className="home-heading">{roles.length ? "Tell us where you want to contribute." : "Ask about safety work."}</h2><p>{roles.length ? "Review the responsibilities and experience expected for your preferred subteam. The application lets you share your interests, skills and projects." : "Contact the team to learn how you can contribute to safety reviews and testing."}</p></div>
+          <div>{roles.length && APPLICATIONS_OPEN ? <a href={APPLICATION_FORM_LINK} className="home-button" target="_blank" rel="noopener noreferrer">Apply to the team <ArrowRight /></a> : <a href={`mailto:${SITE.email}?subject=Joining%20the%20team`} className="home-button">Ask the team <ArrowRight /></a>}<Link href="/recruiting#questions" className="home-text-link">Questions about joining? <ArrowRight /></Link></div>
         </div>
-      </header>
-
-      <Section tone="charcoal">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-14">
-          <Reveal>
-            <h2 className="font-mono text-xs font-medium uppercase tracking-[0.12em] text-ashGold">
-              What you&rsquo;d work on
-            </h2>
-            <ul className="mt-6 space-y-3">
-              {team.work.map((item) => (
-                <li
-                  key={item}
-                  className="flex gap-3 rounded-xl border border-hairline/10 bg-hairline/[0.035] p-4 text-softWhite/80"
-                >
-                  <span
-                    className={`mt-2 h-1.5 w-1.5 shrink-0 rounded-full ${team.text} bg-current`}
-                    aria-hidden
-                  />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-
-          <Reveal delay={120}>
-            <div className="rounded-2xl border border-ashGold/25 bg-[radial-gradient(120%_120%_at_0%_0%,rgba(189,169,104,0.12),transparent_60%)] p-7">
-              <h2 className="text-2xl font-bold text-softWhite">
-                {team.recruiting
-                  ? `Join ${team.name}`
-                  : `${team.name} is by invitation`}
-              </h2>
-              <p className="mt-2 text-softWhite/65 leading-relaxed">
-                {team.recruiting
-                  ? "No prior experience required — the leads teach the tools. One application covers every subteam."
-                  : "This subteam is staffed from members already on the team. Join another subteam first and put your hand up."}
-              </p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                {APPLICATIONS_OPEN && team.recruiting ? (
-                  <Button
-                    href={APPLICATION_FORM_LINK}
-                    external
-                    trailing={<ArrowRight />}
-                  >
-                    Apply now
-                  </Button>
-                ) : (
-                  <Button href="/recruiting" trailing={<ArrowRight />}>
-                    See all subteams
-                  </Button>
-                )}
-                <Button href="/design" variant="secondary">
-                  Back to the suit
-                </Button>
-              </div>
-            </div>
-
-            <div className="mt-8">
-              <h2 className="font-mono text-xs font-medium uppercase tracking-[0.12em] text-softWhite/50">
-                Other subteams
-              </h2>
-              <ul className="mt-4 grid sm:grid-cols-2 gap-3">
-                {others.map((other) => (
-                  <li key={other.slug}>
-                    <Link
-                      href={`/design/${other.slug}`}
-                      className="group flex items-center gap-3 tile p-4"
-                    >
-                      <span className={`shrink-0 ${other.text}`} aria-hidden>
-                        <other.icon size={17} />
-                      </span>
-                      <span className="font-medium text-softWhite group-hover:text-ashGold transition-colors">
-                        {other.name}
-                      </span>
-                      <ArrowRight className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </Reveal>
-        </div>
-      </Section>
-    </>
+      </PageSection>
+      <PageSection tone="light" className="related-section"><p className="eyebrow">Explore the engineering divisions</p><div className="related-subteams">{others.map(other => <Link key={other.slug} href={`/design/${other.slug}`}><span>{SUBTEAM_PRESENTATION[other.slug].index}</span><h2>{other.name}</h2><ArrowRight /></Link>)}</div></PageSection>
+    </div>
   );
 }
