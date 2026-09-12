@@ -1,24 +1,12 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Rajdhani } from "next/font/google";
 import "./globals.css";
+import "./interior.css";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { SITE } from "@/data/site";
 
-/**
- * Three faces, three jobs.
- *
- * Body text was previously Exo 2 — a techno display face — applied to every
- * paragraph on the site. A condensed/techno face is fine as a *display* choice
- * but reads as costume when it sets body copy. Geist is neutral and does the
- * reading work; Rajdhani stays for headlines, where the category signal is
- * wanted; Geist Mono sets numerals, spec values and eyebrow labels so figures
- * line up and read as measurements.
- *
- * Both Geist files were already sitting unused in app/fonts/, so this costs no
- * extra network request.
- */
+// Local fonts keep the site independent of an external font request.
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-sans",
@@ -30,13 +18,6 @@ const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-mono",
   weight: "100 900",
-  display: "swap",
-});
-
-const rajdhani = Rajdhani({
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  variable: "--font-display",
   display: "swap",
 });
 
@@ -101,7 +82,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${rajdhani.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable}`}
     >
       <head>
         {/*
