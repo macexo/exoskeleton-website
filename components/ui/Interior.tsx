@@ -24,11 +24,27 @@ export function PageCTA({ eyebrow = "Build what comes next", title, children, hr
   return <section className="page-cta"><div className="home-container"><div><p className="eyebrow">{eyebrow}</p><h2>{title}</h2>{children && <p>{children}</p>}</div><Link href={href} className="home-button">{label}<ArrowRight /></Link></div></section>;
 }
 
+/**
+ * Safety sits across all three divisions, so both the subteam directory and the
+ * design index close with this line. It was pasted character-for-character in
+ * each; this is the single copy.
+ */
+export function SafetyLink() {
+  return (
+    <div className="directory-safety">
+      <span>Protection spans mechanical, electrical and software design.</span>
+      <Link href="/design/safety" className="home-text-link">
+        Health &amp; safety <ArrowRight />
+      </Link>
+    </div>
+  );
+}
+
 export function SubteamDirectory({ recruiting = false }: { recruiting?: boolean }) {
   return <div className="subteam-directory">{SUBTEAMS.filter(team => team.slug !== "safety").map((team, i) => <Link key={team.slug} href={`/design/${team.slug}`} className="subteam-row">
     <span className="directory-number">0{i + 1}</span>
     <div className="directory-name"><h3>{team.name}</h3><span>{getTeamRoles(team.slug).map(role => role.name).join(" / ")}</span></div>
     <div className="directory-description"><p>{team.summary}</p>{recruiting && <span className="directory-status">View both subteams and their application expectations</span>}</div>
     <span className="directory-arrow" aria-hidden="true"><ArrowRight /></span>
-  </Link>)}<div className="directory-safety"><span>Protection spans mechanical, electrical and software design.</span><Link href="/design/safety" className="home-text-link">Health & safety <ArrowRight /></Link></div></div>;
+  </Link>)}<SafetyLink /></div>;
 }

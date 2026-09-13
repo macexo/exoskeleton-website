@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import PageHero from "@/components/ui/PageHero";
-import { PageSection, SectionIntro, PageNav, PageCTA } from "@/components/ui/Interior";
+import { PageCTA, PageNav, PageSection, SafetyLink, SectionIntro } from "@/components/ui/Interior";
 import { ArrowRight } from "@/components/ui/Button";
 import { DESIGN_PRIORITIES } from "@/data/suit";
 import SuitExplorer, { SoftwareJumpLink } from "@/components/SuitExplorer";
@@ -43,7 +42,7 @@ export default function DesignPage() {
           Explore the current subteams, their responsibilities and the tools they work with. From the waist module to predictive models, there are different ways to help build the next suit.
         </SectionIntro>
         <DesignTeamLinks divisions={["mechanical", "electrical", "software"]} />
-        <div className="directory-safety"><span>Protection spans mechanical, electrical and software design.</span><Link href="/design/safety" className="home-text-link">Health & safety <ArrowRight /></Link></div>
+        <SafetyLink />
       </PageSection>
       <PageCTA title="Find the work that interests you.">Read the subteam responsibilities and application requirements.</PageCTA>
     </div>
