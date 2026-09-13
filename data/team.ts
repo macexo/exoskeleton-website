@@ -15,9 +15,3 @@ export const HOME_STATS = [
   { value: "3", label: "Engineering divisions" },
 ] as const;
 
-export const TEAM_FACTS = {
-  memberCount: "50+",
-  disciplines: "5+",
-  foundedSeason: "2024/25",
-  bestFinish: "5th overall",
-} as const;
