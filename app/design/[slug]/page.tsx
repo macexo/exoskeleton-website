@@ -36,7 +36,7 @@ export default async function SubteamPage({ params }: { params: Promise<{ slug: 
         <SectionIntro eyebrow={roles.length ? "01 / Current member roles" : "01 / Protection across the system"} title={roles.length ? `Inside ${team.name.toLowerCase()}.` : "Safety spans every discipline."}>
           {roles.length ? "Responsibilities and expectations from the team’s 2026/27 application. Choose the area that fits your interests and experience." : team.body}
         </SectionIntro>
-        {roles.length ? <TeamRoles division={team.slug} /> : <ol className="work-list">{team.work.map((work, i) => <li key={work}><span>0{i + 1}</span><p>{work}</p></li>)}</ol>}
+        {roles.length ? <TeamRoles division={team.slug} /> : <ol className="work-list">{(team.work ?? []).map((work, i) => <li key={work}><span>0{i + 1}</span><p>{work}</p></li>)}</ol>}
       </PageSection>
       <PageSection id="engineering" tone="surface">
         <SectionIntro eyebrow="02 / Connecting the disciplines" title={engineering?.sectionTitle ?? "Protection across the whole suit."}>

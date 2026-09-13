@@ -14,8 +14,12 @@ export type Subteam = {
   summary: string;
   /** What the subteam owns on the suit. */
   body: string;
-  /** Concrete things a member works on — the detail recruits actually want. */
-  work: string[];
+  /**
+   * Only rendered for subteams without entries in data/teamRoles.ts — in
+   * practice, safety. The other three render TeamRoles instead, so carrying
+   * `work` for them left 16 bullets that no page displayed.
+   */
+  work?: string[];
 };
 
 export const SUBTEAMS: Subteam[] = [
@@ -26,13 +30,6 @@ export const SUBTEAMS: Subteam[] = [
     summary:
       "The waist, hip and knee assemblies, and the ankle interface that connects the suit to its wearer.",
     body: "The mechanical division has two subteams: Waist and Linkages. Waist develops the module that carries the electronics and interfaces with the pilot; Linkages develops the joints, moving structure and mounting hardware that follow the pilot’s legs.",
-    work: [
-      "Develop the waist structure and electronics enclosure",
-      "Design hip motion and mechanical travel stops",
-      "Refine knee linkages, shin plates and attachment straps",
-      "Work on the ankle ball joint and boot attachment",
-      "Evaluate fit, joint alignment and the path of loads through the suit",
-    ],
   },
   {
     slug: "electrical",
@@ -41,13 +38,6 @@ export const SUBTEAMS: Subteam[] = [
     summary:
       "Battery distribution, custom boards, joint sensors and the communication hardware linking the suit.",
     body: "The electrical division has two subteams: Power Architecture and Actuation & Sensing. Power Architecture develops the suit’s power distribution and regulation. Actuation & Sensing integrates the sensors, motors and circuits that connect the suit to movement.",
-    work: [
-      "Design power-distribution circuits and PCB layouts",
-      "Select and integrate sensors, motors and circuit components",
-      "Support embedded programming and system integration",
-      "Solder, assemble and test circuits with clean wiring",
-      "Coordinate packaging and interfaces with mechanical and software teams",
-    ],
   },
   {
     slug: "software",
@@ -56,14 +46,6 @@ export const SUBTEAMS: Subteam[] = [
     summary:
       "Sensor firmware, motion prediction and motor commands: the code connecting measurements to assistance.",
     body: "The software division has two subteams: Embedded & Controls and AI & Machine Learning. Embedded & Controls develops firmware, communication and control systems. AI & ML develops predictive models, data pipelines and the experiments needed to evaluate assistance algorithms.",
-    work: [
-      "Develop C/C++ microcontroller firmware and communication pipelines",
-      "Build Python testing, hardware-validation and telemetry tools",
-      "Write, simulate and tune controls using ROS / ROS 2",
-      "Research, train and benchmark intent and torque prediction models",
-      "Build multi-sensor data pipelines and interactive dashboards",
-      "Collaborate on edge deployment and hardware-in-the-loop testing",
-    ],
   },
   {
     slug: "safety",

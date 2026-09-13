@@ -27,8 +27,8 @@ export default function DesignPage() {
       >
         A wearable frame. Powered joints. Software that connects movement to assistance. Our engineering comes together around the person wearing the suit.
       </PageHero>
-      <div className="home-container design-assembly"><SuitExplorer /></div>
       <PageNav items={[{ href: "#the-suit", label: "Explore the suit" }, { href: "#systems", label: "Design priorities" }, { href: "#subteams", label: "Our subteams" }]} />
+      <div className="home-container design-assembly"><SuitExplorer /></div>
 
       <PageSection id="systems" tone="light">
         <SectionIntro eyebrow="01 / Design priorities" title="Every decision meets at the pilot.">
