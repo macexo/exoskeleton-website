@@ -26,7 +26,7 @@ export default function HomeCompetitionGallery() {
   const photo = PHOTOS[index];
 
   return (
-    <figure className="competition-gallery" aria-label="ACE 2026 photo gallery">
+    <figure aria-label="ACE 2026 photo gallery">
       <div className="competition-gallery-photo">
         <Image
           src={photo.src}
@@ -39,7 +39,7 @@ export default function HomeCompetitionGallery() {
       </div>
       <div className="gallery-footer">
         <figcaption aria-live="polite" aria-atomic="true">
-          <span>{String(index + 1).padStart(2, "0")} / 03</span>
+          <span>{String(index + 1).padStart(2, "0")} / {String(PHOTOS.length).padStart(2, "0")}</span>
           {photo.caption}
         </figcaption>
         <div className="gallery-controls">

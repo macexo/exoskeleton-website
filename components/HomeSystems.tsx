@@ -8,7 +8,7 @@ import { ArrowRight } from "./ui/Button";
 const SYSTEMS = [
   { id: "mechanical", name: "Mechanical", title: "Fit the person. Guide the movement.", description: "Waist designs the module that carries the electronics and interfaces with the pilot. Linkages develops the joints, straps, motor mounts and moving structure around the legs.", tags: ["Waist", "Linkages"], x: 66, y: 61, label: "Knee assembly" },
   { id: "electrical", name: "Electrical", title: "Connect power, sensing and actuation.", description: "Power Architecture develops distribution, regulation and PCB layouts. Actuation & Sensing integrates the sensors, motors and circuits that connect the suit to movement.", tags: ["Power Architecture", "Actuation & Sensing"], x: 68, y: 20, label: "Electronics enclosure" },
-  { id: "software", name: "Software", title: "The code behind the movement.", description: "Embedded & Controls develops firmware, communication and controls. AI & Machine Learning builds predictive models and data pipelines. Together, they connect movement data to assistance.", tags: ["Embedded & Controls", "AI & Machine Learning"], x: 68, y: 20, label: "Onboard prediction & control" },
+  { id: "software", name: "Software", title: "The code behind the movement.", description: "Embedded & Controls develops firmware, communication and controls. AI & Machine Learning builds predictive models and data pipelines. Together, they connect movement data to assistance.", tags: ["Embedded & Controls", "AI & Machine Learning"], x: 44, y: 38, label: "Onboard prediction & control" },
 ];
 
 export default function HomeSystems() {
@@ -33,7 +33,7 @@ export default function HomeSystems() {
           <ul className="system-tags" aria-label="Current subteams">{system.tags.map(tag => <li key={tag}>{tag}</li>)}</ul>
           <Link href={`/design/${system.id}`} className="home-text-link">Explore {system.name.toLowerCase()} <ArrowRight /></Link>
         </div>
-        <noscript><p className="mt-4"><Link href="/design" className="home-text-link">Read about all six subteams <ArrowRight /></Link></p></noscript>
+        <noscript><p className="system-noscript-note"><Link href="/design" className="home-text-link">Read about all six subteams <ArrowRight /></Link></p></noscript>
       </div>
     </div>
   );
