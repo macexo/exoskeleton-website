@@ -17,6 +17,8 @@ The suit photograph is captioned as the 2025 competition suit. Version labels ha
 
 Exact component identifiers, electrical ratings, wiring protocols, controller timing, model input configuration and tuning parameters have been removed from the website data and copy. No dimensions, schematics, source code or technical source documents are offered as downloads. Conflicting component descriptions and controller values without physical units are not turned into specifications.
 
+The three discipline pages share the same four-part interactive overview in section 2. Mechanical covers the waist, hip, knee and ankle/boot interfaces from sections 5.1–5.4. Electrical covers distribution and regulation, motion sensing, motor electronics and protection from sections 2.1–2.3. Software covers sensing, prediction, control and actuation from sections 3.1–3.2. The presentation describes public functions and cross-discipline interfaces; it does not publish a wiring diagram, controller implementation or prospective architecture. Numbered areas are navigation aids, not a claim that every discipline follows a linear process.
+
 ## Current team and recruiting source
 
 The team supplied the 2026/27 application descriptions and confirmed three engineering divisions, each containing two subteams:

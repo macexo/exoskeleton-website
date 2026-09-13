@@ -5,7 +5,8 @@ import PageHero from "@/components/ui/PageHero";
 import { PageSection, SectionIntro, PageNav } from "@/components/ui/Interior";
 import { ArrowRight } from "@/components/ui/Button";
 import TeamRoles from "@/components/TeamRoles";
-import SoftwareArchitecture from "@/components/SoftwareArchitecture";
+import DisciplineOverview from "@/components/DisciplineOverview";
+import { DISCIPLINE_ENGINEERING } from "@/data/engineering";
 import { SUBTEAMS, getSubteam } from "@/data/subteams";
 import { SUBTEAM_PRESENTATION } from "@/data/subteamPresentation";
 import { getTeamRoles } from "@/data/teamRoles";
@@ -24,13 +25,13 @@ export default async function SubteamPage({ params }: { params: Promise<{ slug: 
   const page = SUBTEAM_PRESENTATION[team.slug];
   const roles = getTeamRoles(team.slug);
   const others = SUBTEAMS.filter(other => other.slug !== team.slug && other.slug !== "safety");
-  const isSoftware = team.slug === "software";
+  const engineering = team.slug === "safety" ? null : DISCIPLINE_ENGINEERING[team.slug];
   return (
     <div className="home-page inner-page">
       <PageHero eyebrow={`${roles.length ? "2026–27 team" : "Engineering"} / ${team.name}`} title={page.title} accent={page.accent} image={page.image} imageAlt={page.imageAlt} imageCaption="From the workshop to the competition floor" actions={<><a href="#the-work" className="home-button">{roles.length ? "Explore the subteams" : "Explore the work"} <ArrowRight /></a><Link href="/design" className="home-text-link">← Back to the design</Link></>}>
         {team.body}
       </PageHero>
-      {roles.length > 0 && <PageNav items={[...roles.map(role => ({ href: `#${role.id}`, label: role.name })), { href: "#join", label: "How to join" }]} />}
+      {roles.length > 0 && <PageNav items={[...roles.map(role => ({ href: `#${role.id}`, label: role.name })), { href: "#engineering", label: "How it connects" }, { href: "#join", label: "How to join" }]} />}
       <PageSection id="the-work" tone="light">
         <SectionIntro eyebrow={roles.length ? "01 / Current member roles" : "01 / Protection across the system"} title={roles.length ? `Inside ${team.name.toLowerCase()}.` : "Safety spans every discipline."}>
           {roles.length ? "Responsibilities and expectations from the team’s 2026/27 application. Choose the area that fits your interests and experience." : team.body}
@@ -38,10 +39,11 @@ export default async function SubteamPage({ params }: { params: Promise<{ slug: 
         {roles.length ? <TeamRoles division={team.slug} /> : <ol className="work-list">{team.work.map((work, i) => <li key={work}><span>0{i + 1}</span><p>{work}</p></li>)}</ol>}
       </PageSection>
       <PageSection id="engineering" tone="surface">
-        <SectionIntro eyebrow="02 / Connecting the disciplines" title={isSoftware ? "From movement to assistance." : team.slug === "mechanical" ? "Where the person meets the machine." : team.slug === "electrical" ? "Power and signals, brought together." : "Protection across the whole suit."}>
-          {isSoftware ? "Sensing, prediction and control connect the wearer’s movement to the powered joints. This overview shows how software contributes to the suit." : team.slug === "electrical" ? "Electrical work connects the power system, motion sensors and motor electronics. It also means fitting those systems into a wearable structure and working with software to bring them to life." : team.slug === "mechanical" ? "The waist and leg structure must accommodate both the pilot and the electronics. Joint geometry, attachment, packaging and assembly bring mechanical work into close contact with every other discipline." : "Pilot safety involves the structure, electrical protections and software behaviour together. Physical travel limits, an emergency stop and command limits are all part of that work."}
+        <SectionIntro eyebrow="02 / Connecting the disciplines" title={engineering?.sectionTitle ?? "Protection across the whole suit."}>
+          {engineering?.sectionIntroduction ?? "Pilot safety involves the structure, electrical protections and software behaviour together. Physical travel limits, an emergency stop and command limits are all part of that work."}
         </SectionIntro>
-        {isSoftware ? <SoftwareArchitecture /> : <Link href="/design#the-suit" className="home-text-link">Explore the suit <ArrowRight /></Link>}
+        {engineering && <DisciplineOverview name={team.name} overview={engineering.overview} />}
+        <div className={engineering ? "discipline-overview-link" : undefined}><Link href="/design#the-suit" className="home-text-link">Explore the suit <ArrowRight /></Link></div>
       </PageSection>
       <PageSection id="join">
         <div className="subteam-join">

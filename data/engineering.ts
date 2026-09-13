@@ -2,6 +2,18 @@
 // Keep implementation parameters and future architecture out of website data.
 // Current member responsibilities are maintained separately in teamRoles.ts.
 
+export type EngineeringOverview = {
+  title: string;
+  introduction: string;
+  stages: readonly {
+    name: string;
+    device: string;
+    summary: string;
+    detail: string;
+    work: string;
+  }[];
+};
+
 export const SOFTWARE_ARCHITECTURE = {
   title: "Sense. Understand. Assist.",
   introduction: "The software connects measurements from the wearer to commands for the powered joints. Each stage brings a different engineering challenge.",
@@ -14,7 +26,7 @@ export const SOFTWARE_ARCHITECTURE = {
       work: "Sensor integration · Data acquisition",
     },
     {
-      name: "Understand motion",
+      name: "Predict motion",
       device: "Machine learning",
       summary: "Find useful patterns in movement.",
       detail: "Predictive models use movement data to estimate how the pilot’s joints will move. Developing and evaluating these models connects machine learning to a physical system.",
@@ -36,3 +48,91 @@ export const SOFTWARE_ARCHITECTURE = {
     },
   ],
 } as const;
+
+export const DISCIPLINE_ENGINEERING = {
+  mechanical: {
+    sectionTitle: "Where the person meets the machine.",
+    sectionIntroduction: "The waist and leg structure connect the pilot to the powered joints. Their physical interfaces also make room for electronics, sensors and wiring.",
+    overview: {
+      title: "Fit. Move. Carry.",
+      introduction: "From the waist to the ground, each interface shapes how the suit sits on a person, moves with them and carries its loads.",
+      stages: [
+        {
+          name: "Fit the pilot",
+          device: "Waist & attachment",
+          summary: "Support the suit around its wearer.",
+          detail: "The waist is a main connection between the pilot and the exoskeleton. It supports the structure and houses onboard electronics, bringing attachment and comfort together with the space needed for boards, power hardware and wiring.",
+          work: "Pilot fit · Structural support · Electronics packaging",
+        },
+        {
+          name: "Move at the hip",
+          device: "Hip assembly",
+          summary: "Accommodate motion in more than one direction.",
+          detail: "The hip assembly allows the leg to move forwards, backwards and sideways. Joint geometry and motor mounting connect assistance to the moving structure, while physical stops limit travel. Mechanical, electrical and software work meet at this powered interface.",
+          work: "Joint geometry · Motor mounting · Travel limits",
+        },
+        {
+          name: "Guide the knee",
+          device: "Knee & shin interface",
+          summary: "Connect a powered joint to the lower leg.",
+          detail: "The knee assembly bends and straightens with the pilot’s leg. Linkages and the shin plate connect the joint to straps around the wearer. Alignment, attachment and space for sensors and wiring have to work together as the leg moves.",
+          work: "Joint alignment · Linkages · Straps & sensor placement",
+        },
+        {
+          name: "Connect to the ground",
+          device: "Ankle & boot interface",
+          summary: "Carry structural loads down through the suit.",
+          detail: "The ankle interface is designed to route the suit’s weight towards the ground. Its joint allows movement at the foot, while a strap secures the assembly over a work boot. This connection links lower-leg motion with attachment and load support.",
+          work: "Range of motion · Boot attachment · Load support",
+        },
+      ],
+    },
+  },
+  electrical: {
+    sectionTitle: "Power and signals, brought together.",
+    sectionIntroduction: "Electrical work connects the power supply, motion sensors and motor electronics. Those systems need physical space in the suit and interfaces that software can work with.",
+    overview: {
+      title: "Supply. Sense. Actuate.",
+      introduction: "Power distribution, measurement and motor electronics support different parts of the same wearable system. Their connections matter as much as the individual circuits.",
+      stages: [
+        {
+          name: "Distribute power",
+          device: "Supply & regulation",
+          summary: "Supply the motors and onboard electronics.",
+          detail: "The battery supplies the suit’s powered joints and onboard electronics. Distribution and voltage regulation provide the supply paths these systems need. Integrating them also means coordinating space for power hardware and connections within the waist structure.",
+          work: "Power distribution · Voltage regulation · Waist packaging",
+        },
+        {
+          name: "Read movement",
+          device: "Motion sensing",
+          summary: "Connect body-mounted measurements to software.",
+          detail: "Motion sensors measure the orientation of body segments as the pilot moves. Their electrical connections carry measurements to the onboard computer. Sensor mounting and wiring are coordinated with Mechanical, while Software reads and interprets the incoming data.",
+          work: "Sensor integration · Wiring · Data acquisition",
+        },
+        {
+          name: "Drive the joints",
+          device: "Motor electronics",
+          summary: "Bring electrical power and control commands together.",
+          detail: "Motor electronics connect the electrical supply and software commands to actuation at the hip and knee. Power connections, communication hardware and motor integration sit alongside the moving assemblies, linking circuit work to control software and mechanical mounting.",
+          work: "Motor integration · Control signals · Physical interfaces",
+        },
+        {
+          name: "Integrate protection",
+          device: "Protection & shutdown",
+          summary: "Build protection into the electrical system.",
+          detail: "Fuses and emergency-stop hardware form part of the suit’s electrical protections. Packaging and wiring must accommodate these devices alongside the supply and motor connections. Their behaviour also has to be considered with software shutdown handling and the pilot’s physical controls.",
+          work: "Circuit protection · Emergency stop · System integration",
+        },
+      ],
+    },
+  },
+  software: {
+    sectionTitle: "From movement to assistance.",
+    sectionIntroduction: "Sensing, prediction and control connect the wearer’s movement to the powered joints. Each part of the software works through interfaces with the suit’s physical hardware.",
+    overview: SOFTWARE_ARCHITECTURE,
+  },
+} satisfies Record<"mechanical" | "electrical" | "software", {
+  sectionTitle: string;
+  sectionIntroduction: string;
+  overview: EngineeringOverview;
+}>;

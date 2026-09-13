@@ -438,8 +438,9 @@
   .page-index a { font-size: 12px; }
 }
 
-/* Software architecture and the current six subteams. */
-.software-architecture { border: 1px solid #d4b66e42; padding: 32px; background: #0c0e09; }
+/* Shared engineering overviews and the current six subteams. */
+.discipline-overview { border: 1px solid #d4b66e42; padding: 32px; background: #0c0e09; }
+.discipline-overview-link { margin-top: 30px; }
 .architecture-toolbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; padding-bottom: 24px; border-bottom: 1px solid #ffffff20; }
 .architecture-hint { color: #c6c2b1; font: 12px/1.5 var(--font-mono), monospace; }
 .architecture-intro { display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; margin-block: 30px; }
@@ -456,7 +457,10 @@
 .flow-device { display: block; font: 12px/1.6 var(--font-mono), monospace; color: #dedccb; margin-top: 13px; }
 .flow-summary { display: block; color: #a6aa99; font-size: 13px; line-height: 1.5; margin-top: 9px; }
 .architecture-flow button[aria-pressed="true"] .flow-step, .architecture-flow button[aria-pressed="true"] .flow-device, .architecture-flow button[aria-pressed="true"] .flow-summary { color: #363d28; }
-.architecture-detail { display: grid; grid-template-columns: 1fr 2fr; gap: 36px; margin-top: 28px; padding-top: 26px; border-top: 1px solid #ffffff24; min-height: 180px; }
+.architecture-detail { display: grid; margin-top: 28px; padding-top: 26px; border-top: 1px solid #ffffff24; min-height: 180px; }
+/* Overlapping panels reserve their maximum height, preventing selection jumps. */
+.architecture-detail-panel { grid-area: 1 / 1; display: grid; grid-template-columns: 1fr 2fr; gap: 36px; align-content: start; visibility: hidden; }
+.architecture-detail-panel.is-active { visibility: visible; }
 .architecture-detail h4 { font-size: 25px; font-weight: 500; letter-spacing: -.03em; margin-top: 13px; line-height: 1.2; }
 .architecture-work { display: block; color: #d0bd87; font: 12px/1.7 var(--font-mono), monospace; margin-top: 16px; }
 .architecture-note { color: #a1a58f; font-size: 12px; line-height: 1.7; margin-top: 26px; }
@@ -486,18 +490,21 @@
 .role-expectation { margin-top: 28px; }
 .role-expectation strong { display: block; margin-bottom: 10px; }
 @media (max-width: 1100px) {
-  .software-architecture { padding: 25px; }
+  .discipline-overview { padding: 25px; }
   .architecture-flow { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .architecture-flow button { min-height: 190px; }
   .team-role { gap: 40px; }
 }
 @media (max-width: 760px) {
-  .software-architecture { padding: 22px 18px; }
-  .architecture-intro, .architecture-detail { grid-template-columns: 1fr; gap: 18px; }
+  .discipline-overview { padding: 22px 18px; }
+  .architecture-intro, .architecture-detail-panel { grid-template-columns: 1fr; gap: 18px; }
   .architecture-intro h3 { font-size: 30px; }
-  .architecture-flow { grid-template-columns: 1fr; gap: 10px; }
-  .architecture-flow button { min-height: 0; padding: 20px; }
-  .flow-step { margin-bottom: 14px; }
+  .architecture-flow { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+  .architecture-flow button { min-height: 150px; padding: 16px 14px; }
+  .architecture-flow strong { font-size: 17px; }
+  .flow-step { margin-bottom: 12px; }
+  .flow-device { font-size: 11px; margin-top: 9px; }
+  .flow-summary { display: none; }
   .architecture-detail { min-height: 0; }
   .design-team-groups { margin-top: 35px; }
   .design-team-links { grid-template-columns: 1fr; gap: 8px; }
