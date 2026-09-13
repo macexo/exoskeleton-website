@@ -1,11 +1,10 @@
-import { getTeamRoles, SOFTWARE_RECRUITING_NOTE } from "@/data/teamRoles";
+import { getTeamRoles } from "@/data/teamRoles";
 
 export default function TeamRoles({ division }: { division: string }) {
   const roles = getTeamRoles(division);
   if (!roles.length) return null;
   return (
     <div className="team-role-list">
-      {division === "software" && <p className="team-recruitment-note">{SOFTWARE_RECRUITING_NOTE}</p>}
       {roles.map((role, index) => (
         <article className="team-role" id={role.id} key={role.id}>
           <div className="team-role-overview">

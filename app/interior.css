@@ -482,8 +482,7 @@
 .team-role-responsibilities li + li { margin-top: 22px; }
 .team-role-responsibilities strong { font-size: 17px; font-weight: 600; }
 .team-role-responsibilities li p { margin-top: 6px; font-size: 16px; line-height: 1.75; color: var(--page-text); }
-.team-recruitment-note, .role-expectation { padding: 22px 25px; background: #dfe2d4; font-size: 15px; line-height: 1.75; color: #505842; }
-.team-recruitment-note { margin-top: 25px; }
+.role-expectation { padding: 22px 25px; background: #dfe2d4; font-size: 15px; line-height: 1.75; color: #505842; }
 .role-expectation { margin-top: 28px; }
 .role-expectation strong { display: block; margin-bottom: 10px; }
 @media (max-width: 1100px) {
@@ -507,5 +506,5 @@
   .directory-safety { align-items: flex-start; flex-direction: column; gap: 14px; }
   .team-role { grid-template-columns: 1fr; gap: 35px; padding-block: 35px; }
   .team-role-overview h3 { font-size: 37px; }
-  .team-recruitment-note, .role-expectation { padding: 20px; }
+  .role-expectation { padding: 20px; }
 }
