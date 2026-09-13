@@ -4,12 +4,23 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "./ui/Button";
+import { getSubteam } from "@/data/subteams";
 
-const SYSTEMS = [
-  { id: "mechanical", name: "Mechanical", title: "Fit the person. Guide the movement.", description: "Waist designs the module that carries the electronics and interfaces with the pilot. Linkages develops the joints, straps, motor mounts and moving structure around the legs.", tags: ["Waist", "Linkages"], x: 66, y: 61, label: "Knee assembly" },
-  { id: "electrical", name: "Electrical", title: "Connect power, sensing and actuation.", description: "Power Architecture develops distribution, regulation and PCB layouts. Actuation & Sensing integrates the sensors, motors and circuits that connect the suit to movement.", tags: ["Power Architecture", "Actuation & Sensing"], x: 68, y: 20, label: "Electronics enclosure" },
-  { id: "software", name: "Software", title: "The code behind the movement.", description: "Embedded & Controls develops firmware, communication and controls. AI & Machine Learning builds predictive models and data pipelines. Together, they connect movement data to assistance.", tags: ["Embedded & Controls", "AI & Machine Learning"], x: 44, y: 38, label: "Onboard prediction & control" },
-];
+/**
+ * Presentation only. The division name and its prose come from data/subteams.ts
+ * — this component used to keep its own `name` + `description` per division,
+ * which had already drifted from the canonical copy word for word.
+ */
+const PANELS = [
+  { id: "mechanical", title: "Fit the person. Guide the movement.", tags: ["Waist", "Linkages"], x: 66, y: 61, label: "Knee assembly" },
+  { id: "electrical", title: "Connect power, sensing and actuation.", tags: ["Power Architecture", "Actuation & Sensing"], x: 68, y: 20, label: "Electronics enclosure" },
+  { id: "software", title: "The code behind the movement.", tags: ["Embedded & Controls", "AI & Machine Learning"], x: 44, y: 38, label: "Onboard prediction & control" },
+] as const;
+
+const SYSTEMS = PANELS.map(panel => {
+  const subteam = getSubteam(panel.id);
+  return { ...panel, name: subteam?.name ?? panel.id, description: subteam?.body ?? "" };
+});
 
 export default function HomeSystems() {
   const [active, setActive] = useState(0);

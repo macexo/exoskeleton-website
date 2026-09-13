@@ -85,14 +85,6 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable}`}
     >
       <head>
-        {/*
-          Scroll reveals start at opacity-0 and are un-hidden by an
-          IntersectionObserver. Without JavaScript that leaves most of the page
-          invisible, so force the final state when scripting is off.
-        */}
-        <noscript>
-          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
-        </noscript>
       </head>
       <body className="font-sans antialiased bg-jet text-softWhite">
         {/* Keyboard and screen-reader users can jump the nav. */}
