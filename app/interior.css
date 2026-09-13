@@ -14,7 +14,6 @@
 .page-hero-image { position: relative; width: 100%; aspect-ratio: 1.02; min-width: 0; min-height: 430px; overflow: hidden; background: #1c1e17; }
 .page-hero-image > img { filter: saturate(.72); }
 .page-hero-image figcaption { position: absolute; inset: auto 0 0; padding: 55px 22px 20px; background: linear-gradient(transparent, #0a0a09c9); color: #e3e2d7; font: 12px/1.6 var(--font-mono), monospace; }
-.hero-discipline { display: block; color: #e0dece; font-size: 14px; margin-bottom: 8px; }
 .page-hero--wide .page-hero-layout { display: flex; flex-direction: column; align-items: stretch; gap: 45px; }
 .page-hero--wide .page-hero-copy { display: grid; grid-template-columns: 1.4fr 1fr; gap: 0 64px; }
 .page-hero--wide .page-hero-copy > .eyebrow { grid-column: 1 / -1; }
@@ -58,36 +57,19 @@
 .directory-name h3 { font-size: 30px; line-height: 1.15; font-weight: 550; letter-spacing: -.04em; }
 .directory-name > span { display: block; margin-top: 9px; font: 12px/1.5 var(--font-mono), monospace; color: var(--page-text); }
 .directory-description p { font-size: 16px; line-height: 1.65; color: var(--page-text); }
-.directory-status { display: block; font-size: 12px; margin-top: 12px; color: #797257; }
+.directory-status { display: block; font-size: 12px; margin-top: 12px; color: #6b6448; }
 .directory-arrow { display: grid; place-items: center; height: 44px; width: 44px; border: 1px solid var(--page-line); border-radius: 50%; transition: background .2s; }
 .subteam-row:hover .directory-arrow { background: #d4b66e; color: #1b1e15; border-color: #d4b66e; }
-.spec-table { display: grid; grid-template-columns: repeat(3,1fr); margin-top: 48px; border-top: 1px solid var(--page-line); border-left: 1px solid var(--page-line); }
-.spec-table > div { padding: 23px; border-right: 1px solid var(--page-line); border-bottom: 1px solid var(--page-line); }
-.spec-table dt { color: #a8a797; font: 12px/1.5 var(--font-mono), monospace; text-transform: uppercase; }
-.spec-table dd { margin-top: 10px; font-size: 16px; }
-.spec-table dd > span { display: block; margin-top: 5px; font-size: 14px; color: #9f9f92; }
 .systems-inventory { display: grid; grid-template-columns: repeat(4,1fr); border-top: 1px solid var(--page-line); }
 .systems-inventory > div { padding: 28px 26px; border-right: 1px solid var(--page-line); }
 .systems-inventory > div:first-child { padding-left: 0; }
 .systems-inventory > div:last-child { border-right: 0; padding-right: 0; }
 .systems-inventory h3 { font-size: 23px; line-height: 1.2; letter-spacing: -.03em; font-weight: 550; margin-block: 16px 22px; }
 .systems-inventory li { font-size: 15px; color: var(--page-text); margin-top: 12px; line-height: 1.5; }
-.season-timeline { display: grid; grid-template-columns: repeat(4,1fr); gap: 30px; counter-reset: phase; }
-.season-timeline > li { border-top: 1px solid #d4b66e77; padding-top: 22px; }
-.timeline-step { display: block; font: 14px/1.5 var(--font-mono), monospace; color: var(--home-gold); margin-bottom: 26px; }
-.season-timeline .eyebrow { color: #a8a38c; font-size: 12px; }
-.season-timeline h3 { font-size: 25px; letter-spacing: -.035em; font-weight: 550; line-height: 1.2; margin-top: 12px; }
-.season-timeline p:not(.eyebrow) { font-size: 16px; line-height: 1.7; margin-top: 15px; color: var(--page-text); }
-.work-layout { display: grid; grid-template-columns: 1.5fr 1fr; gap: 70px; }
 .work-list { margin-top: 20px; }
 .work-list > li { display: flex; align-items: flex-start; gap: 22px; padding: 21px 0; border-top: 1px solid var(--page-line); }
 .work-list > li > span { font: 12px/1.8 var(--font-mono), monospace; color: #85764d; }
 .work-list p { font-size: 18px; line-height: 1.6; }
-.skills-sidebar { padding: 30px; background: #e1e3d8; align-self: start; }
-.skills-sidebar h3 { font-size: 32px; line-height: 1.1; letter-spacing: -.04em; font-weight: 550; margin-block: 20px 24px; }
-.skills-sidebar ul { display: flex; flex-wrap: wrap; gap: 9px; }
-.skills-sidebar li { font: 12px/1.6 var(--font-mono), monospace; border: 1px solid #25281f2b; padding: 7px 10px; }
-.skills-sidebar > p:last-child { font-size: 16px; line-height: 1.7; color: var(--page-text); margin-top: 25px; }
 .subteam-join { display: grid; grid-template-columns: 1.7fr 1fr; gap: 65px; align-items: center; }
 .subteam-join h2 { margin-top: 22px; }
 .subteam-join p:not(.eyebrow) { color: var(--page-text); font-size: 16px; line-height: 1.7; margin-top: 22px; max-width: 600px; }
@@ -277,7 +259,7 @@
   .page-section-intro { grid-template-columns: .85fr 2fr; gap: 30px; }
   .subteam-row { grid-template-columns: 30px 1fr 1.2fr 44px; gap: 20px; }
   .directory-name h3 { font-size: 25px; }
-  .work-layout, .apply-layout, .faq-layout, .partner-contact, .contact-details { gap: 40px; }
+ .apply-layout, .faq-layout, .partner-contact, .contact-details { gap: 40px; }
   .roster-grid { gap: 20px; }
   .person-profile h3 { font-size: 20px; }
   .team-social > div { flex-wrap: wrap; }
@@ -315,22 +297,14 @@
   .directory-description { grid-column: 2 / -1; }
   .directory-arrow { grid-column: 3; grid-row: 1; width: 36px; height: 36px; }
   .subteam-row:hover { padding-inline: 0; }
-  .spec-table { grid-template-columns: 1fr 1fr; margin-top: 30px; }
-  .spec-table > div { padding: 18px; }
-  .spec-table dd { font-size: 15px; }
   .systems-inventory { grid-template-columns: 1fr 1fr; }
   .systems-inventory > div { padding: 24px 18px; border-bottom: 1px solid var(--page-line); }
   .systems-inventory > div:nth-child(odd) { padding-left: 0; }
   .systems-inventory > div:nth-child(even) { padding-right: 0; border-right: 0; }
   .systems-inventory h3 { font-size: 22px; }
   .systems-inventory li { font-size: 14px; }
-  .season-timeline { grid-template-columns: 1fr 1fr; gap: 35px 25px; }
-  .timeline-step { margin-bottom: 18px; }
-  .season-timeline h3 { font-size: 23px; }
-  .season-timeline p:not(.eyebrow) { font-size: 15px; }
-  .work-layout, .apply-layout, .faq-layout, .subteam-join { grid-template-columns: 1fr; gap: 30px; }
+ .apply-layout, .faq-layout, .subteam-join { grid-template-columns: 1fr; gap: 30px; }
   .work-list p { font-size: 16px; }
-  .skills-sidebar { padding: 25px; }
   .related-subteams { grid-template-columns: 1fr; gap: 22px; }
   .related-subteams h2 { font-size: 25px; }
   .recruiting-strip > div { gap: 16px; flex-wrap: wrap; padding-block: 19px; }
@@ -410,7 +384,7 @@
 }
 @media (max-width: 380px) {
   .roster-grid { grid-template-columns: 1fr; }
-  .spec-table, .season-timeline, .funding-grid { grid-template-columns: 1fr; }
+ .funding-grid { grid-template-columns: 1fr; }
   .person-profile h3 { font-size: 22px; }
   .alumni-grid .person-profile h3 { font-size: 18px; }
   .page-index a { font-size: 12px; }
