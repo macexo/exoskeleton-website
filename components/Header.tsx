@@ -65,7 +65,13 @@ export default function Header() {
         </Link>
         <nav className="desktop-nav" aria-label="Main">
           {links.map(link => <div key={link.href} className="nav-group">
-            <Link href={link.href} aria-current={isActive(link.href) ? "page" : undefined}>{link.label}{link.children && <span aria-hidden="true" className="nav-chevron">⌄</span>}</Link>
+            <Link href={link.href} aria-current={isActive(link.href) ? "page" : undefined}>{link.label}{link.children && (
+              // A real SVG rather than the ⌄ glyph (U+2304), which is poorly
+              // hinted in most faces and sat off the baseline.
+              <svg className="nav-chevron" viewBox="0 0 12 12" aria-hidden="true">
+                <path d="M2.5 4.5 L6 8 L9.5 4.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            )}</Link>
             {link.children && <div className="nav-dropdown">{link.children.map(child => <Link key={child.href} href={child.href} aria-current={isActive(child.href) ? "page" : undefined}>{child.label}</Link>)}</div>}
           </div>)}
           <Link className="nav-join" href="/recruiting" aria-current={isActive("/recruiting") ? "page" : undefined}>Join the team <ArrowRight /></Link>

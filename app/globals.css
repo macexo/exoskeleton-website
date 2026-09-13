@@ -245,7 +245,11 @@
 .nav-group { position: relative; }
 .nav-group > a { display: flex; align-items: center; gap: 6px; min-height: 44px; font-size: 14px; color: #d1d0c9; }
 .desktop-nav a:hover, .desktop-nav a[aria-current="page"] { color: #d4b66e; }
-.nav-chevron { font-size: 14px; }
+ /* Sits on the text's optical centre and rotates with the dropdown. */
+.desktop-nav .nav-group > a { display: inline-flex; align-items: center; gap: 5px; }
+.nav-chevron { width: 12px; height: 12px; flex-shrink: 0; opacity: .65;
+  transition: transform .2s ease, opacity .2s ease; }
+.nav-group:hover .nav-chevron, .nav-group:focus-within .nav-chevron { opacity: 1; transform: rotate(180deg); }
 .nav-dropdown { position: absolute; top: 100%; left: -16px; min-width: 130px; padding: 8px; background: #191914; border: 1px solid #ffffff22; border-radius: 3px; visibility: hidden; opacity: 0; }
 .nav-group:hover .nav-dropdown, .nav-group:focus-within .nav-dropdown { visibility: visible; opacity: 1; }
 .nav-dropdown a { display: block; padding: 12px; font-size: 14px; }
