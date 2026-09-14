@@ -16,7 +16,8 @@ export type SuitPart = {
   hint: string;
   detail: string;
   /**
-   * The subteams that own this part, not everyone who touches it.
+   * The subteams directly responsible for the function being explained,
+   * not everyone who touches the hardware.
    */
   contributors: { division: "mechanical" | "electrical" | "software"; id: string }[];
   regions: readonly SuitRegionId[];
@@ -27,9 +28,9 @@ export type SuitPart = {
 export const SUIT_PARTS: SuitPart[] = [
   {
     id: "power",
-    name: "Power & electronics",
-    hint: "Boards, battery and distribution",
-    detail: "Power distribution boards and the onboard computer sit at the waist. Their connections supply the suit’s electronics and carry signals between sensing, software and the powered joints.",
+    name: "Power & distribution",
+    hint: "Battery power to every board",
+    detail: "Power distribution boards at the waist regulate battery power and supply the suit’s onboard systems, from the computer at the waist to the motor electronics at each joint. Board placement and wiring have to fit within the waist module.",
     contributors: [{ division: "electrical", id: "power-architecture" }, { division: "mechanical", id: "waist" }],
     regions: ["power"],
     photoAnnotation: { x: 42, y: 24, side: "left", labelY: 20 },
@@ -47,8 +48,8 @@ export const SUIT_PARTS: SuitPart[] = [
     id: "actuation",
     name: "Powered joints",
     hint: "Hip & knee assistance",
-    detail: "Motors at the hip and knee turn electrical power and control commands into assistive torque. Their mounts and joint geometry connect that assistance to the pilot’s legs.",
-    contributors: [{ division: "mechanical", id: "linkages" }, { division: "electrical", id: "actuation-sensing" }, { division: "software", id: "embedded-controls" }, { division: "software", id: "ai-ml" }],
+    detail: "Each powered joint is an integrated assembly: the motor and its control signals, the mount and joint geometry that carry torque to the leg, and the firmware that drives it. All three have to work together around the pilot’s movement.",
+    contributors: [{ division: "electrical", id: "actuation-sensing" }, { division: "mechanical", id: "linkages" }, { division: "software", id: "embedded-controls" }],
     regions: ["hipMotor", "kneeMotor"],
     photoAnnotation: { x: 41, y: 66, side: "left", labelY: 61 },
   },
@@ -83,7 +84,17 @@ export const SUIT_PARTS: SuitPart[] = [
     hint: "Intent into motor commands",
     detail: "Control software turns estimated movement into commands for the powered joints, and firmware carries those commands to the motor electronics. Command limits are part of the control design around the wearer.",
     contributors: [{ division: "software", id: "embedded-controls" }],
-    regions: ["thighMcu", "shinMcu"],
+    regions: ["thighMcu", "shinMcu", "hipMotor", "kneeMotor"],
+  },
+  {
+    // The loop's final stage. It outlines the same motors as Powered joints but
+    // credits only the teams that turn commands into torque at the leg.
+    id: "actuation-stage",
+    name: "Actuation",
+    hint: "Commands into joint torque",
+    detail: "The hip and knee motors turn control commands into assistive torque, and the linkages carry that torque to the pilot’s legs. The movement that follows is measured again, which closes the loop.",
+    contributors: [{ division: "electrical", id: "actuation-sensing" }, { division: "mechanical", id: "linkages" }],
+    regions: ["hipMotor", "kneeMotor"],
   },
 ];
 
@@ -93,5 +104,5 @@ export const SUIT_RESPONSE = [
   { id: "sensing", name: "Sensing", hint: "Measure movement" },
   { id: "prediction", name: "Prediction", hint: "Estimate intent" },
   { id: "control", name: "Control", hint: "Send motor commands" },
-  { id: "actuation", name: "Actuation", hint: "Apply joint torque" },
+  { id: "actuation-stage", name: "Actuation", hint: "Apply joint torque" },
 ] as const;

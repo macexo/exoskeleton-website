@@ -37,7 +37,7 @@
 .suit-anchor:hover > span { box-shadow: 0 0 0 1px currentColor, 0 0 0 6px #f3f2ed25; }
 
 /* Every selection occupies the same space; interaction never moves the figure. */
-.suit-detail { display: grid; align-self: center; margin-bottom: 160px; border-top: 1px solid #d4b66e80; padding-top: 25px; scroll-margin-top: 110px; }
+.suit-detail { display: grid; align-self: center; margin-bottom: 0; border-top: 1px solid #d4b66e80; padding-top: 25px; scroll-margin-top: 110px; }
 .suit-detail-panel { grid-area: 1 / 1; visibility: hidden; pointer-events: none; display: flex; flex-direction: column; align-items: flex-start; }
 .suit-detail-panel.is-active { visibility: visible; pointer-events: auto; }
 .suit-detail-eyebrow { color: var(--suit-gold); font: 11px/1.6 var(--font-mono), monospace; letter-spacing: .03em; }
@@ -174,3 +174,8 @@
 .suit-response-heading > span { display: block; margin-top: 7px; max-width: 62ch; margin-inline: auto;
   color: #8f8e85; font-family: var(--font-sans), system-ui, sans-serif; font-size: 14px;
   line-height: 1.6; letter-spacing: 0; text-transform: none; }
+
+/* Direct hover targets on the hardware itself. Transparent, and above the
+   shading so the pointer reaches them; label buttons still sit on top. */
+.suit-hit { position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%; pointer-events: none; }
+.suit-hit path { fill: transparent; stroke: none; pointer-events: all; cursor: pointer; }
