@@ -6,7 +6,6 @@ export type TeamRole = {
   description: string;
   responsibilities: { title: string; detail: string }[];
   tools: string[];
-  expectation?: string;
 };
 
 export const TEAM_ROLES: Record<"mechanical" | "electrical" | "software", TeamRole[]> = {
@@ -45,7 +44,6 @@ export const TEAM_ROLES: Record<"mechanical" | "electrical" | "software", TeamRo
         { title: "System integration", detail: "Coordinate board placement, wiring and operation with mechanical and software teammates so the supply works within the wearable suit." },
       ],
       tools: ["Power electronics", "Altium or similar", "PCB layout", "Soldering", "Electrical safety"],
-      expectation: "The application asks for a solid electrical and power-electronics foundation, experience with Altium or similar PCB tools, hands-on assembly skills and an understanding of electrical safety.",
     },
     {
       id: "actuation-sensing", name: "Actuation & Sensing",

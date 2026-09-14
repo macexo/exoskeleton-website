@@ -22,46 +22,31 @@ export function SoftwareJumpLink() {
 }
 
 export default function SuitExplorer() {
-  // Nothing is selected until the visitor hovers or picks a part.
+  // Nothing is selected until the visitor hovers or picks a part. After that the
+  // last part hovered, focused or tapped stays in view; moving the pointer off the
+  // photograph doesn't reset it.
   const [activeId, setActiveId] = useState<string | null>(null);
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
-  const [focusedId, setFocusedId] = useState<string | null>(null);
-  const displayedId = hoveredId ?? focusedId ?? activeId;
-  const active = SUIT_PARTS.find(part => part.id === displayedId);
+  const active = SUIT_PARTS.find(part => part.id === activeId);
   const maskId = useId();
-  const routeActive = displayedId === "control";
+  const routeActive = activeId === "control";
   const regions = active?.regions.flatMap(id => SUIT_REGIONS[id].paths) ?? [];
 
-  // Hover and keyboard focus preview a part; click/tap keeps that selection.
   const selectionProps = (id: string) => ({
     onPointerEnter: (event: PointerEvent<HTMLButtonElement>) => {
-      if (event.pointerType !== "touch") {
-        setFocusedId(null);
-        setHoveredId(id);
-      }
+      if (event.pointerType !== "touch") setActiveId(id);
     },
-    onPointerLeave: () => setHoveredId(null),
     onFocus: (event: FocusEvent<HTMLButtonElement>) => {
-      if (event.currentTarget.matches(":focus-visible")) {
-        setHoveredId(null);
-        setFocusedId(id);
-      }
+      if (event.currentTarget.matches(":focus-visible")) setActiveId(id);
     },
-    onBlur: () => setFocusedId(null),
     onClick: () => setActiveId(id),
     "aria-pressed": activeId === id,
     "aria-controls": "suit-detail",
-    "data-preview": displayedId === id,
   });
 
   const regionProps = (owner: string) => ({
     onPointerEnter: (event: PointerEvent<SVGGElement>) => {
-      if (event.pointerType !== "touch") {
-        setFocusedId(null);
-        setHoveredId(owner);
-      }
+      if (event.pointerType !== "touch") setActiveId(owner);
     },
-    onPointerLeave: () => setHoveredId(null),
     onClick: () => setActiveId(owner),
   });
 
@@ -81,7 +66,7 @@ export default function SuitExplorer() {
           <p className="eyebrow">Inside the suit</p>
           <h2 id="suit-experience-title">Explore what makes it move.</h2>
         </div>
-        <p><span className="suit-pointer-instruction">Hover to explore. Select to keep a part in view.</span><span className="suit-touch-instruction">Tap a part or a stage of the loop to explore.</span></p>
+        <p><span className="suit-pointer-instruction">Hover over a part or a stage of the loop to explore.</span><span className="suit-touch-instruction">Tap a part or a stage of the loop to explore.</span></p>
       </header>
 
       <div className="suit-experience-layout">
@@ -127,7 +112,7 @@ export default function SuitExplorer() {
             {SUIT_PARTS.map(part => {
               const point = part.photoAnnotation;
               if (!point) return null;
-              const isActive = part.id === displayedId;
+              const isActive = part.id === activeId;
               // Desktop reserves a quarter of the figure on each side for labels.
               // Mobile uses the same uncropped photo with labels over its outer edges.
               const desktopX = 25 + point.x / 2;
@@ -173,7 +158,7 @@ export default function SuitExplorer() {
             <p className="suit-detail-description">Each one shows what it does and which subteams work on it.</p>
           </div>
           {SUIT_PARTS.map(part => (
-            <div key={part.id} className={`suit-detail-panel ${displayedId === part.id ? "is-active" : ""}`} aria-hidden={displayedId !== part.id}>
+            <div key={part.id} className={`suit-detail-panel ${activeId === part.id ? "is-active" : ""}`} aria-hidden={activeId !== part.id}>
               <p className="suit-detail-eyebrow">{part.hint}</p>
               <h3>{part.name}</h3>
               <p className="suit-detail-description">{part.detail}</p>

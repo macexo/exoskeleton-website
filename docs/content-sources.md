@@ -29,7 +29,7 @@ The team supplied the 2026/27 application descriptions and confirmed three engin
 
 Responsibilities, tools and expectations are centralised in `data/teamRoles.ts`. They describe current member work, not an inventory of deployed features. Recruitment tools such as C/C++, STM32, Python, ROS / ROS 2, CAN, PyTorch and TensorFlow remain because the team supplied them for prospective members.
 
-The website uses a common recruiting tone across all three divisions. At the team’s request, the software-only competitiveness notice from the application form is omitted. Each specialist role has a short introduction, four groups of concrete responsibilities and relevant tools; grouping the supplied responsibilities does not add new duties. Power Architecture’s supplied electrical fundamentals, PCB-tool experience, assembly skills and electrical-safety expectations remain. No blanket no-experience requirement, acceptance promise or training guarantee is added.
+The website uses a common recruiting tone across all three divisions. At the team’s request, the software-only competitiveness notice from the application form is omitted. Each specialist role has a short introduction, four groups of concrete responsibilities and relevant tools; grouping the supplied responsibilities does not add new duties. At the team’s request, the “Experience expected” callout supplied for Power Architecture is not shown. No blanket no-experience requirement, acceptance promise or training guarantee is added.
 
 Current leads for the six specialist subteams were not supplied. Existing leadership records were retained without inventing people or assignments. Health and safety is described as work across the system, not a fourth engineering division in the current recruitment structure.
 

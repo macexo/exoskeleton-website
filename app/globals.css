@@ -175,12 +175,13 @@
 .mobile-nav a[aria-current="page"] { color: #d4b66e; }
 .mobile-nav a.mobile-sub-link { font-size: 16px; padding-left: 22px; color: #b6b6ad; }
 
-/* The hero leaves the pilot in the photograph, and gives the copy its own ground. */
-.home-hero { position: relative; isolation: isolate; overflow: hidden; min-height: 840px; min-height: min(900px, max(820px, 100svh)); background: #0a0a09; }
+/* The hero leaves the pilot in the photograph, and gives the copy its own ground.
+   It fills the first screen, with the copy centred above the stats. */
+.home-hero { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh; background: #0a0a09; }
 .hero-photograph { position: absolute; right: 0; top: 0; bottom: 0; width: 76%; z-index: -3; }
 .hero-photograph img { object-position: 54% 52%; filter: saturate(.63); }
 .hero-shade { position: absolute; inset: 0; z-index: -2; background: linear-gradient(90deg, #0a0a09 0%, #0a0a09fa 25%, #0a0a09cc 38%, #0a0a0940 61%, #0a0a090a 100%), linear-gradient(0deg, #0a0a09 0%, #0a0a0938 24%, transparent 65%, #0a0a094d 100%); }
-.hero-inner { position: relative; padding-top: 168px; padding-bottom: 164px; }
+.hero-inner { position: relative; flex: 1 0 auto; display: flex; flex-direction: column; justify-content: center; padding-top: 168px; padding-bottom: 164px; }
 .hero-copy { max-width: 610px; }
 .hero-copy .eyebrow { color: #d4c08e; margin-bottom: 29px; }
 .hero-copy h1 { font-size: clamp(76px, 7.3vw, 110px); font-weight: 650; line-height: .96; letter-spacing: -.067em; text-transform: uppercase; }
@@ -297,7 +298,6 @@
   .desktop-nav { display: none; }
   .menu-toggle { display: flex; }
   .home-container { width: calc(100% - 64px); }
-  .home-hero { min-height: 820px; }
   .hero-copy h1 { font-size: 88px; }
   .hero-copy .eyebrow { font-size: 12px; }
   .hero-caption { bottom: 65px; right: 0; }
@@ -319,7 +319,6 @@
   .site-brand > span { font-size: 9px; }
   .home-section { padding-block: 65px; }
   .home-heading { font-size: clamp(35px, 8vw, 52px); }
-  .home-hero { min-height: 0; }
   .hero-inner { padding-top: 127px; padding-bottom: 335px; }
   .hero-copy { max-width: none; }
   .hero-copy .eyebrow { max-width: 320px; font-size: 11px; margin-bottom: 22px; letter-spacing: .03em; }
