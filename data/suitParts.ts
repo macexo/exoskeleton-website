@@ -1,87 +1,108 @@
-/**
- * Annotated hotspots over `public/ace_2025/full_suit_image.png`.
- *
- * Coordinates are percentages of that image's natural 1800x2400 (3:4) frame, so
- * the diagram MUST render the photo un-cropped in a 3:4 box for the markers to
- * land correctly. Positions were read off a coordinate grid overlaid on the
- * actual photograph.
- *
- * `owner` ties each part back to the subteam that builds it, which is the point
- * of the diagram: it shows a recruit where their discipline physically lives on
- * the machine, and shows a sponsor that the team knows its own hardware.
- */
+// Public system functions only; detailed responsibilities live on discipline pages.
+// Coordinates refer to the uncropped 2:3 hardware photograph.
+
+import type { SuitRegionId } from "@/data/suitGeometry";
+
+export type PhotoAnnotation = {
+  x: number;
+  y: number;
+  side: "left" | "right";
+  labelY: number;
+};
 
 export type SuitPart = {
   id: string;
   name: string;
-  /** % from left of the image. */
-  x: number;
-  /** % from top of the image. */
-  y: number;
-  owner: "Mechanical" | "Electrical" | "Software" | "Health & Safety";
+  hint: string;
   detail: string;
+  /**
+   * The subteams directly responsible for the function being explained,
+   * not everyone who touches the hardware.
+   */
+  contributors: { division: "mechanical" | "electrical" | "software"; id: string }[];
+  regions: readonly SuitRegionId[];
+  /** Present only for the four parts that carry a label on the photograph. */
+  photoAnnotation?: PhotoAnnotation;
 };
 
 export const SUIT_PARTS: SuitPart[] = [
   {
-    id: "control-pack",
-    name: "Control pack",
-    x: 68,
-    y: 20,
-    owner: "Electrical",
-    detail:
-      "Back-mounted enclosure carrying the battery, power distribution and controller boards. It also carries our sponsors' logos to every event we run.",
+    id: "power",
+    name: "Power & distribution",
+    hint: "Battery power to every board",
+    detail: "Power distribution boards at the waist regulate battery power and supply the suit’s onboard systems, from the computer at the waist to the motor electronics at each joint. Board placement and wiring have to fit within the waist module.",
+    contributors: [{ division: "electrical", id: "power-architecture" }, { division: "mechanical", id: "waist" }],
+    regions: ["power"],
+    photoAnnotation: { x: 42, y: 24, side: "left", labelY: 20 },
   },
   {
-    id: "e-stop",
-    name: "Emergency stop",
-    x: 32,
-    y: 37,
-    owner: "Health & Safety",
-    detail:
-      "A hardware cutoff within the pilot's reach. Pressing it removes power from the actuators immediately — ACE will not clear a suit for the course without one.",
+    id: "waist",
+    name: "Waist & fit",
+    hint: "The connection to the pilot",
+    detail: "The waist connects the suit to its wearer and supports the onboard electronics. Attachment, comfort and packaging have to work together around a moving body.",
+    contributors: [{ division: "mechanical", id: "waist" }],
+    regions: ["waist"],
+    photoAnnotation: { x: 50, y: 27, side: "right", labelY: 30 },
   },
   {
-    id: "hip",
-    name: "Hip actuator",
-    x: 36,
-    y: 46,
-    owner: "Mechanical",
-    detail:
-      "Powered hip joint. It adds torque through the swing and stance phases of the pilot's gait and carries load into the frame rather than the pilot's body.",
+    id: "actuation",
+    name: "Powered joints",
+    hint: "Hip & knee assistance",
+    detail: "Each powered joint is an integrated assembly: the motor and its control signals, the mount and joint geometry that carry torque to the leg, and the firmware that drives it. All three have to work together around the pilot’s movement.",
+    contributors: [{ division: "electrical", id: "actuation-sensing" }, { division: "mechanical", id: "linkages" }, { division: "software", id: "embedded-controls" }],
+    regions: ["hipMotor", "kneeMotor"],
+    photoAnnotation: { x: 41, y: 66, side: "left", labelY: 61 },
   },
   {
-    id: "harness",
-    name: "Wiring harness",
-    x: 55,
-    y: 44,
-    owner: "Electrical",
-    detail:
-      "Power and signal routing between the control pack, the actuators and the sensors — built to survive being walked, climbed and fallen in.",
+    id: "linkages",
+    name: "Leg structure",
+    hint: "Structure that follows movement",
+    detail: "Linkages, joints and mounting hardware connect the powered assemblies to the pilot. Alignment and range of motion guide how the structure follows the leg and transfers assistive torque.",
+    contributors: [{ division: "mechanical", id: "linkages" }],
+    regions: ["linkages"],
+    photoAnnotation: { x: 31, y: 76, side: "right", labelY: 80 },
   },
   {
-    id: "knee",
-    name: "Knee actuator",
-    x: 66,
-    y: 61,
-    owner: "Mechanical",
-    detail:
-      "Powered knee joint. This is the actuator doing the most work on the stair climb, where it drives the pilot's full body weight upward each step.",
+    id: "sensing",
+    name: "Motion sensing",
+    hint: "Movement into data",
+    detail: "Motion sensors inside the leg-mounted controller enclosures measure how the pilot moves. The local electronics read those measurements and pass them to the onboard computer.",
+    contributors: [{ division: "electrical", id: "actuation-sensing" }, { division: "software", id: "embedded-controls" }],
+    regions: ["thighMcu", "shinMcu"],
   },
   {
-    id: "foot",
-    name: "Foot interface",
-    x: 56,
-    y: 87,
-    owner: "Mechanical",
-    detail:
-      "Where the whole structure meets the ground. The boot plate transfers load out of the frame and has to stay rigid without limiting the pilot's ankle.",
+    id: "prediction",
+    name: "Prediction & learning",
+    hint: "Movement data into intent",
+    detail: "The onboard computer uses movement data to estimate how the pilot’s joints will move next. Building and evaluating those models is where machine learning meets a physical system that someone is wearing.",
+    contributors: [{ division: "software", id: "ai-ml" }],
+    regions: ["pi"],
+  },
+  {
+    id: "control",
+    name: "Control & firmware",
+    hint: "Intent into motor commands",
+    detail: "Control software turns estimated movement into commands for the powered joints, and firmware carries those commands to the motor electronics. Command limits are part of the control design around the wearer.",
+    contributors: [{ division: "software", id: "embedded-controls" }],
+    regions: ["thighMcu", "shinMcu", "hipMotor", "kneeMotor"],
+  },
+  {
+    // The loop's final stage. It outlines the same motors as Powered joints but
+    // credits only the teams that turn commands into torque at the leg.
+    id: "actuation-stage",
+    name: "Actuation",
+    hint: "Commands into joint torque",
+    detail: "The hip and knee motors turn control commands into assistive torque, and the linkages carry that torque to the pilot’s legs. The movement that follows is measured again, which closes the loop.",
+    contributors: [{ division: "electrical", id: "actuation-sensing" }, { division: "mechanical", id: "linkages" }],
+    regions: ["hipMotor", "kneeMotor"],
   },
 ];
 
-export const OWNER_STYLES: Record<SuitPart["owner"], string> = {
-  Mechanical: "text-ashGold",
-  Electrical: "text-yellow-400",
-  Software: "text-mutedBlue",
-  "Health & Safety": "text-dustyRose",
-};
+// A measured movement passes through prediction, control and actuation,
+// then returns to sensing as the pilot and suit move together.
+export const SUIT_RESPONSE = [
+  { id: "sensing", name: "Sensing", hint: "Measure movement" },
+  { id: "prediction", name: "Prediction", hint: "Estimate intent" },
+  { id: "control", name: "Control", hint: "Send motor commands" },
+  { id: "actuation-stage", name: "Actuation", hint: "Apply joint torque" },
+] as const;

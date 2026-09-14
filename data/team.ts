@@ -10,14 +10,8 @@
  */
 
 export const HOME_STATS = [
-  { value: "50+", label: "Members across 5+ disciplines" },
-  { value: "2", label: "Suits built from scratch" },
-  { value: "5th", label: "At ACE, two years running" },
+  { value: "50+", label: "Student members" },
+  { value: "6", label: "Specialist subteams" },
+  { value: "3", label: "Engineering divisions" },
 ] as const;
 
-export const TEAM_FACTS = {
-  memberCount: "50+",
-  disciplines: "5+",
-  foundedSeason: "2024/25",
-  bestFinish: "5th overall",
-} as const;

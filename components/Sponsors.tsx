@@ -1,182 +1,22 @@
-import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import PageHero from "./ui/PageHero";
-import { Section, SectionHeader } from "./ui/Section";
-import Reveal from "./ui/Reveal";
-import Button, { ArrowRight } from "./ui/Button";
+import { PageSection, SectionIntro, PageNav } from "./ui/Interior";
+import { ArrowRight } from "./ui/Button";
 import SponsorTiers from "./SponsorTiers";
-import { sponsors, SponsorProps } from "@/data/sponsorsData";
-import SponsorLogo from "./SponsorLogo";
+import { sponsors } from "@/data/sponsorsData";
 import { FUNDING_USES } from "@/data/sponsorship";
 import { SITE, SPONSORSHIP_PACKAGE } from "@/data/site";
 
-const AFFILIATES = [
-  {
-    name: "McMaster Engineering Society",
-    logo: "/MES_logo.png",
-    website: "https://www.macengsociety.ca/",
-    role: "Our governing student society",
-  },
-];
-
-function LogoGrid({
-  items,
-  size = "md",
-}: {
-  items: readonly SponsorProps[];
-  size?: "md" | "lg";
-}) {
-  return (
-    <ul
-      className={`grid gap-3 ${
-        size === "lg"
-          ? "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4"
-          : "grid-cols-2 sm:grid-cols-3 lg:grid-cols-5"
-      }`}
-    >
-      {items.map((sponsor) => (
-        <li key={sponsor.name}>
-          <SponsorLogo sponsor={sponsor} size={size} />
-        </li>
-      ))}
-    </ul>
-  );
-}
-
 export default function Sponsors() {
-  return (
-    <>
-      <PageHero
-        eyebrow="Partners"
-        title="Our sponsors put"
-        accent="the suit on the course."
-        image="/ace_2026/sponsors.jpg"
-        imageAlt="McMaster Exoskeleton team members working on the suit with sponsor logos displayed."
-        focal="center 35%"
-        actions={
-          <>
-            <Button href={`mailto:${SITE.email}?subject=Sponsorship%20enquiry`} external>
-              Talk to us about sponsoring
-            </Button>
-            <Button href={SPONSORSHIP_PACKAGE} external variant="ghost">
-              Download the full package (PDF)
-            </Button>
-          </>
-        }
-      >
-        We are a student team with no institutional budget for parts. Actuators,
-        custom PCBs, machined aluminium and competition travel are all funded by
-        sponsors.
-      </PageHero>
-
-      {/* Where the money goes — makes the ask concrete rather than abstract. */}
-      <Section tone="charcoal" size="sm">
-        <SectionHeader align="left" eyebrow="What sponsorship funds" title="Where the money goes" />
-        <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {FUNDING_USES.map((use, i) => (
-            <Reveal key={use.label} delay={i * 80}>
-              <div className="h-full card p-5">
-                <p className="font-semibold text-softWhite">{use.label}</p>
-                <p className="mt-1.5 text-sm text-softWhite/60 leading-relaxed">
-                  {use.detail}
-                </p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </Section>
-
-      {/* The tiers, on the page. */}
-      <Section tone="jet" divider id="tiers">
-        <SectionHeader
-          eyebrow="Sponsorship tiers"
-          title="What you get"
-          accent="at each level"
-        >
-          Gold sponsors have their logo on the exoskeleton itself — it travels to
-          competition and appears in every photo and every piece of coverage.
-        </SectionHeader>
-        <div className="mt-12">
-          <SponsorTiers />
-        </div>
-        <Reveal delay={150} className="mt-10 flex flex-wrap items-center gap-3">
-          <Button
-            href={`mailto:${SITE.email}?subject=Sponsorship%20enquiry`}
-            external
-            trailing={<ArrowRight />}
-          >
-            Start a conversation
-          </Button>
-          <Button href={SPONSORSHIP_PACKAGE} external variant="secondary">
-            Full package (PDF)
-          </Button>
-          <p className="text-sm text-softWhite/50">
-            In-kind support — parts, machining time, software licences — is just
-            as welcome as cash.
-          </p>
-        </Reveal>
-      </Section>
-
-      <Section tone="charcoal" id="our-sponsors">
-        <SectionHeader eyebrow="Thank you" title="The people backing us" />
-
-        <div className="mt-12 space-y-12">
-          <Reveal>
-            <h3 className="font-mono text-xs font-medium uppercase tracking-[0.12em] text-ashGold mb-5">
-              Gold
-            </h3>
-            <LogoGrid items={sponsors.gold} size="lg" />
-          </Reveal>
-          <Reveal>
-            <h3 className="font-mono text-xs font-medium uppercase tracking-[0.12em] text-slate-300 mb-5">
-              Silver
-            </h3>
-            <LogoGrid items={sponsors.silver} />
-          </Reveal>
-          <Reveal>
-            <h3 className="font-mono text-xs font-medium uppercase tracking-[0.12em] text-orange-300/90 mb-5">
-              Bronze
-            </h3>
-            <LogoGrid items={sponsors.bronze} />
-          </Reveal>
-          <Reveal>
-            <h3 className="font-mono text-xs font-medium uppercase tracking-[0.12em] text-softWhite/50 mb-5">
-              Affiliates
-            </h3>
-            <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {AFFILIATES.map((a) => (
-                <li key={a.name}>
-                  <a
-                    href={a.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex items-center gap-4 tile p-4"
-                  >
-                    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-lg bg-white/[0.92] p-1.5">
-                      <Image
-                        src={a.logo}
-                        alt=""
-                        width={64}
-                        height={64}
-                        unoptimized={a.logo.endsWith(".svg")}
-                        className="max-h-full w-auto object-contain"
-                      />
-                    </span>
-                    <span>
-                      <span className="block font-medium text-softWhite group-hover:text-ashGold transition-colors">
-                        {a.name}
-                      </span>
-                      <span className="block text-sm text-softWhite/55">
-                        {a.role}
-                      </span>
-                    </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </div>
-      </Section>
-    </>
-  );
+  return <div className="home-page inner-page">
+    <PageHero eyebrow="Partnerships / Build with McMaster Exo" title="Back the people." accent="Power the progress." image="/ace_2026/sponsors.jpg" imageAlt="Sponsor logos on the frame of the McMaster exoskeleton worn by a pilot outdoors." focal="50% 43%" imageCaption="Your support becomes something real." actions={<><a href="#partner-contact" className="home-button">Become a partner <ArrowRight /></a><a href={SPONSORSHIP_PACKAGE} target="_blank" rel="noopener noreferrer" className="home-text-link">Sponsorship package <span className="pdf-label">PDF ↗</span></a></>}>
+      Help students turn ambitious ideas into working hardware. Your support funds the components, manufacturing and competition experiences that make the build possible.
+    </PageHero>
+    <PageNav items={[{href:"#impact",label:"Your impact"},{href:"#tiers",label:"Sponsorship levels"},{href:"#our-sponsors",label:"Our partners"},{href:"#partner-contact",label:"Get in touch"}]} />
+    <PageSection id="impact" tone="light"><SectionIntro eyebrow="01 / From support to a working suit" title="See what your support makes possible.">Every actuator and circuit board has a job to do. Funding and in-kind support help us source the right parts and put student engineering to work.</SectionIntro><div className="funding-grid">{FUNDING_USES.map((use,i)=><article key={use.label}><span className="eyebrow">0{i+1}</span><h3>{use.label}</h3><p>{use.detail}</p></article>)}</div><div className="sponsor-impact-note"><p>50+ students. Multiple disciplines. A shared engineering challenge.</p><Link href="/design" className="home-text-link">Explore the work you’re backing <ArrowRight /></Link></div></PageSection>
+    <PageSection id="tiers"><SectionIntro eyebrow="02 / Ways to partner" title="Choose your part in the build.">From a first contribution to a logo on the suit, each level supports the team and gives your company a place in our story.</SectionIntro><SponsorTiers /><div className="in-kind-note"><span className="eyebrow">More than funding</span><p>Components, machining time and software licences are welcome, too. Talk with us about what your company can contribute.</p></div></PageSection>
+    <PageSection id="our-sponsors" tone="light"><SectionIntro eyebrow="03 / The people in our corner" title="Built with their support.">Thank you to the organisations helping us design, build and compete.</SectionIntro><div className="partner-roster">{(["gold","silver","bronze"] as const).map(tier=><div key={tier}><h3 className="partner-tier-heading">{tier}<span>{sponsors[tier].length} partners</span></h3><ul className="partner-logo-grid">{sponsors[tier].map(sponsor=><li key={sponsor.name}><a href={sponsor.website} target="_blank" rel="noopener noreferrer"><Image src={sponsor.logo} alt={sponsor.name} width={200} height={Math.round(200/(sponsor.aspect??2.5))} unoptimized={sponsor.logo.endsWith(".svg")} className={sponsor.invert?"invert":""} /></a></li>)}</ul></div>)}</div><div className="affiliate-row"><p className="eyebrow">Our student society</p><a href="https://www.macengsociety.ca/" target="_blank" rel="noopener noreferrer"><Image src="/MES_logo.png" alt="" width={90} height={45} /><span>McMaster Engineering Society<strong>Our governing student society</strong></span><ArrowRight /></a></div></PageSection>
+    <PageSection id="partner-contact" tone="surface"><div className="partner-contact"><div><p className="eyebrow">04 / Let’s make something happen</p><h2 className="home-heading">The next step is<br />a conversation.</h2><p>Tell us about your company and how you’d like to support the team. We can talk through sponsorship, in-kind contributions and the work ahead.</p><a href={`mailto:${SITE.email}?subject=Sponsorship%20enquiry`} className="home-button">Email us about partnering <ArrowRight /></a></div><aside><span className="eyebrow">Take a closer look</span><h3>The sponsorship<br />proposal.</h3><p>Our team, our plans, and the full sponsorship benefits in one document.</p><a href={SPONSORSHIP_PACKAGE} target="_blank" rel="noopener noreferrer" className="home-text-link">Open the package <span className="pdf-label">PDF ↗</span></a></aside></div></PageSection>
+  </div>;
 }

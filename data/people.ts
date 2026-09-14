@@ -20,25 +20,6 @@ export type Person = {
 export const EXECS: Person[] = execsJson;
 export const ARCHIVED_EXECS: Person[] = archivedJson;
 
-/**
- * One role-colour map for the whole site.
- *
- * Headshot.tsx and ArchivedTeam.tsx each defined their own `getBorderColor`,
- * and the two disagreed: mechanical was `border-red-900` in one and
- * `border-steelRed` in the other, safety was `border-dustyRose` vs
- * `border-purple-300`. The same person's ring changed colour when they moved
- * from the current roster to the alumni list.
- */
-export function roleAccent(title: string): string {
-  const t = title.toLowerCase();
-  if (t.includes("principal") || t.includes("founder")) return "border-ashGold";
-  if (t.includes("software")) return "border-mutedBlue";
-  if (t.includes("electrical")) return "border-yellow-400";
-  if (t.includes("mechanical")) return "border-ashGold/70";
-  if (t.includes("safety")) return "border-dustyRose";
-  return "border-white/25";
-}
-
 export const FACULTY = [
   {
     name: "Dr. Ratnasingham (Thamas) Tharmarasa",
