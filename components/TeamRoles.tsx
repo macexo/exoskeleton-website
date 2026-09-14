@@ -15,7 +15,6 @@ export default function TeamRoles({ division }: { division: string }) {
           <div className="team-role-responsibilities">
             <h4>What you’ll work on</h4>
             <ul>{role.responsibilities.map(item => <li key={item.title}><strong>{item.title}</strong><p>{item.detail}</p></li>)}</ul>
-            {role.expectation && <p className="role-expectation"><strong>Experience expected</strong>{role.expectation}</p>}
           </div>
         </article>
       ))}

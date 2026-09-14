@@ -46,7 +46,7 @@ export default async function SubteamPage({ params }: { params: Promise<{ slug: 
       </PageSection>
       <PageSection id="join">
         <div className="subteam-join">
-          <div><p className="eyebrow">03 / Take the next step</p><h2 className="home-heading">{roles.length ? "Tell us where you want to contribute." : "Ask about safety work."}</h2><p>{roles.length ? "Review the responsibilities and experience expected for your preferred subteam. The application lets you share your interests, skills and projects." : "Contact the team to learn how you can contribute to safety reviews and testing."}</p></div>
+          <div><p className="eyebrow">03 / Take the next step</p><h2 className="home-heading">{roles.length ? "Tell us where you want to contribute." : "Ask about safety work."}</h2><p>{roles.length ? "Review the responsibilities and tools for your preferred subteam. The application lets you share your interests, skills and projects." : "Contact the team to learn how you can contribute to safety reviews and testing."}</p></div>
           <div>{roles.length && APPLICATIONS_OPEN ? <a href={APPLICATION_FORM_LINK} className="home-button" target="_blank" rel="noopener noreferrer">Apply to the team <ArrowRight /></a> : <a href={`mailto:${SITE.email}?subject=Joining%20the%20team`} className="home-button">Ask the team <ArrowRight /></a>}<Link href="/recruiting#questions" className="home-text-link">Questions about joining? <ArrowRight /></Link></div>
         </div>
       </PageSection>

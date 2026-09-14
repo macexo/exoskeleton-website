@@ -8,8 +8,8 @@ import { APPLICATIONS_OPEN, APPLICATION_FORM_LINK } from "./constants";
 
 export const metadata: Metadata = { title: "Join the Team", description: "Find your place at McMaster Exoskeleton. Explore the subteams, learn how to apply, and build real engineering experience. Explore the six specialist subteams and role-specific expectations." };
 const QUESTIONS = [
-  { question: "Do I need experience?", answer: "Expectations vary by subteam. Read the responsibilities, tools and any experience requirements for the roles that interest you. Use the application to share your relevant skills and projects, and contact us if you’re unsure how your background fits." },
-  { question: "Can I join from any program or year?", answer: "The team is based at McMaster. Start with the subteam responsibilities and experience requirements; contact us if you are unsure how your background fits a role." },
+  { question: "Do I need experience?", answer: "Expectations vary by subteam. Read the responsibilities and tools for the roles that interest you. Use the application to share your relevant skills and projects, and contact us if you’re unsure how your background fits." },
+  { question: "Can I join from any program or year?", answer: "The team is based at McMaster. Start with the subteam responsibilities; contact us if you are unsure how your background fits a role." },
   { question: "Can I be interested in more than one subteam?", answer: "The application asks for your subteam preference. Software offers a first choice and an optional second choice between Embedded & Controls and AI & Machine Learning." },
   { question: "How do I join health & safety?", answer: "Contact the team about contributing to safety work. The six recruiting subteams are grouped under Mechanical, Electrical and Software." },
   { question: "What is the time commitment?", answer: "Ask us about the current meeting schedule and expectations for the subteam you’re considering. We can help you understand how the build fits around your coursework." },
