@@ -24,10 +24,10 @@ export default function DesignPage() {
         focal="55% 48%"
         imageCaption="Bringing the suit together / 2025"
         actions={<><a href="#the-suit" className="home-button">Explore the suit <ArrowRight /></a><SoftwareJumpLink /></>}
+        below={<PageNav items={[{ href: "#the-suit", label: "Explore the suit" }, { href: "#systems", label: "Design priorities" }, { href: "#subteams", label: "Our subteams" }]} />}
       >
         A wearable frame. Powered joints. Software that connects movement to assistance. Our engineering comes together around the person wearing the suit.
       </PageHero>
-      <PageNav items={[{ href: "#the-suit", label: "Explore the suit" }, { href: "#systems", label: "Design priorities" }, { href: "#subteams", label: "Our subteams" }]} />
       <div className="home-container design-assembly"><SuitExplorer /></div>
 
       <PageSection id="systems" tone="light">

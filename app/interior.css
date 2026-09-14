@@ -3,7 +3,10 @@
 .inner-page h1, .inner-page h2, .inner-page h3 { text-wrap: balance; }
 .inner-page .eyebrow { color: var(--home-gold); }
 .inner-page .home-button { text-align: center; }
-.page-hero { padding-block: 156px 66px; background: #0a0a09; }
+/* The hero and the bands beneath it (key facts, the page index) fill the first
+   screen, so the page index sits at the bottom of the window. */
+.page-intro { display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh; background: #0a0a09; }
+.page-hero { flex: 1 0 auto; display: flex; flex-direction: column; justify-content: center; padding-block: 156px 66px; background: #0a0a09; }
 .page-hero-layout { display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(0, .96fr); gap: 64px; align-items: center; }
 .page-hero-copy { min-width: 0; }
 .page-hero-copy > .eyebrow { margin-bottom: 28px; }
@@ -218,7 +221,7 @@
 .partner-contact aside h3 { font-size: 34px; font-weight: 550; line-height: 1.12; letter-spacing: -.04em; margin-top: 28px; }
 
 /* Contact stays direct: an email address, clear intentions and real channels. */
-.contact-hero { padding-block: 164px 72px; }
+.contact-hero { display: flex; flex-direction: column; justify-content: center; min-height: 100vh; min-height: 100svh; padding-block: 164px 72px; }
 .contact-hero h1 { font-size: clamp(43px,6.3vw,91px); line-height: 1.025; letter-spacing: -.065em; font-weight: 550; margin-top: 33px; }
 .contact-hero h1 span { color: #d4b66e; }
 .contact-intro { display: grid; grid-template-columns: 1fr 1.5fr; gap: 100px; align-items: center; margin-top: 45px; }
@@ -248,6 +251,16 @@
 .campus-details address { font-style: normal; font-size: 16px; line-height: 1.8; color: #a4a695; margin-top: 16px; }
 .campus-details .visit-note { padding-top: 23px; border-top: 1px solid #ffffff24; }
 .campus-details .home-text-link { margin-top: 13px; }
+
+/* On desktop the photograph takes the spare height instead of leaving it empty,
+   down to its minimum on short windows and capped so it never turns into a strip. */
+@media (min-width: 761px) {
+  .page-hero--split > .home-container, .page-hero--wide > .home-container { flex: 1 0 auto; display: flex; flex-direction: column; }
+  .page-hero--split .page-hero-layout, .page-hero--wide .page-hero-layout { flex: 1 0 auto; container-type: inline-size; }
+  .page-hero--split .page-hero-image { height: 100%; aspect-ratio: auto; max-height: 52cqi; }
+  .page-hero--wide .page-hero-layout { justify-content: center; }
+  .page-hero--wide .page-hero-image { flex: 1 0 0; aspect-ratio: auto; min-height: 300px; max-height: 42cqi; }
+}
 
 @media (max-width: 1100px) {
   .page-hero-layout { gap: 38px; }

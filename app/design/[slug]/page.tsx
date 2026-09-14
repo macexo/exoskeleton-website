@@ -28,10 +28,9 @@ export default async function SubteamPage({ params }: { params: Promise<{ slug: 
   const engineering = team.slug === "safety" ? null : DISCIPLINE_ENGINEERING[team.slug];
   return (
     <div className="home-page inner-page">
-      <PageHero eyebrow={`${roles.length ? "2026–27 team" : "Engineering"} / ${team.name}`} title={page.title} accent={page.accent} image={page.image} imageAlt={page.imageAlt} imageCaption="From the workshop to the competition floor" actions={<><a href="#the-work" className="home-button">{roles.length ? "Explore the subteams" : "Explore the work"} <ArrowRight /></a><Link href="/design" className="home-text-link">← Back to the design</Link></>}>
+      <PageHero eyebrow={`${roles.length ? "2026–27 team" : "Engineering"} / ${team.name}`} title={page.title} accent={page.accent} image={page.image} imageAlt={page.imageAlt} imageCaption="From the workshop to the competition floor" actions={<><a href="#the-work" className="home-button">{roles.length ? "Explore the subteams" : "Explore the work"} <ArrowRight /></a><Link href="/design" className="home-text-link">← Back to the design</Link></>} below={roles.length > 0 && <PageNav items={[...roles.map(role => ({ href: `#${role.id}`, label: role.name })), { href: "#engineering", label: "How it connects" }, { href: "#join", label: "How to join" }]} />}>
         {team.body}
       </PageHero>
-      {roles.length > 0 && <PageNav items={[...roles.map(role => ({ href: `#${role.id}`, label: role.name })), { href: "#engineering", label: "How it connects" }, { href: "#join", label: "How to join" }]} />}
       <PageSection id="the-work" tone="light">
         <SectionIntro eyebrow={roles.length ? "01 / Current member roles" : "01 / Protection across the system"} title={roles.length ? `Inside ${team.name.toLowerCase()}.` : "Safety spans every discipline."}>
           {roles.length ? "Responsibilities and expectations from the team’s 2026/27 application. Choose the area that fits your interests and experience." : team.body}
