@@ -1,6 +1,6 @@
 .design-assembly { margin-bottom: 80px; }
 
-.suit-experience { --suit-gold: var(--home-gold); --suit-muted: #a4a39b; padding-top: 55px; scroll-margin-top: 100px; }
+.suit-experience { --suit-gold: var(--home-gold); --suit-muted: #a4a39b; padding-top: 55px; }
 .suit-experience-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; margin-bottom: 42px; }
 .suit-experience-heading .eyebrow { margin-bottom: 16px; }
 .suit-experience-heading h2 { font-size: clamp(28px, 2.7vw, 38px); font-weight: 500; line-height: 1.15; letter-spacing: -.035em; }
@@ -37,7 +37,7 @@
 .suit-anchor:hover > span { box-shadow: 0 0 0 1px currentColor, 0 0 0 6px #f3f2ed25; }
 
 /* Every selection occupies the same space; interaction never moves the figure. */
-.suit-detail { display: grid; align-self: center; margin-bottom: 0; border-top: 1px solid #d4b66e80; padding-top: 25px; scroll-margin-top: 110px; }
+.suit-detail { display: grid; align-self: center; margin-bottom: 0; border-top: 1px solid #d4b66e80; padding-top: 25px; }
 .suit-detail-panel { grid-area: 1 / 1; visibility: hidden; pointer-events: none; display: flex; flex-direction: column; align-items: flex-start; }
 .suit-detail-panel.is-active { visibility: visible; pointer-events: auto; }
 .suit-detail-eyebrow { color: var(--suit-gold); font: 11px/1.6 var(--font-mono), monospace; letter-spacing: .03em; }
@@ -45,7 +45,7 @@
 .suit-detail-description { margin-top: 18px; margin-bottom: 24px; color: #b4b3a9; font-size: 16px; line-height: 1.75; }
 
 /* Sensing and software belong to a system flow rather than a point on the leg. */
-.suit-response { margin-top: 34px; padding-top: 22px; border-top: 1px solid #ffffff26; scroll-margin-top: 120px; text-align: center; }
+.suit-response { margin-top: 34px; padding-top: 22px; border-top: 1px solid #ffffff26; text-align: center; }
 .suit-response-heading { color: #cfcec4; font: 14px/1.6 var(--font-mono), monospace; letter-spacing: .04em; }
 .suit-response-flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 26px; max-width: 960px; margin-inline: auto; }
 .suit-response-step { min-width: 0; }

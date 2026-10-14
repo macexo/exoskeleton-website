@@ -27,6 +27,8 @@ export default function Header() {
     if (!menuOpen) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    // The panel covers the page, so reading order starts inside it.
+    navRef.current?.querySelector<HTMLAnchorElement>("a")?.focus();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setMenuOpen(false);
@@ -80,7 +82,7 @@ export default function Header() {
           <span>{menuOpen ? "Close" : "Menu"}</span><span aria-hidden="true">{menuOpen ? "×" : "+"}</span>
         </button>
       </div>
-      <nav ref={navRef} id="mobile-nav" hidden={!menuOpen} aria-label="Mobile navigation" className="mobile-nav">
+      <nav ref={navRef} id="mobile-nav" hidden={!menuOpen} role="dialog" aria-modal="true" aria-label="Mobile navigation" className="mobile-nav">
         {NAV_LINKS.map(link => <div key={link.href}>
           <Link href={link.href} onClick={() => setMenuOpen(false)} aria-current={isActive(link.href) ? "page" : undefined}>{link.label}<ArrowRight /></Link>
           {link.children?.map(child => <Link className="mobile-sub-link" key={child.href} href={child.href} onClick={() => setMenuOpen(false)}>{child.label}</Link>)}
