@@ -5,8 +5,8 @@ export const SUBTEAM_PRESENTATION: Record<Subteam["slug"], {
 }> = {
   mechanical: {
     index: "01", title: "Make it strong.", accent: "Make it move.",
-    image: "/ace_2025/juan_stair_climb.png",
-    imageAlt: "A pilot’s powered leg frame during a stair-climbing event, with teammates alongside.",
+    image: "/ace_2026/IMG_4369.jpg",
+    imageAlt: "A pilot stepping over an obstacle in the powered suit, its leg structure carrying the movement.",
   },
   electrical: {
     index: "02", title: "Power every", accent: "possibility.",
@@ -15,8 +15,8 @@ export const SUBTEAM_PRESENTATION: Record<Subteam["slug"], {
   },
   software: {
     index: "03", title: "Turn intent", accent: "into movement.",
-    image: "/ace_2025/working_on_suit.JPG",
-    imageAlt: "McMaster students working together on the exoskeleton.",
+    image: "/design/suit-leg.jpg",
+    imageAlt: "The suit’s leg-mounted controller enclosures and wiring alongside its powered joints.",
   },
   safety: {
     index: "04", title: "A person comes", accent: "before a prototype.",

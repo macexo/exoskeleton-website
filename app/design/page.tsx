@@ -19,10 +19,10 @@ export default function DesignPage() {
         eyebrow="The design / McMaster Exoskeleton"
         title="One suit."
         accent="Built together."
-        image="/ace_2025/working_on_suit.JPG"
-        imageAlt="McMaster students fitting the exoskeleton around their pilot and adjusting its waist and leg assemblies."
+        image="/ace_2026/IMG_4800.JPG"
+        imageAlt="McMaster students kneeling beside their pilot to adjust the exoskeleton’s leg assemblies."
         focal="55% 48%"
-        imageCaption="Bringing the suit together / 2025"
+        imageCaption="Bringing the suit together / 2026"
         actions={<><a href="#the-suit" className="home-button">Explore the suit <ArrowRight /></a><SoftwareJumpLink /></>}
         below={<PageNav items={[{ href: "#the-suit", label: "Explore the suit" }, { href: "#systems", label: "Design priorities" }, { href: "#subteams", label: "Our subteams" }]} />}
       >

@@ -12,9 +12,9 @@ import { getSubteam } from "@/data/subteams";
  * which had already drifted from the canonical copy word for word.
  */
 const PANELS = [
-  { id: "mechanical", title: "Fit the person. Guide the movement.", tags: ["Waist", "Linkages"], x: 66, y: 61, label: "Knee assembly" },
-  { id: "electrical", title: "Connect power, sensing and actuation.", tags: ["Power Architecture", "Actuation & Sensing"], x: 68, y: 20, label: "Electronics enclosure" },
-  { id: "software", title: "The code behind the movement.", tags: ["Embedded & Controls", "AI & Machine Learning"], x: 44, y: 38, label: "Onboard prediction & control" },
+  { id: "mechanical", title: "Fit the person. Guide the movement.", tags: ["Waist", "Linkages"], x: 41, y: 68, label: "Knee assembly" },
+  { id: "electrical", title: "Connect power, sensing and actuation.", tags: ["Power Architecture", "Actuation & Sensing"], x: 43, y: 21, label: "Electronics enclosure" },
+  { id: "software", title: "The code behind the movement.", tags: ["Embedded & Controls", "AI & Machine Learning"], x: 71, y: 28, label: "Onboard prediction & control" },
 ] as const;
 
 const SYSTEMS = PANELS.map(panel => {
@@ -28,8 +28,8 @@ export default function HomeSystems() {
   return (
     <div className="systems-layout">
       <figure className="systems-photo">
-        <Image src="/ace_2025/full_suit_image.png" alt="The 2025 McMaster exoskeleton showing its control pack, wiring and powered leg joints." fill sizes="(max-width: 760px) 100vw, 40vw" className="object-cover" />
-        <span className="photo-index">EXO / 2025</span>
+        <Image src="/design/suit-leg.jpg" alt="The McMaster exoskeleton worn by a pilot, showing its waist electronics, wiring and powered leg joints." fill sizes="(max-width: 760px) 100vw, 40vw" className="object-cover" />
+        <span className="photo-index">EXO / 2026</span>
         <span className="system-marker" style={{ left: `${system.x}%`, top: `${system.y}%` }} aria-hidden="true"><span>+</span></span>
         <figcaption><span>{String(active + 1).padStart(2, "0")} / {system.label}</span><span>Actual team hardware</span></figcaption>
       </figure>
