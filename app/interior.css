@@ -112,7 +112,7 @@
 .faq-list details > p { font-size: 16px; line-height: 1.75; color: var(--page-text); padding-bottom: 24px; }
 
 /* People: portraits without the old badges and circular frames. */
-.roster-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 28px; }
+.roster-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 24px; }
 .person-photo { position: relative; aspect-ratio: 1; overflow: hidden; background: #fff; }
 .person-photo img { object-position: center bottom; transition: transform .4s; }
 .person-photo-link { display: block; position: relative; }
@@ -273,7 +273,7 @@
   .subteam-row { grid-template-columns: 30px 1fr 1.2fr 44px; gap: 20px; }
   .directory-name h3 { font-size: 25px; }
  .apply-layout, .faq-layout, .partner-contact, .contact-details { gap: 40px; }
-  .roster-grid { gap: 20px; }
+  .roster-grid { grid-template-columns: repeat(3,1fr); gap: 20px; }
   .person-profile h3 { font-size: 20px; }
   .team-social > div { flex-wrap: wrap; }
   .event-grid { gap: 27px; }
