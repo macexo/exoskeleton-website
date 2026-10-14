@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageSection, SectionIntro } from "@/components/ui/Interior";
 import { ArrowRight } from "@/components/ui/Button";
-import { SITE, SOCIALS, SPONSORSHIP_PACKAGE } from "@/data/site";
+import { SITE, SOCIALS, SPONSORSHIP_PACKAGE, pageMetadata } from "@/data/site";
 import { FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 
-export const metadata: Metadata = { title: "Contact", description: "Talk to McMaster Exoskeleton about joining, sponsorship, media or collaboration. Email exo@mcmaster.ca or follow the team." };
+export const metadata: Metadata = pageMetadata({ title: "Contact", path: "/contact", description: "Talk to McMaster Exoskeleton about joining, sponsorship, media or collaboration. Email exo@mcmaster.ca or follow the team." });
 const CHANNELS = [
   { name: "Instagram", label: "@mcmasterexo", href: SOCIALS.instagram, icon: FaInstagram },
   { name: "LinkedIn", label: "McMaster Exoskeleton", href: SOCIALS.linkedin, icon: FaLinkedin },

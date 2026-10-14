@@ -10,13 +10,16 @@ import { DISCIPLINE_ENGINEERING } from "@/data/engineering";
 import { SUBTEAMS, getSubteam } from "@/data/subteams";
 import { SUBTEAM_PRESENTATION } from "@/data/subteamPresentation";
 import { getTeamRoles } from "@/data/teamRoles";
-import { SITE } from "@/data/site";
+import { SITE, pageMetadata } from "@/data/site";
 import { APPLICATIONS_OPEN, APPLICATION_FORM_LINK } from "@/app/recruiting/constants";
 
 export function generateStaticParams() { return SUBTEAMS.map(team => ({ slug: team.slug })); }
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const team = getSubteam((await params).slug);
-  return team ? { title: team.slug === "safety" ? "Health & Safety" : `${team.name} Team`, description: team.body } : { title: "Not found" };
+  if (!team) return { title: "Not found" };
+  const title = team.slug === "safety" ? "Health & Safety" : `${team.name} Team`;
+  // team.body is hero prose — 235–273 characters, cut off in search results.
+  return pageMetadata({ title, path: `/design/${team.slug}`, description: team.summary });
 }
 
 export default async function SubteamPage({ params }: { params: Promise<{ slug: string }> }) {

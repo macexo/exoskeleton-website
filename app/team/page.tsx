@@ -6,9 +6,9 @@ import { PageSection, SectionIntro, PageCTA, PageNav, SubteamDirectory } from "@
 import Headshot from "@/components/Headshot";
 import { ArrowRight } from "@/components/ui/Button";
 import { EXECS, ARCHIVED_EXECS, FACULTY } from "@/data/people";
-import { SOCIALS } from "@/data/site";
+import { SOCIALS, pageMetadata } from "@/data/site";
 
-export const metadata: Metadata = { title: "Team", description: "Meet the students, team leads, alumni and faculty advisors behind McMaster Exoskeleton." };
+export const metadata: Metadata = pageMetadata({ title: "Team", path: "/team", description: "Meet the students, team leads, alumni and faculty advisors behind McMaster Exoskeleton." });
 export default function TeamPage() {
   return <div className="home-page inner-page">
     <PageHero eyebrow="The people / McMaster Exo" title="Different minds." accent="Shared ambition." variant="wide" image="/ace_2026/background_image.jpg" imageAlt="McMaster Exoskeleton students gathered outside the engineering building with the suit at ACE 2026." focal="50% 45%" imageCaption="The team at ACE 2026 / McMaster University" actions={<Link href="/recruiting" className="home-button">Build with us <ArrowRight /></Link>} below={<PageNav items={[{href:"#divisions",label:"Our subteams"},{href:"#leads",label:"Team leads"},{href:"#alumni",label:"Past directors"},{href:"#faculty",label:"Faculty advisors"}]} />}>

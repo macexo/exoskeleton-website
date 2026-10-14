@@ -6,11 +6,13 @@ import { DESIGN_PRIORITIES } from "@/data/suit";
 import SuitExplorer, { SoftwareJumpLink } from "@/components/SuitExplorer";
 import DesignTeamLinks from "@/components/DesignTeamLinks";
 import "./design.css";
+import { pageMetadata } from "@/data/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Design",
+  path: "/design",
   description: "Explore the hardware, motion sensing and software behind McMaster’s student-built exoskeleton, and meet the six subteams bringing it together.",
-};
+});
 
 export default function DesignPage() {
   return (
