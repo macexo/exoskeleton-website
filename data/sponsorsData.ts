@@ -1,3 +1,5 @@
+import type { Tier } from "./sponsorship";
+
 export type SponsorProps = {
   logo: string;
   name: string;
@@ -17,7 +19,10 @@ export type SponsorProps = {
   aspect?: number;
 };
 
-export const sponsors: Record<"bronze" | "silver" | "gold", SponsorProps[]> = {
+/** Keyed by sponsorship level, so a level the package offers but nobody holds yet
+  * stays in the data instead of disappearing from the roster by omission. */
+export const sponsors: Record<Tier["id"], SponsorProps[]> = {
+  platinum: [],
   bronze: [
     {
       name: "East Mount Chiropractic",

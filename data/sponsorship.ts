@@ -1,6 +1,6 @@
 /**
- * Sponsorship tiers, transcribed from page 6 of the 2025/26 sponsorship
- * proposal PDF. These were previously only available by downloading a 5.9 MB
+ * Sponsorship tiers, transcribed from page 6 of the 2026/27 sponsorship
+ * package PDF. These were previously only available by downloading a 6.5 MB
  * PDF, which meant a prospective sponsor could not evaluate the team without
  * committing to a download.
  */
@@ -12,10 +12,11 @@ export type TierBenefit = {
   bronze: string | boolean;
   silver: string | boolean;
   gold: string | boolean;
+  platinum: string | boolean;
 };
 
 export type Tier = {
-  id: "bronze" | "silver" | "gold";
+  id: "bronze" | "silver" | "gold" | "platinum";
   name: string;
   amount: string;
   /** Short pitch shown under the tier name. */
@@ -26,59 +27,71 @@ export const TIERS: Tier[] = [
   {
     id: "bronze",
     name: "Bronze",
-    amount: "Under $1,000",
+    amount: "$500",
     blurb: "Get your name in front of 50+ engineering students and our audience.",
   },
   {
     id: "silver",
     name: "Silver",
-    amount: "$1,000 – $2,000",
-    blurb: "Recruit from the team directly and feature in our competition coverage.",
+    amount: "$1,000",
+    blurb: "Your logo travels with the team, on our presentations and promotional material.",
   },
   {
     id: "gold",
     name: "Gold",
-    amount: "$2,000+",
+    amount: "$2,000",
     blurb: "Your logo rides on the suit itself, at competition and in every photo.",
+  },
+  {
+    id: "platinum",
+    name: "Platinum",
+    amount: "$3,000+",
+    blurb: "Everything Gold offers, plus a featured post and a place on our team merch.",
   },
 ];
 
 export const TIER_BENEFITS: TierBenefit[] = [
   {
     label: "Logo on website",
-    bronze: "Standard placement",
-    silver: "Enhanced placement",
-    gold: "Prominent placement",
-  },
-  {
-    label: "Social media promotion",
-    bronze: "General mention",
-    silver: "Dedicated mention",
-    gold: "Featured post",
+    bronze: "Standard display",
+    silver: "Enhanced display",
+    gold: "Prominent display",
+    platinum: "Featured display",
   },
   {
     label: "Logo on team materials",
     bronze: "Website only",
     silver: "Promos & presentations",
     gold: "On the exoskeleton suit",
+    platinum: "On the exoskeleton suit",
   },
   {
     label: "Access to team resume book",
-    bronze: false,
+    bronze: true,
     silver: true,
     gold: true,
+    platinum: true,
   },
   {
-    label: "Media coverage recognition",
+    label: "Social media promotion",
     bronze: false,
-    silver: true,
+    silver: "General mention",
+    gold: "Dedicated mention",
+    platinum: "Featured post",
+  },
+  {
+    label: "Meet the team & suit display event",
+    bronze: false,
+    silver: false,
     gold: true,
+    platinum: true,
   },
   {
     label: "Featured on team merch",
     bronze: false,
     silver: false,
-    gold: true,
+    gold: false,
+    platinum: true,
   },
 ];
 

@@ -10,13 +10,16 @@ import { DISCIPLINE_ENGINEERING } from "@/data/engineering";
 import { SUBTEAMS, getSubteam } from "@/data/subteams";
 import { SUBTEAM_PRESENTATION } from "@/data/subteamPresentation";
 import { getTeamRoles } from "@/data/teamRoles";
-import { SITE } from "@/data/site";
+import { SITE, pageMetadata } from "@/data/site";
 import { APPLICATIONS_OPEN, APPLICATION_FORM_LINK } from "@/app/recruiting/constants";
 
 export function generateStaticParams() { return SUBTEAMS.map(team => ({ slug: team.slug })); }
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const team = getSubteam((await params).slug);
-  return team ? { title: team.slug === "safety" ? "Health & Safety" : `${team.name} Team`, description: team.body } : { title: "Not found" };
+  if (!team) return { title: "Not found" };
+  const title = team.slug === "safety" ? "Health & Safety" : `${team.name} Team`;
+  // team.body is hero prose — 235–273 characters, cut off in search results.
+  return pageMetadata({ title, path: `/design/${team.slug}`, description: team.summary });
 }
 
 export default async function SubteamPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -28,7 +31,7 @@ export default async function SubteamPage({ params }: { params: Promise<{ slug: 
   const engineering = team.slug === "safety" ? null : DISCIPLINE_ENGINEERING[team.slug];
   return (
     <div className="home-page inner-page">
-      <PageHero eyebrow={`${roles.length ? "2026–27 team" : "Engineering"} / ${team.name}`} title={page.title} accent={page.accent} image={page.image} imageAlt={page.imageAlt} imageCaption="From the workshop to the competition floor" actions={<><a href="#the-work" className="home-button">{roles.length ? "Explore the subteams" : "Explore the work"} <ArrowRight /></a><Link href="/design" className="home-text-link">← Back to the design</Link></>} below={roles.length > 0 && <PageNav items={[...roles.map(role => ({ href: `#${role.id}`, label: role.name })), { href: "#engineering", label: "How it connects" }, { href: "#join", label: "How to join" }]} />}>
+      <PageHero eyebrow={`${roles.length ? "2026–27 team" : "Engineering"} / ${team.name}`} title={page.title} accent={page.accent} image={page.image} imageAlt={page.imageAlt} imageCaption="From the workshop to the competition floor" actions={<><a href="#the-work" className="home-button">{roles.length ? "Explore the subteams" : "Explore the work"} <ArrowRight /></a><Link href="/design" className="home-text-link"><span aria-hidden="true">←</span> Back to the design</Link></>} below={roles.length > 0 && <PageNav items={[...roles.map(role => ({ href: `#${role.id}`, label: role.name })), { href: "#engineering", label: "How it connects" }, { href: "#join", label: "How to join" }]} />}>
         {team.body}
       </PageHero>
       <PageSection id="the-work" tone="light">

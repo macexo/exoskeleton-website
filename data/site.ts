@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 /**
  * Single source of truth for site-wide identity, navigation and social links.
  * Previously these were duplicated across Header, Footer, Team_Hero, YouTube
@@ -48,4 +50,34 @@ export const SOCIAL_LINKS = [
 
 /** Typed once so the filename (which contains spaces) is never retyped. */
 export const SPONSORSHIP_PACKAGE =
-  "/2526 McMaster Exoskeleton Sponsorship Proposal.pdf";
+  "/McMaster Exoskeleton Sponsorship Package 2026_2027.pdf";
+
+/**
+ * Per-route metadata. Every page used to inherit the layout's single Open Graph
+ * block, so an ACE recap or a subteam page shared to LinkedIn previewed as the
+ * homepage. Next merges metadata shallowly — a page that declares `openGraph`
+ * does not inherit the parent's images — so the card is built in full here,
+ * along with the canonical URL no route was declaring.
+ */
+export function pageMetadata({ title, description, path, image = "/og.jpg" }: {
+  title: string;
+  description: string;
+  path: string;
+  image?: string;
+}): Metadata {
+  const card = { title: `${title} — ${SITE.name}`, description };
+  return {
+    title,
+    description,
+    alternates: { canonical: path },
+    openGraph: {
+      ...card,
+      type: "website",
+      locale: "en_CA",
+      url: path,
+      siteName: SITE.name,
+      images: [{ url: image, width: 1200, height: 630, alt: "A pilot wearing the McMaster Exoskeleton lower-limb suit." }],
+    },
+    twitter: { ...card, card: "summary_large_image", images: [image] },
+  };
+}

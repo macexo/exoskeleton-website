@@ -34,6 +34,7 @@ export const metadata: Metadata = {
     template: `%s — ${SITE.name}`,
   },
   description: SITE.description,
+  alternates: { canonical: "/" },
   keywords: [
     "McMaster Exoskeleton",
     "McMaster University",

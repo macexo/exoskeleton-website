@@ -24,14 +24,15 @@ export default function DisciplineOverview({ name, overview }: {
       <ul className={`architecture-flow ${isFlow ? "is-flow" : "is-areas"}`} aria-label={`${name} ${isFlow ? "system flow" : "design areas"}`}>
         {overview.stages.map((item, index) => (
           <li key={item.name}>
-            <button type="button" aria-label={item.name} aria-pressed={selected === index} aria-controls={detailId} onClick={() => setSelected(index)}>
+            <button type="button" aria-pressed={selected === index} aria-controls={detailId} onClick={() => setSelected(index)}>
               <span className="flow-step" aria-hidden="true">{isFlow ? `0${index + 1}` : "Design area"}<span>{selected === index ? "−" : "+"}</span></span>
               <strong>{item.name}</strong><span className="flow-device">{item.device}</span><span className="flow-summary">{item.summary}</span>
             </button>
           </li>
         ))}
       </ul>
-      <div id={detailId} className="architecture-detail" aria-live="polite" aria-atomic="true">
+      <span className="sr-only" role="status" aria-atomic="true">{`Showing ${overview.stages[selected].name}`}</span>
+      <div id={detailId} className="architecture-detail">
         {overview.stages.map((item, index) => (
           <div key={item.name} className={`architecture-detail-panel ${selected === index ? "is-active" : ""}`} aria-hidden={selected !== index}>
             <div><span className="eyebrow">{isFlow ? `Inside the flow / 0${index + 1}` : "Inside the design area"}</span><h4>{item.name}</h4></div>

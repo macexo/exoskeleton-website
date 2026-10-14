@@ -1,6 +1,6 @@
 # Website content sources
 
-Updated 2026-09-14. The website presents the club’s engineering at a public overview level. It is not an implementation guide or a specification for the next suit.
+Updated 2026-10-13. The website presents the club’s engineering at a public overview level. It is not an implementation guide or a specification for the next suit.
 
 ## Technical source and scope
 
@@ -37,13 +37,13 @@ Current leads for the six specialist subteams were not supplied. Existing leader
 
 The team explicitly instructed that the prospective design documentation remain internal. Its technical content, diagrams and original documents are not included in the website or repository. The original Word files remain outside the project.
 
-Current technical descriptions exclude previously unsupported claims about sensing, lifting capability, wiring robustness and seasonal development practices. Competition results, sponsor information and existing names remain based on the original website and sponsorship material; the technical documentation is not treated as confirmation of rosters or competition results.
+Current technical descriptions exclude previously unsupported claims about sensing, lifting capability, wiring robustness and seasonal development practices. Competition results, sponsor information and existing names remain based on the original website and sponsorship material; the technical documentation is not treated as confirmation of rosters or competition results. Sponsorship levels, amounts and benefits are transcribed from page 6 of the team-supplied 2026/27 sponsorship package, which replaced the 2025/26 proposal; the package itself is linked from the website as a download.
 
 ## Interactive system photograph
 
 The team supplied its `V5 PRODUCTION` folder and identified it as the previous year's build. The native SolidWorks assembly, components and pilot scans remain outside the website repository. A low-resolution assembly preview was used during the first layout iteration and has been removed from the public assets.
 
-After reviewing the conceptual illustration, the user supplied a clearer leg photograph for the system explorer. The Design hero uses the existing 2025 workshop photo (`working_on_suit.JPG`) to introduce the students and integration work; the explorer uses `public/design/suit-leg.jpg` to show real team hardware. The attached PNG was converted locally to JPEG for web delivery without changing its content. Leader lines connect four named callouts to visible hardware areas on the uncropped photograph.
+After reviewing the conceptual illustration, the user supplied a clearer leg photograph for the system explorer. The Design hero uses a 2026 workshop photo (`ace_2026/IMG_4800.JPG`) to introduce the students and integration work; the explorer uses `public/design/suit-leg.jpg` to show real team hardware. The attached PNG was converted locally to JPEG for web delivery without changing its content. Leader lines connect four named callouts to visible hardware areas on the uncropped photograph.
 
 The team subsequently identified the Pi enclosure to the right of the pilot's hand and the leg-mounted MCU enclosures containing the motion sensors and STM32 hardware. These identifications map sensing to the controller enclosures, prediction to the onboard computer, control to the controller enclosures and visible red cable, and actuation to the hip and knee motors. Public copy retains functional descriptions rather than component specifications.
 

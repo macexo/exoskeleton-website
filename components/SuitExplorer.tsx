@@ -139,7 +139,7 @@ export default function SuitExplorer() {
                     className="suit-anchor"
                     style={{ "--anchor-x": `${desktopX}%`, "--mobile-anchor-x": `${point.x}%`, top: `${point.y}%` } as CSSProperties}
                     {...selectionProps(part.id)}
-                    aria-label={part.name}
+                    aria-hidden="true"
                     tabIndex={-1}
                   ><span aria-hidden="true" /></button>
                 </div>

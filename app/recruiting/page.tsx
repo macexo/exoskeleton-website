@@ -3,10 +3,10 @@ import Link from "next/link";
 import PageHero from "@/components/ui/PageHero";
 import { PageSection, SectionIntro, PageNav, SubteamDirectory } from "@/components/ui/Interior";
 import { ArrowRight } from "@/components/ui/Button";
-import { SITE } from "@/data/site";
+import { SITE, pageMetadata } from "@/data/site";
 import { APPLICATIONS_OPEN, APPLICATION_FORM_LINK } from "./constants";
 
-export const metadata: Metadata = { title: "Join the Team", description: "Find your place at McMaster Exoskeleton. Explore the subteams, learn how to apply, and build real engineering experience. Explore the six specialist subteams and role-specific expectations." };
+export const metadata: Metadata = pageMetadata({ title: "Join the Team", path: "/recruiting", description: "Find your place at McMaster Exoskeleton: six specialist subteams, what each role expects, and how to apply." });
 const QUESTIONS = [
   { question: "Do I need experience?", answer: "Expectations vary by subteam. Read the responsibilities and tools for the roles that interest you. Use the application to share your relevant skills and projects, and contact us if you’re unsure how your background fits." },
   { question: "Can I join from any program or year?", answer: "The team is based at McMaster. Start with the subteam responsibilities; contact us if you are unsure how your background fits a role." },
