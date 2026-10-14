@@ -182,16 +182,17 @@
 .funding-grid p { font-size: 16px; line-height: 1.7; color: var(--page-text); }
 .sponsor-impact-note { display: flex; align-items: center; justify-content: space-between; gap: 40px; border-top: 1px solid var(--page-line); margin-top: 42px; padding-top: 25px; }
 .sponsor-impact-note p { font-size: 16px; color: #626351; }
-.tier-overview { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
-.tier-summary { border: 1px solid #ffffff2b; padding: 28px; }
+.tier-overview { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; }
+.tier-summary { border: 1px solid #ffffff2b; padding: 26px 24px; }
 .tier-summary--gold { border-color: #d4b66e8c; background: #d4b66e0d; }
+.tier-summary--platinum { border-color: #ffffff52; background: #ffffff08; }
 .tier-summary h3 { font-size: clamp(22px,2.5vw,35px); font-weight: 550; line-height: 1.15; letter-spacing: -.045em; margin-block: 29px 17px; }
-.tier-summary p { font-size: 16px; line-height: 1.7; color: #aaa99e; min-height: 82px; }
+.tier-summary p { font-size: 16px; line-height: 1.7; color: #aaa99e; min-height: 109px; }
 .tier-summary .home-text-link { margin-top: 16px; }
 .tier-table-wrap { margin-top: 38px; }
 .tier-table { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.5; table-layout: fixed; }
 .tier-table caption { text-align: left; font: 12px/1.5 var(--font-mono), monospace; color: #aca996; padding-bottom: 20px; text-transform: uppercase; }
-.tier-table th:first-child { width: 34%; text-align: left; }
+.tier-table th:first-child { width: 28%; text-align: left; }
 .tier-table th, .tier-table td { padding: 21px 17px; border-bottom: 1px solid #ffffff24; }
 .tier-table thead th { color: #d6ceb3; font-weight: 500; }
 .tier-table tbody th { font-weight: 400; color: #dedcd1; }
@@ -277,8 +278,9 @@
   .person-profile h3 { font-size: 20px; }
   .team-social > div { flex-wrap: wrap; }
   .event-grid { gap: 27px; }
+  .tier-overview { grid-template-columns: repeat(2,1fr); }
   .tier-summary { padding: 23px; }
-  .tier-summary p { min-height: 108px; }
+  .tier-summary p { min-height: 82px; }
   .funding-grid { gap: 22px; }
   .contact-intro { gap: 40px; }
   .contact-intents { gap: 26px; }

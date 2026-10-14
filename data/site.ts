@@ -48,4 +48,4 @@ export const SOCIAL_LINKS = [
 
 /** Typed once so the filename (which contains spaces) is never retyped. */
 export const SPONSORSHIP_PACKAGE =
-  "/2526 McMaster Exoskeleton Sponsorship Proposal.pdf";
+  "/McMaster Exoskeleton Sponsorship Package 2026_2027.pdf";
