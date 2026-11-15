@@ -49,12 +49,6 @@ export const sponsors: Record<Tier["id"], SponsorProps[]> = {
       aspect: 1.887,
       website: "https://www.protocase.com/",
     },
-    {
-      name: "Toronto Hydro",
-      logo: "/toronto_hydro.png",
-      aspect: 2.551,
-      website: "https://www.torontohydro.com/",
-    },
   ],
   silver: [
     {
