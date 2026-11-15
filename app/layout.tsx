@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import "./interior.css";
 import Footer from "@/components/Footer";
@@ -99,6 +100,7 @@ export default function RootLayout({
         {/* A real <main> landmark. Eight of eleven routes previously had none. */}
         <main id="main">{children}</main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
